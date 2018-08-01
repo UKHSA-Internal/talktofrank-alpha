@@ -1,0 +1,9 @@
+// Path to assets for use with the file-url function
+// in the govuk frontend toolkit's url-helpers partial
+$path: '/ui/img';
+$text-max-width: 65rem;
+
+
+// exported css files as scss for speed as the kit is not complete
+// and a litle disparate if not imported using Gulp
+@charset 'UTF-8';

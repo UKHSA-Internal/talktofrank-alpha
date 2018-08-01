@@ -1,0 +1,20 @@
+default:
+  - clean
+  - build
+  - concurrent:monitor
+
+css:
+  - sass
+  - postcss
+
+build:
+  - css
+  - copy
+  - js
+
+js:
+  - concurrent:js
+
+validate:
+  - eslint
+  - sasslint

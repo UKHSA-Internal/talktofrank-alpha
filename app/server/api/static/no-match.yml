@@ -1,0 +1,18 @@
+---
+contentType: page
+slug: no-match
+
+head:
+  contentType: head
+  title: 404 error page not found
+breadcrumb:
+- contentType: link
+  text: Home
+  url: "/"
+content:
+- contentType: hero
+  title: 404 error - page not found
+  modifiers: hero--accent hero--has-media
+- contentType: longform
+  intro: 'This page doesn''t seem to  exist : ('
+  text: "<p>Please check that you have typed out the URL correctly.</p>"
