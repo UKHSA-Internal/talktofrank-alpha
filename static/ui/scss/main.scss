@@ -1,5 +1,10 @@
 @charset 'UTF-8';
 
+$max-width: 1200px;
+
+// base
+@import 'base';
+
 // custom fonts
 @import 'fonts';
 
@@ -14,7 +19,7 @@
 @import "bootstrap/scss/mixins";
 @import "bootstrap/scss/root";
 @import "bootstrap/scss/reboot";
-@import "bootstrap/scss/type";
+// @import "bootstrap/scss/type";
 // @import "bootstrap/scss/images";
 // @import "bootstrap/scss/code";
 @import "bootstrap/scss/grid";
@@ -43,3 +48,4 @@
 
 
 // Added components!!
+@import '../../../app/shared/components/Typography/style';

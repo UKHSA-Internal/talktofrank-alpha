@@ -28,10 +28,6 @@ const Typography = props => {
       <h5>This is an actual h5 - time to test it out in the format below....</h5>
       <p className='h5'>...which is a chunk of h5 sized paragraph text - super</p>
 
-      <hr className='divider mt-5 mb-5'/>
-
-      <h6>This is an actual h6 - time to test it out in the format below....</h6>
-      <p className='h6'>...which is a chunk of h6 sized paragraph text - super</p>
 
       <hr className='divider mt-5 mb-5'/>
       <ul>
