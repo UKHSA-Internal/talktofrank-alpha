@@ -44,7 +44,7 @@ const Typography = props => {
 
       <hr className='divider mt-5 mb-5'/>
 
-      <ul className="breadcrumb">
+      <ul className="nav breadcrumb">
         <li className='breadcrumb__item'>
           <a href='#' className='breadcrumb__link'>Amount</a>
         </li>

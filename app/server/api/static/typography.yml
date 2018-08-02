@@ -4,6 +4,6 @@ slug: typography
 
 content:
 - contentType: heading
-  text: "Talk to Frank"
+  text: "Typographic scale | Talk to Frank"
   type: p
   modifiers: spacing-top--large spacing-bottom--single heading-medium
