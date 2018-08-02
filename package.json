@@ -93,6 +93,7 @@
   "dependencies": {
     "express-basic-auth": "^1.1.4",
     "install": "^0.10.4",
+    "lodash.sortby": "^4.7.0",
     "notifications-node-client": "^4.1.0",
     "npm": "^5.7.1",
     "serve-favicon": "^2.5.0",

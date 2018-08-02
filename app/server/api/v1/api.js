@@ -7,6 +7,7 @@ const bodyParser = require('body-parser')
 const util = require('util')
 const marked = require('marked')
 const router = express.Router()
+const sortBy = require('lodash.sortby')
 import axios from 'axios'
 axios.defaults.headers.common['Authorization'] = 'Bearer ddde134cf3f45d080ed01144bc1db5074caa49a077d04ba51e69c9a69d5f4682'
 
@@ -50,6 +51,7 @@ router.get('/drugList', (req, res, next) => {
         })
 
       })
+      response.list = sortBy(response.list, (item) => (item.name))
 
       res.send(response)
 
