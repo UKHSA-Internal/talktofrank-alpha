@@ -91,6 +91,7 @@
     "webpack": "^2.2.0-rc.1"
   },
   "dependencies": {
+    "contentful-cli": "^0.15.0",
     "express-basic-auth": "^1.1.4",
     "install": "^0.10.4",
     "lodash.sortby": "^4.7.0",
