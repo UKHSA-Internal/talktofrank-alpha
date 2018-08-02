@@ -95,6 +95,78 @@ router.get('/pages/:slug', (req, res, next) => {
       response.description = marked(response.description)
     }
 
+    if (response.appearance_whatDoesItLookLike) {
+      response.appearance_whatDoesItLookLike = marked(response.appearance_whatDoesItLookLike)
+    }
+
+    if (response.appearance_whatDoesItTastesmellLike) {
+      response.appearance_whatDoesItTastesmellLike = marked(response.appearance_whatDoesItTastesmellLike)
+    }
+
+    if (response.appearance_howDoPeopleTakeIt) {
+      response.appearance_howDoPeopleTakeIt = marked(response.appearance_howDoPeopleTakeIt)
+    }
+
+    if (response.effects_howDoesItMakeYouFeel) {
+      response.effects_howDoesItMakeYouFeel = marked(response.effects_howDoesItMakeYouFeel)
+    }
+
+    if (response.effects_howDoesItMakePeopleBehave) {
+      response.effects_howDoesItMakePeopleBehave = marked(response.effects_howDoesItMakePeopleBehave)
+    }
+
+    if (response.effects_whatAreThePhysicalEffects) {
+      response.effects_whatAreThePhysicalEffects = marked(response.effects_whatAreThePhysicalEffects)
+    }
+
+    if (response.effects_whatIsTheComedownLike) {
+      response.effects_whatIsTheComedownLike = marked(response.effects_whatIsTheComedownLike)
+    }
+
+    if (response.effects_howLongDoesItStayInYourBody) {
+      response.effects_howLongDoesItStayInYourBody = marked(response.effects_howLongDoesItStayInYourBody)
+    }
+
+    if (response.risks_whatAreTheRisks) {
+      response.risks_whatAreTheRisks = marked(response.risks_whatAreTheRisks)
+    }
+
+    if (response.risks_canYouGetAddicted) {
+      response.risks_canYouGetAddicted = marked(response.risks_canYouGetAddicted)
+    }
+
+    if (response.risks_isItDangerousToMixWithOtherDrugs) {
+      response.risks_isItDangerousToMixWithOtherDrugs = marked(response.risks_isItDangerousToMixWithOtherDrugs)
+    }
+
+    if (response.risks_whatIsCutWith) {
+      response.risks_whatIsCutWith = marked(response.risks_whatIsCutWith)
+    }
+
+    if (response.effects_howDoesItEffectSocietyAndTheEnvironment) {
+      response.effects_howDoesItEffectSocietyAndTheEnvironment = marked(response.effects_howDoesItEffectSocietyAndTheEnvironment)
+    }
+
+    if (response.law_whatIsTheDrugClassification) {
+      response.law_whatIsTheDrugClassification = marked(response.law_whatIsTheDrugClassification)
+    }
+
+    if (response.law_whatIfYouAreCaughtWithIt) {
+      response.law_whatIfYouAreCaughtWithIt = marked(response.law_whatIfYouAreCaughtWithIt)
+    }
+
+    if (response.worried_iFeelPressuredIntoTakingItWhatCanIDo) {
+      response.worried_iFeelPressuredIntoTakingItWhatCanIDo = marked(response.worried_iFeelPressuredIntoTakingItWhatCanIDo)
+    }
+
+    if (response.worried_howCanIHelpMyFriendWithTheirUse) {
+      response.worried_howCanIHelpMyFriendWithTheirUse = marked(response.worried_howCanIHelpMyFriendWithTheirUse)
+    }
+
+    if (response.worried_iveSpentAllMyMoneyOnItWhatCanIDo) {
+      response.worried_iveSpentAllMyMoneyOnItWhatCanIDo = marked(response.worried_iveSpentAllMyMoneyOnItWhatCanIDo)
+    }
+
     res.send(response)
   }).catch(function (error) {
     // handle error
