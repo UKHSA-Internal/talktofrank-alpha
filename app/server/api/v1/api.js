@@ -9,8 +9,7 @@ const util = require('util')
 const marked = require('marked')
 const router = express.Router()
 const sortBy = require('lodash.sortby')
-
-axios.defaults.headers.common['Authorization'] = 'Bearer ddde134cf3f45d080ed01144bc1db5074caa49a077d04ba51e69c9a69d5f4682'
+axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.contentAccessToken}`
 
 /**
  * Add middleware to parse json
