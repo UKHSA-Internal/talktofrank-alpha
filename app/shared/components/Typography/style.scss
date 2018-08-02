@@ -12,7 +12,6 @@ body {
   }
 }
 
-
 h1,
 h2,
 h3,
@@ -74,7 +73,6 @@ h3,
   }
 }
 
-
 h4,
 .h4,
 %lead,
@@ -111,7 +109,6 @@ h5,
   font-size: $lead-font-size;
   font-weight: $lead-font-weight;
 }
-
 
 //
 // Horizontal rules
@@ -154,6 +151,7 @@ mark,
 .list-inline {
   @include list-unstyled;
 }
+
 .list-inline-item {
   display: inline-block;
 
@@ -185,6 +183,6 @@ mark,
   color: $blockquote-small-color;
 
   &::before {
-    content: "\2014 \00A0"; // em dash, nbsp
+    content: '\2014 \00A0'; // em dash, nbsp
   }
 }
