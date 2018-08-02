@@ -92,8 +92,6 @@
   },
   "dependencies": {
     "contentful-cli": "^0.15.0",
-    "contentful-export": "^7.2.0",
-    "contentful-import": "^7.1.0",
     "express-basic-auth": "^1.1.4",
     "install": "^0.10.4",
     "notifications-node-client": "^4.1.0",
