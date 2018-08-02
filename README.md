@@ -29,6 +29,15 @@ A feature branch branching strategy is in use, specifically:
 - A peer review should be undertaken against the pull request and the branch merged.
 - The CI server will build from the develop and deploy to the staging server.
 
+### Grunt tasks
+
+| Task | Description                                                                      |
+| --------------- | -------------------------------------------------------------------------------- |
+| `grunt`  (default)          | Clean existing & build new bundled files. Run your app on the development server at `localhost:3000`.  |
+| `grunt build `         | Create new bundled files                  |
+| `grunt validate`         | Run eslint and sasslint          |
+
+
 ## Releasing
 
 - Determine the new semantic version of the release.
