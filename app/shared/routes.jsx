@@ -5,7 +5,7 @@ import { fetchPage, receivePageError } from './actions'
 import NoMatchContainer from './containers/NoMatchContainer/component.jsx'
 import ServerError from './components/ServerError/component.jsx'
 import PageContainer from './containers/PageContainer/component'
-import PageStaticContainer from './containers/PageStaticContainer/component'
+import TypographyContainer from './containers/TypographyContainer/component'
 
 import { config } from 'config'
 
@@ -49,7 +49,7 @@ let getRoutes = store => {
   return (
     <Route path='/'>
       <IndexRoute component={withFallback(PageContainer)} onEnter={getPage} slug='index'/>
-      <Route path='typography' component={withFallback(PageStaticContainer)} onEnter={getPage} slug='typography' />
+      <Route path='typography' component={withFallback(TypographyContainer)} onEnter={getPage} slug='typography' />
       <Route path='*' component={withFallback(NoMatchContainer)} onEnter={getPage} slug='no-match' />
     </Route>
   )
