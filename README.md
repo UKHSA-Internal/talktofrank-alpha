@@ -29,6 +29,18 @@ A feature branch branching strategy is in use, specifically:
 - A peer review should be undertaken against the pull request and the branch merged.
 - The CI server will build from the develop and deploy to the staging server.
 
+
+### Contenftul CLI
+
+Migration and API query tools available using [contentful-cli](https://github.com/contentful/contentful-cli).
+
+
+| `contentful <script>` | Description                                                                      |
+| --------------- | -------------------------------------------------------------------------------- |
+| `login / logout`           | Start/end a CLI tool session |
+| `content-type list --space-id xxx` | List all content types |
+| `content-type get --space-id xxx --id [content type id]`| Get a list of content type fields |
+
 ## Releasing
 
 - Determine the new semantic version of the release.
