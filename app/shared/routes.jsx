@@ -47,10 +47,10 @@ let getRoutes = store => {
       .then(() => {
         callback()
       }).catch(err => {
-      console.log(err)
-      // error pushed to state
-      callback()
-    })
+        console.log(err)
+        // error pushed to state
+        callback()
+      })
   }
 
   function noMatchError (nextState, replace, callback) {

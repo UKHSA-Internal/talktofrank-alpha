@@ -2,7 +2,7 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import favicon from  'serve-favicon'
+import favicon from 'serve-favicon'
 import { RouterContext, match } from 'react-router'
 import React from 'react'
 import { Provider } from 'react-redux'

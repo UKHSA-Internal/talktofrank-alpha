@@ -1,4 +1,5 @@
 import { config } from 'config'
+import axios from 'axios'
 
 const express = require('express')
 const yaml = require('js-yaml')
@@ -8,7 +9,7 @@ const util = require('util')
 const marked = require('marked')
 const router = express.Router()
 const sortBy = require('lodash.sortby')
-import axios from 'axios'
+
 axios.defaults.headers.common['Authorization'] = 'Bearer ddde134cf3f45d080ed01144bc1db5074caa49a077d04ba51e69c9a69d5f4682'
 
 /**
@@ -21,12 +22,10 @@ router.use(bodyParser.json())
  * Get page data
  */
 router.get('/drugList', (req, res, next) => {
-
   try {
     let lookupUrl = config.contentful.contentHost + '/spaces/%s/entries?content_type=%s'
     let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug)
     axios.get(pageUrl).then(json => {
-
       if (json.data.total === 0) {
         let error = new Error()
         error.status = 404
@@ -49,13 +48,11 @@ router.get('/drugList', (req, res, next) => {
             parent: item.fields.name
           }
         })
-
       })
       response.list = sortBy(response.list, (item) => (item.name))
 
       res.send(response)
-
-    });
+    })
   } catch (e) {
     /* eslint-disable */
     console.error(err);
@@ -67,7 +64,6 @@ router.get('/drugList', (req, res, next) => {
 })
 
 router.get('/pages/:slug', (req, res, next) => {
-
   if (!req.params.slug) {
     let error = new Error()
     error.status = 404
@@ -101,14 +97,12 @@ router.get('/pages/:slug', (req, res, next) => {
     }
 
     res.send(response)
-
   }).catch(function (error) {
     // handle error
     res.status(error.response.status).json({
       'message': error.response.statusText
     })
   })
-
 })
 
 /**
