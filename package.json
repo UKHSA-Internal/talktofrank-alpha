@@ -95,6 +95,7 @@
     "install": "^0.10.4",
     "notifications-node-client": "^4.1.0",
     "npm": "^5.7.1",
+    "serve-favicon": "^2.5.0",
     "yaml-import": "^0.2.3"
   }
 }

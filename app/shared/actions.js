@@ -31,10 +31,19 @@ function receivePage (pageData) {
   }
 }
 
-function sendNotification (notifyData) {
-  return {
-    type: SEND_NOTIFICATION,
-    notifyData
+export function fetchDrugList () {
+  return dispatch => {
+    dispatch(requestPage())
+    let lookupUrl = apiHost + '/api/v1/drugList'
+    return axios.get(lookupUrl)
+      .then(res => {
+        dispatch(receivePage(res.data))
+      })
+      .catch(err => {
+        let status = err.code === 'ETIMEDOUT' ? 500 : err.response.status
+        dispatch(receivePageError(status))
+        return Promise.reject(err)
+      })
   }
 }
 
