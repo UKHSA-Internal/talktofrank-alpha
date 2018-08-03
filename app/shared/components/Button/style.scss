@@ -1,0 +1,53 @@
+.btn {
+  font-family: $headings-font-family;
+
+  &.btn--full-width {
+    width: 100%;
+    text-align: center;
+  }
+
+  &.btn--half-width {
+    width: 50%;
+    text-align: center;
+  }
+
+  &.btn--link {
+    background-color: transparent;
+    text-decoration: underline;
+    color: inherit;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  &.btn--secondary {
+    background-color: $blue;
+  }
+
+  &.btn--large {
+    font-size: 160%;
+  }
+
+  .bg-dark {
+    :link,
+    :visited,
+    :hover {
+      color: $blue;
+    }
+  }
+
+}
+
+.btn-group {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+
+  .btn + .btn {
+    margin-top: 1.5rem;
+  }
+
+  @include media(tablet) {
+    .btn + .btn {
+      margin-top: 0;
+    }
+  }
+}

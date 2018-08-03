@@ -1,10 +1,9 @@
 import React from 'react'
 
+// @todo @refactor @joel - make this dynamic
 const Logo = () => {
   return (
-    <object data='/ui/svg/log-frank.svg' type='image/svg+xml'>
-      <img src='yourfallback.jpg' />
-    </object>
+    <object data='/ui/svg/logo-frank.svg' type='image/svg+xml' />
   )
 }
 
