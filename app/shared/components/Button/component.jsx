@@ -49,7 +49,7 @@ export default class Button extends React.Component {
           disabled={disabled}
           {...data}
           {...id}
-          onClick={event => this.onClick(event).bind(this)}
+          onClick={event => this.onClick(event)}
           className={classes} type={type}>
           {children}{label}
         </button>

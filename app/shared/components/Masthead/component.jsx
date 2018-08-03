@@ -20,7 +20,7 @@ export default class Masthead extends React.Component {
     document.removeEventListener('touchstart', function () {}, true)
   }
 
-  handleMenuClick (e) {
+  handleMenuClick () {
     var nextState
 
     if (this.state.mobileMenuOpen) {
@@ -34,8 +34,6 @@ export default class Masthead extends React.Component {
     this.setState({
       mobileMenuOpen: nextState
     })
-
-    e.preventDefault()
   }
 
   render () {
