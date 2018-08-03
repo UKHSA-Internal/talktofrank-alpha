@@ -2,10 +2,6 @@ import React from 'react'
 import classNames from 'classnames'
 
 export default class Button extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   onClick (event) {
     const { clickHandler } = this.props
 
@@ -29,11 +25,9 @@ export default class Button extends React.Component {
 
     // list out data- and aria- attributes and stick em in
     for (const prop in this.props) {
-      // if (this.props.hasOwnProperty(prop)) {
       if (/^data-/.test(prop) || /^aria-/.test(prop)) {
         data[prop] = this.props[prop]
       }
-      // }
     }
 
     let id = this.props.id ? {'id': [this.props.id]} : null

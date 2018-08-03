@@ -4,8 +4,7 @@ import Logo from '../Logo/component.jsx'
 import Button from '../Button/component.jsx'
 
 export default class Masthead extends React.Component {
-
-  constructor() {
+  constructor () {
     super()
 
     this.state = {
@@ -13,24 +12,21 @@ export default class Masthead extends React.Component {
     }
   }
 
-  componentDidMount() {
-    document.addEventListener('touchstart', function(){}, true)
+  componentDidMount () {
+    document.addEventListener('touchstart', function () {}, true)
   }
 
-  componentWillUnmount() {
-    document.removeEventListener('touchstart', function(){}, true)
+  componentWillUnmount () {
+    document.removeEventListener('touchstart', function () {}, true)
   }
 
-  handleMenuClick(e) {
+  handleMenuClick (e) {
     var nextState
 
-    console.log('clikcinedde')
-
-    if ( this.state.mobileMenuOpen ) {
+    if (this.state.mobileMenuOpen) {
       document.body.classList.remove('js-offcanvas-menu-visible')
       nextState = false
-    }
-    else {
+    } else {
       document.body.classList.add('js-offcanvas-menu-visible')
       nextState = true
     }
@@ -42,8 +38,7 @@ export default class Masthead extends React.Component {
     e.preventDefault()
   }
 
-  render() {
-
+  render () {
     let classes = classNames('masthead', this.props.className)
 
     return (
