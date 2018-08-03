@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import { getRoutes } from '../shared/routes'
 import { generateStore } from '../shared/store'
 
+
 var store = generateStore(window.$REDUX_STATE)
 
 let routes = (

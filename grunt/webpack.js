@@ -8,12 +8,12 @@ module.exports = {
       vendor: ['react', 'react-dom', 'react-router', 'react-redux', 'redux-thunk']
     },
     output: {
-      path: path.resolve(__dirname, '../dist/static/ui-next/js/'),
-      filename: '[name].bundle.js?v=' + new Date().getTime(),
+      path: path.resolve(__dirname, '../dist/static/ui/js/'),
+      filename: '[name].bundle.js',
       devtoolLineToLine: true,
       sourceMapFilename: './bundle.js.map',
       pathinfo: true,
-      publicPath: '/ui-next/js/' // need this to ensure that the lazy loaded components can map PATH > URL
+      publicPath: '/ui/js/' // need this to ensure that the lazy loaded components can map PATH > URL
     },
     resolve: {
       extensions: ['.js', '.jsx'],
@@ -28,6 +28,7 @@ module.exports = {
       alias: {
         'config': path.resolve(__dirname, '../app/client/client-config-loader.js')
       }
+
     },
     resolveLoader: {
     },
