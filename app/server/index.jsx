@@ -64,7 +64,7 @@ app.get('*', function (req, res) {
 
     // changed from renderToString to renderToStaticMarkup
     try {
-      componentHtml = ReactDOMServer.renderToStaticMarkup((
+      componentHtml = ReactDOMServer.renderToString((
         <Provider store={store}>
           <RouterContext {...renderProps} />
         </Provider>

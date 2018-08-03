@@ -1,5 +1,5 @@
 .logo {
-  max-width: 25rem;
+  max-width: 18rem;
   height: auto;
   text-align: center;
   padding: 1rem;
@@ -7,7 +7,7 @@
   margin-right: auto;
 
   @include media-breakpoint-up(md) {
-
+    max-width: 25rem;
   }
 
   &__link {
