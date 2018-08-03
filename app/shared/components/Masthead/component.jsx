@@ -9,19 +9,26 @@ const Masthead = props => {
   return (
     <header className={classes} id='header'>
       <div className='masthead__inner container-fluid'>
-        <div className='logo'>
-          <Logo />
-        </div>
+        <Logo />
         <div className='nav nav--primary'>
-          <Button url='#primary-navigation' className='btn menu-toggle menu-toggle--active'/>
-          <nav id='primary-navigation'>
-            <ul className='nav--primary__items'>
-              <li><a href='#'>Link item 1</a></li>
-              <li><a href='#'>Link item 2</a></li>
-              <li><a href='#'>Link item 2</a></li>
-              <li><a href='#'>Link item 2</a></li>
+          <Button className='navbar-toggler' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
+            <span className='navbar-toggler-icon'></span>
+          </Button>
+          <nav className='navbar navbar-expand-md text-center'>
+            <ul className='navbar-nav mr-auto'>
+              <li className='nav-item active'>
+                <a className='nav-link' href='#'>Link item 1</a>
+              </li>
+              <li className='nav-item active'>
+                <a className='nav-link' href='#'>Link item 1</a>
+              </li>
+              <li className='nav-item active'>
+                <a className='nav-link' href='#'>Link item 1</a>
+              </li>
+              <li className='nav-item active'>
+                <a className='nav-link' href='#'>Link item 1</a>
+              </li>
             </ul>
-
           </nav>
         </div>
       </div>

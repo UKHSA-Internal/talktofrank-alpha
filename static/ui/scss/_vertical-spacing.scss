@@ -1,0 +1,61 @@
+
+$vertical-spacing: 30px;
+
+/**
+ * Spacing mixin
+ */
+@mixin spacing($prefix: '') {
+  @each $direction in '-top', '-bottom', ''  {
+    .#{$prefix}spacing#{$direction}--flush {
+      margin#{$direction}: 0 !important;
+    }
+
+    .#{$prefix}spacing#{$direction}--tight {
+      @if ($direction != '') {
+        margin#{$direction}: ($vertical-spacing/2) !important;
+      }
+      @else {
+        margin-top: ($vertical-spacing/2) !important;
+        margin-bottom: ($vertical-spacing/2) !important;
+      }
+    }
+
+    .#{$prefix}spacing#{$direction}--single {
+      @if ($direction != '') {
+        margin#{$direction}: $vertical-spacing !important;
+      }
+      @else {
+        margin-top: $vertical-spacing !important;
+        margin-bottom: $vertical-spacing !important;
+      }
+    }
+
+    .#{$prefix}spacing#{$direction}--large {
+      @if ($direction != '') {
+        margin#{$direction}: ($vertical-spacing * 2) !important;
+      }
+      @else {
+        margin-top: ($vertical-spacing * 2) !important;
+        margin-bottom: ($vertical-spacing * 2) !important;
+      }
+    }
+  }
+}
+
+/**
+ * Apply vertical spacings to the site's breakpoints
+ */
+@include spacing();
+
+
+@include media-breakpoint-up(sm) {
+  @include spacing('sm-');
+}
+
+@include media-breakpoint-up(md) {
+  @include spacing('md-');
+}
+
+@include media-breakpoint-up(lg) {
+  @include spacing('lg-');
+}

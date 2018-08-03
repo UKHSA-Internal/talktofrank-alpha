@@ -15,8 +15,12 @@ $max-width: 1200px;
 // Overrides for variables
 @import 'custom';
 
+
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins";
+
+@import 'vertical-spacing';
+
 @import "bootstrap/scss/root";
 @import "bootstrap/scss/reboot";
 // @import "bootstrap/scss/type";
@@ -49,3 +53,4 @@ $max-width: 1200px;
 
 // Added components!!
 @import '../../../app/shared/components/Typography/style';
+@import '../../../app/shared/components/Logo/style';

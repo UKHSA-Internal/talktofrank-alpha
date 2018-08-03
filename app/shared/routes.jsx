@@ -1,11 +1,12 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import { fetchPage, receivePageError } from './actions'
+import { fetchPage, fetchDrugList, receivePageError } from './actions'
 
 import NoMatchContainer from './containers/NoMatchContainer/component.jsx'
 import ServerError from './components/ServerError/component.jsx'
 import PageContainer from './containers/PageContainer/component'
-import TypographyContainer from './containers/TypographyContainer/component'
+import TypographyContainer from './containers/TypographyContainer/component' // @todo @refactor @joel - remove this in due time - replace with generic static page handler
+import DrugListContainer from './containers/DrugListContainer/component'
 
 import { config } from 'config'
 
@@ -31,7 +32,19 @@ let getRoutes = store => {
   }
 
   function getPage (nextState, replace, callback) {
-    store.dispatch(fetchPage(this.slug))
+    const slug = this.slug ? this.slug : nextState.params.drugName
+    store.dispatch(fetchPage(slug))
+      .then(() => {
+        callback()
+      }).catch(err => {
+        console.log(err)
+        // error pushed to state
+        callback()
+      })
+  }
+
+  function getDrugList (nextState, replace, callback) {
+    store.dispatch(fetchDrugList())
       .then(() => {
         callback()
       }).catch(err => {
@@ -50,6 +63,11 @@ let getRoutes = store => {
     <Route path='/'>
       <IndexRoute component={withFallback(PageContainer)} onEnter={getPage} slug='index'/>
       <Route path='typography' component={withFallback(TypographyContainer)} onEnter={getPage} slug='typography' />
+      <IndexRoute component={withFallback(DrugListContainer)} onEnter={getDrugList} />
+      <Route path='drug'>
+        <IndexRoute component={withFallback(DrugListContainer)} onEnter={getDrugList} />
+        <Route path=':drugName' component={withFallback(PageContainer)} onEnter={getPage} />
+      </Route>
       <Route path='*' component={withFallback(NoMatchContainer)} onEnter={getPage} slug='no-match' />
     </Route>
   )

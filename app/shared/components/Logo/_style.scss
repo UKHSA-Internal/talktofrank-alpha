@@ -1,0 +1,16 @@
+.logo {
+  max-width: 25rem;
+  height: auto;
+  text-align: center;
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  @include media-breakpoint-up(md) {
+
+  }
+
+  &__link {
+    display: block;
+  }
+}
