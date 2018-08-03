@@ -17,12 +17,21 @@ export default class Button extends React.Component {
 
   render () {
     let component
+    let data = {}
     let { children, url, label, type, modifiers } = this.props
     let classes = classNames('btn', this.props.className, modifiers, {
       'loading': this.props.disabled && this.props.loading
     })
 
-    let data = this.props.data ? {[this.props.data]: true} : null
+    // list out data- and aria- attributes and stick em in
+    for (const prop in this.props) {
+      if (this.props.hasOwnProperty(prop)) {
+        if (/^data-/.test(prop) || /^aria-/.test(prop)) {
+          data[prop] = this.props[prop]
+        }
+      }
+    }
+
     let id = this.props.id ? {'id': [this.props.id]} : null
     let disabled = !!this.props.disabled
 
