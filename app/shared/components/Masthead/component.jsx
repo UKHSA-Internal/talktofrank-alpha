@@ -41,14 +41,14 @@ export default class Masthead extends React.Component {
 
     return (
 
-      <header className='masthead' id='header'>
+      <header className={classes} id='header'>
         <div className='masthead__inner container-fluid'>
           <Logo />
           <div className='nav nav--primary'>
-            <Button className='navbar-toggler hidden-md-up' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
+            <Button className='navbar-toggler hidden-md-up' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
               <span className='navbar-toggler-icon'>MENU</span>
             </Button>
-            <nav className='navbar navbar-expand-md text-center'>
+            <nav className='navbar navbar-expand-md text-center' id='navbarSupportedContent'>
               <ul className='navbar-nav mr-auto'>
                 <li className='nav-item active'>
                   <a className='nav-link' href='#'>Link item 1</a>

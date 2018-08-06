@@ -9,7 +9,7 @@ const Page = props => {
       <ul>
         { props.list.map((item, key) => (
           <li key={`drug-${key}`}>
-            <Link to={item.slug}>{item.name}</Link>
+            <a href={item.slug}>{item.name}</a>
           </li>
         ))}
       </ul>

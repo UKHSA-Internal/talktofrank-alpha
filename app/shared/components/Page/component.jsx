@@ -2,6 +2,9 @@ import React from 'react'
 import Masthead from '../Masthead/component.jsx'
 
 const Page = props => {
+
+  console.log(props)
+
   return (
     <React.Fragment>
       <Masthead />
