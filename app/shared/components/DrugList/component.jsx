@@ -1,20 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-const Page = props => {
+const DrugList = props => {
   return (
-    <React.Fragment>
+    <div>
       <h1>A-Z</h1>
-      {props.components}{props.children}
       <ul>
-        { props.list.map((item, key) => (
+        {props.list && props.list.map((item, key) => (
           <li key={`drug-${key}`}>
-            <a href={item.slug}>{item.name}</a>
+            <Link to={item.slug}>{item.name}</Link>
           </li>
         ))}
       </ul>
-    </React.Fragment>
+    </div>
   )
 }
-
-export default Page
+export default DrugList

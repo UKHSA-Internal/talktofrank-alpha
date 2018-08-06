@@ -1,25 +1,80 @@
+
+@import 'main-nav';
+@import 'offcanvas-menu';
+
 .masthead {
-  background-color: $black;
-  width: 100%;
+  @include media-breakpoint-up(sm) {
+    //position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+  }
 }
 
 .masthead__inner {
-  @include media(tablet) {
-    display: flex;
-    align-items: center;
+  padding: 1rem 0 2rem;
+  background-color: $white;
+
+  @include media-breakpoint-up(sm) {
+    transition: .3s height ease-in-out;
+    height: 8rem;
+    padding-bottom: 0;
+    padding-top: 0;
+    position: relative;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    height: 4px;
+    background-color: #f7f7f7;
+    clear: both;
+    position: relative;
+    margin: 0 -2rem -2rem;
+
+    @include media-breakpoint-up(sm) {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      margin: 0;
+    }
   }
 }
 
 .logo {
-  color: $white !important;
-  display: inline-block;
-  font-size: 24px;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  text-decoration: none;
+  height: auto;
+  margin-top: 1.8rem;
+  transition: margin-top .3s ease-in-out;
+  width: 20rem;
 
-  @include media(tablet) {
-    font-size: 30px;
-    flex: 1 1 auto;
+  &:focus {
+    outline: 1px dotted $black;
+  }
+
+  @include media-breakpoint-up(sm) {
+    margin-top: 2.8rem; // See _sticky-masthead.css
+    overflow: hidden;
+    position: relative;
+    width: 25rem;
+  }
+
+  @include media-breakpoint-up(sm) {
+    margin-top: 2.4rem; // See _sticky-masthead.css
+
+    &:after {
+      left: 45px;
+    }
+  }
+}
+
+.logo__image {
+  width: 14rem;
+  height: auto;
+  max-width: none;
+
+  @include media-breakpoint-up(sm) {
+    width: 19rem;
   }
 }

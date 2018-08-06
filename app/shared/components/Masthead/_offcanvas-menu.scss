@@ -1,0 +1,88 @@
+/**
+ * This file mostly contains the mechanics by which the offcanvas menu functions
+ * on mobile. JS is merely used to swap a class on the body, the rest is handled
+ * in here using transforms etc.
+ */
+
+/**
+ * Inner wrapper used solely on mobile to handle the off canvas navigation
+ */
+.primary-nav__inner {
+  box-sizing: border-box;
+  position: absolute;
+  width: 70%;
+  left: 100%;
+  top: 0;
+  transition: transform .3s ease-in-out;
+  -webkit-transform: translate3d(0,0,0);
+
+  @include media-breakpoint-up(sm) {
+    position: static;
+    width: auto;
+    left: auto;
+    top: auto;
+    transition: none;
+    transform: none;
+
+    .js-offcanvas-menu-visible & {
+      transform: none;
+    }
+  }
+}
+
+/**
+ * When a class is added to the body by the js, translate the entire page
+ * across to the left thereby revealing the menu
+ * @see _layout.scss for the base styles for .inner-wrapper
+ */
+.js-offcanvas-menu-visible .inner-wrapper {
+  transform: translate3d(-70%, 0, 0);
+
+  @include media-breakpoint-up(sm) {
+    transform: none;
+  }
+}
+
+/**
+ * Mobile menu open button
+ */
+.offcanvas-menu-toggle--open {
+  text-transform: uppercase;
+  padding: 0 1rem;
+  box-shadow: 0 0 7px rgba($black,.1);
+  border-radius: 3px;
+  text-decoration: none;
+  color: $black;
+  font-size: 1.5rem;
+  float: right;
+  height: 4rem;
+  line-height: 4rem;
+  margin: .8rem 0 1.5rem;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+/**
+ * Mobile menu close button
+ */
+.offcanvas-menu-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1;
+  text-decoration: none;
+  color: $gray-500;
+
+  &:hover,
+  &:focus {
+    color: $white;
+    text-decoration: none;
+  }
+}

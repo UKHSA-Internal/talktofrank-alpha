@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import Logo from '../Logo/component.jsx'
 import Button from '../Button/component.jsx'
 
-export default class Masthead extends React.Component {
+export default class Masthead extends React.PureComponent {
   constructor () {
     super()
 
@@ -12,13 +12,13 @@ export default class Masthead extends React.Component {
     }
   }
 
-  componentDidMount () {
-    document.addEventListener('touchstart', function () {}, true)
-  }
+  // componentDidMount () {
+  //   document.addEventListener('touchstart', function () {}, true)
+  // }
 
-  componentWillUnmount () {
-    document.removeEventListener('touchstart', function () {}, true)
-  }
+  // componentWillUnmount () {
+  //   document.removeEventListener('touchstart', function () {}, true)
+  // }
 
   handleMenuClick () {
     var nextState
