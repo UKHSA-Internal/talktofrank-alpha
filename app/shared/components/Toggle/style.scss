@@ -1,0 +1,19 @@
+.collapsible {
+  padding-left: 4rem;
+  position: relative;
+}
+
+.collapsible_trigger:after {
+  content: '\e903';
+  @include chevron;
+  position: absolute;
+  left: 1.5rem;
+  top: 0;
+  height: 1.2rem;
+  width: 1.2rem;
+  color: $gray-400;
+}
+
+.collapsible_trigger--active:after {
+  content: '\e904';
+}

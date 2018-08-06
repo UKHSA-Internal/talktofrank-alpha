@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 const Grid = props => {
-  let classes = classNames('grid-row', props.className, props.modifiers)
+  let classes = classNames('row', props.className)
 
   return (
     <div className={classes}>

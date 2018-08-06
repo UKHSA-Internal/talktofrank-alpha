@@ -1,72 +1,69 @@
 import React from 'react'
 import Masthead from '../Masthead/component.jsx'
+import Longform from '../Longform/component.jsx'
 
 const Page = props => {
-
-  console.log(props)
-
   return (
-    <React.Fragment>
+    <div className='main-wrapper'>
       <Masthead />
-      {props.components}{props.children}
       <h1>{props.name}</h1>
-      <h5>{props.synonyms}</h5>
-      <div dangerouslySetInnerHTML={{__html: props.description}} />
+      <p className='lead'>{props.synonyms}</p>
+      <Longform text={props.description} />
       {props.appearance_whatDoesItLookLike &&
-        <div dangerouslySetInnerHTML={{__html: props.appearance_whatDoesItLookLike}} />
+        <Longform text={props.appearance_whatDoesItLookLike} />
       }
       {props.appearance_whatDoesItTastesmellLike &&
-        <div dangerouslySetInnerHTML={{__html: props.appearance_whatDoesItTastesmellLike}} />
+        <Longform text={props.appearance_whatDoesItTastesmellLike} />
       }
       {props.appearance_howDoPeopleTakeIt &&
-        <div dangerouslySetInnerHTML={{__html: props.appearance_howDoPeopleTakeIt}} />
+        <Longform text={props.appearance_howDoPeopleTakeIt} />
       }
       {props.effects_howDoesItMakeYouFeel &&
-        <div dangerouslySetInnerHTML={{__html: props.effects_howDoesItMakeYouFeel}} />
+        <Longform text={props.effects_howDoesItMakeYouFeel} />
       }
       {props.effects_howDoesItMakePeopleBehave &&
-        <div dangerouslySetInnerHTML={{__html: props.effects_howDoesItMakePeopleBehave}} />
+        <Longform text={props.effects_howDoesItMakePeopleBehave} />
       }
       {props.effects_whatAreThePhysicalEffects &&
-        <div dangerouslySetInnerHTML={{__html: props.effects_whatAreThePhysicalEffects}} />
+        <Longform text={props.effects_whatAreThePhysicalEffects} />
       }
       {props.effects_whatIsTheComedownLike &&
-        <div dangerouslySetInnerHTML={{__html: props.effects_whatIsTheComedownLike}} />
+        <Longform text={props.effects_whatIsTheComedownLike} />
       }
       {props.effects_howLongDoesItStayInYourBody &&
-        <div dangerouslySetInnerHTML={{__html: props.effects_howLongDoesItStayInYourBody}} />
+        <Longform text={props.effects_howLongDoesItStayInYourBody} />
       }
       {props.risks_whatAreTheRisks &&
-        <div dangerouslySetInnerHTML={{__html: props.risks_whatAreTheRisks}} />
+        <Longform text={props.risks_whatAreTheRisks} />
       }
       {props.risks_canYouGetAddicted &&
-        <div dangerouslySetInnerHTML={{__html: props.risks_canYouGetAddicted}} />
+        <Longform text={props.risks_canYouGetAddicted} />
       }
       {props.risks_isItDangerousToMixWithOtherDrugs &&
-        <div dangerouslySetInnerHTML={{__html: props.risks_isItDangerousToMixWithOtherDrugs}} />
+        <Longform text={props.risks_isItDangerousToMixWithOtherDrugs} />
       }
       {props.risks_whatIsCutWith &&
-        <div dangerouslySetInnerHTML={{__html: props.risks_whatIsCutWith}} />
+        <Longform text={props.risks_whatIsCutWith} />
       }
       {props.effects_howDoesItEffectSocietyAndTheEnvironment &&
-        <div dangerouslySetInnerHTML={{__html: props.effects_howDoesItEffectSocietyAndTheEnvironment}} />
+        <Longform text={props.effects_howDoesItEffectSocietyAndTheEnvironment} />
       }
       {props.law_whatIsTheDrugClassification &&
-        <div dangerouslySetInnerHTML={{__html: props.law_whatIsTheDrugClassification}} />
+        <Longform text={props.law_whatIsTheDrugClassification} />
       }
       {props.law_whatIfYouAreCaughtWithIt &&
-        <div dangerouslySetInnerHTML={{__html: props.law_whatIfYouAreCaughtWithIt}} />
+        <Longform text={props.law_whatIfYouAreCaughtWithIt} />
       }
       {props.worried_iFeelPressuredIntoTakingItWhatCanIDo &&
-        <div dangerouslySetInnerHTML={{__html: props.worried_iFeelPressuredIntoTakingItWhatCanIDo}} />
+        <Longform text={props.worried_iFeelPressuredIntoTakingItWhatCanIDo} />
       }
       {props.worried_howCanIHelpMyFriendWithTheirUse &&
-        <div dangerouslySetInnerHTML={{__html: props.worried_howCanIHelpMyFriendWithTheirUse}} />
+        <Longform text={props.worried_howCanIHelpMyFriendWithTheirUse} />
       }
       {props.worried_iveSpentAllMyMoneyOnItWhatCanIDo &&
-        <div dangerouslySetInnerHTML={{__html: props.worried_iveSpentAllMyMoneyOnItWhatCanIDo}} />
+        <Longform text={props.worried_iveSpentAllMyMoneyOnItWhatCanIDo} />
       }
-    </React.Fragment>
+    </div>
   )
 }
 
