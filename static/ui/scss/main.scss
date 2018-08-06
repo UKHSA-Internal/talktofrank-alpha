@@ -1,9 +1,25 @@
-// Path to assets for use with the file-url function
-// in the govuk frontend toolkit's url-helpers partial
-$path: '/ui/img';
-$text-max-width: 65rem;
+@charset 'UTF-8';
 
+@import 'bootstrap/scss/functions';
+
+// Mixins
+@import 'bootstrap/scss/mixins';
+
+
+// Overrides for variables
+@import 'custom';
+
+// Core variables
+@import 'bootstrap/scss/variables';
+
+// Core CSS
+@import 'bootstrap/scss/reboot';
+@import 'bootstrap/scss/grid';
+
+
+// Added components!!
 
 // exported css files as scss for speed as the kit is not complete
 // and a litle disparate if not imported using Gulp
 @charset 'UTF-8';
+

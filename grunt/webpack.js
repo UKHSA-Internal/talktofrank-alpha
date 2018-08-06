@@ -3,6 +3,7 @@ var webpack = require('webpack')
 
 module.exports = {
   server: {
+    devtool: 'eval',
     entry: {
       server: './app/server/index.jsx'
     },
