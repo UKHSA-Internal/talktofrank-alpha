@@ -34,7 +34,6 @@ const Page = props => {
           </Toggle>
         </section>
 
-
         <section className='section'>
           <Heading modifiers='h4' text={"What does it look like?"}/>
           <p className='muted'></p>
@@ -42,8 +41,6 @@ const Page = props => {
 
           </Toggle>
         </section>
-
-
 
         {props.appearance_howDoPeopleTakeIt && <React.Fragment><Heading {...modifiers} text={"How do people take it?"}/><Longform text={props.appearance_howDoPeopleTakeIt} /></React.Fragment>
         }
