@@ -37,15 +37,12 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
 app.use(favicon('../static/ui/favicon.ico'))
-<<<<<<< HEAD
-=======
 
 app.get('/robots.txt', function (req, res) {
   res.type('text/plain')
   res.send('User-agent: *\nDisallow: /')
 })
 
->>>>>>> feature/security-fixes
 /*
  * Pass Express over to the App via the React Router
  */
