@@ -1,9 +1,0 @@
-api: http://127.0.0.1:3000
-buildConfig: development
-
-contentful:
-  contentHost: 'https://cdn.contentful.com'
-  contentSpace: 'mltlrs3kods6'
-  contentAccessToken: '2344793320293345d377a78dce95e1413937d4f1749c59677c538b522a7f94b5'
-  contentTypes:
-    drug: 'drugPage'
