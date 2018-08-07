@@ -1,2 +1,10 @@
 buildConfig: production
 api: https://alpha-talktofrank.cxp.io
+
+contentful:
+  contentHost: 'https://cdn.contentful.com'
+  contentSpace: 'mltlrs3kods6'
+  contentTypes:
+    drug: 'drugPage'
+
+creds: !!import/single ../config.creds.yaml
