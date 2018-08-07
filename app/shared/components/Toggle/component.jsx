@@ -2,21 +2,20 @@ import React from 'react'
 import classNames from 'classnames'
 
 export default class Toggle extends React.PureComponent {
-  constructor(props) {
+  constructor (props) {
     super(props)
-    let showPanel = this.props.className === 'collapsible_trigger--active' ? true : false
 
     this.state = {
-      visible: showPanel
+      visible: this.props.className === 'collapsible_trigger--active'
     }
   }
 
-  toggle(event) {
+  toggle (event) {
     event.preventDefault()
     this.setState({ visible: !this.state.visible })
   }
 
-  render() {
+  render () {
     let text = this.props.hidden ? <span className='sr-only'>{this.props.text}</span> : this.props.text
     let classes = classNames('collapsible', this.props.className)
     let toggleClass = classNames({
@@ -36,6 +35,5 @@ export default class Toggle extends React.PureComponent {
         </a>
       </div>
     )
-
   }
 }

@@ -37,9 +37,9 @@ export default class Masthead extends React.PureComponent {
         <div className='masthead__inner container-fluid'>
           <Logo />
           <div className='nav nav--primary'>
-{/*            <Button className='navbar-toggler hidden-sm-up' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
+            <Button className='navbar-toggler hidden-sm-up' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
               <span className='navbar-toggler-icon'>MENU</span>
-            </Button>*/}
+            </Button>
             <nav className='navbar navbar-expand-md text-center' id='navbarSupportedContent'>
               <ul className='navbar-nav mr-auto'>
                 <li className='nav-item active'>
