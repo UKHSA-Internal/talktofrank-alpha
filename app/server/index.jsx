@@ -36,7 +36,7 @@ app.use('/api/v1', apiRoutes)
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
-app.use(favicon('../../static/ui/favicon.ico'))
+app.use(favicon('../static/ui/favicon.ico'))
 /*
  * Pass Express over to the App via the React Router
  */
