@@ -4,7 +4,6 @@
 $grid-gutter: 30px;
 
 .outer-wrapper {
-  overflow: hidden;
   position: relative;
   width: 100%;
   min-height: 100%;
@@ -19,6 +18,14 @@ $grid-gutter: 30px;
   max-width: $max-width;
   margin-left: auto;
   margin-right: auto;
+
+  padding-left: $grid-gutter / 2;
+  padding-right: $grid-gutter / 2;
+
+  @include media-breakpoint-up(lg) {
+    padding-left: $grid-gutter;
+    padding-right: $grid-gutter;
+  }
 }
 
 %constrain-narrow {
@@ -29,7 +36,6 @@ $grid-gutter: 30px;
 
 .main-wrapper {
   @extend %constrain;
-  overflow: hidden;
 }
 
 #main {
@@ -61,3 +67,15 @@ $grid-gutter: 30px;
     padding: 4rem 0 10rem;
   }
 }
+
+.section {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid $gray-900;
+
+  @include media-breakpoint-up(sm) {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
