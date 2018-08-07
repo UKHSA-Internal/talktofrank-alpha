@@ -94,7 +94,6 @@ app.get('*', function (req, res) {
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
     let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts />)
     let renderedHtml = renderFullPageHtml(componentHtml, componentHead, componentScripts, JSON.stringify(state))
-
     return res.status(status).send(renderedHtml)
   })
 })
