@@ -22,7 +22,7 @@ const Page = props => {
           <p className='lead'>{props.synonyms}</p>
           <Longform text={props.description} />
           <section className='section'>
-            <Svg url='/ui/svg/eye.svg' className='ml-3 float-right'/>
+            <Svg url='/ui/svg/eye.svg' className='ml-5 mb-5 float-right'/>
             <Heading modifiers='h3' text={`How do you tell if something  is ${props.name}?`}/>
             <p className='muted'>Read about what {props.name} looks, smells and tastes like</p>
             <Toggle text={`How to recognise ${props.name}`} className='collapsible--chevron' hidden='true'>
@@ -35,7 +35,7 @@ const Page = props => {
             </Toggle>
           </section>
           <section className='section'>
-            <Svg url='/ui/svg/take.svg' className='ml-3 float-right'/>
+            <Svg url='/ui/svg/take.svg' className='ml-5 mb-5 float-right'/>
             <Heading modifiers='h3' text={`How do people take ${props.name}?`}/>
             <p className='muted'>Read about the different ways that {props.name} can be taken</p>
             <Toggle text='How to recognise {props.name}' className='collapsible--chevron' hidden='true'>
@@ -44,7 +44,7 @@ const Page = props => {
             </Toggle>
           </section>
           <section className='section'>
-            <Svg url='/ui/svg/effects.svg' className='ml-3 float-right'/>
+            <Svg url='/ui/svg/effects.svg' className='ml-5 mb-5 float-right'/>
             <Heading modifiers='h3' text={`What are the effects of taking ${props.name}?`}/>
             <p className='muted'>Read about the effects that {props.name} has on your body and mind.</p>
             <Toggle text='How to recognise cocaine' className='collapsible--chevron' hidden='true'>
@@ -61,7 +61,7 @@ const Page = props => {
             </Toggle>
           </section>
           <section className='section'>
-            <Svg url='/ui/svg/risks.svg' className='ml-3 float-right'/>
+            <Svg url='/ui/svg/risks.svg' className='ml-5 mb-5 float-right'/>
             <Heading modifiers='h3' text={`What are the risks of taking ${props.name}?`}/>
             <p className='muted'>Read about addiction, the risks of mixing {props.name} with other drugs and the risks to your health.</p>
             <Toggle text={`How to recognise ${props.name}`} className='collapsible--chevron' hidden='true'>
@@ -78,7 +78,7 @@ const Page = props => {
             </Toggle>
           </section>
           <section className='section'>
-            <Svg url='/ui/svg/law.svg' className='ml-3 float-right'/>
+            <Svg url='/ui/svg/law.svg' className='ml-5 mb-5 float-right'/>
             <Heading modifiers='h3' text={`What does the law say about ${props.name}?`}/>
             <p className='muted'>Read more about {props.name} being a Class A drug.</p>
             <Toggle text={'How to recognise cocaine'} className='collapsible--chevron' hidden='true'>
