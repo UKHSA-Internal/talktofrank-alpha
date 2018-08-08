@@ -1,0 +1,40 @@
+
+//@import 'main-nav';
+//@import 'offcanvas-menu';
+
+.masthead {
+  background-color: $black;
+
+  @include media-breakpoint-up(sm) {
+    //position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
+  }
+}
+
+.masthead__inner {
+
+}
+
+.logo {
+  height: auto;
+  width: 20rem;
+
+  &:focus {
+    outline: 1px dotted $black;
+  }
+
+  @include media-breakpoint-up(sm) {
+    position: relative;
+    width: 25rem;
+  }
+}
+
+.navbar-expand-md {
+  @include media-breakpoint-up(md) {
+    display: flex !important;
+  }
+}

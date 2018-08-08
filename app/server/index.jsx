@@ -25,12 +25,12 @@ import apiRoutes from './api/v1/api.js'
  * Project configuration
 */
 import { config } from 'config'
-
 import packageInfo from '../../package.json'
 
 var store
 
 const app = express()
+const cacheBusterTS = Date.now()
 
 app.use('/api/v1', apiRoutes)
 app.use(cookieParser())
@@ -70,7 +70,7 @@ app.get('*', function (req, res) {
 
     // changed from renderToString to renderToStaticMarkup
     try {
-      componentHtml = ReactDOMServer.renderToStaticMarkup((
+      componentHtml = ReactDOMServer.renderToString((
         <Provider store={store}>
           <RouterContext {...renderProps} />
         </Provider>
@@ -98,7 +98,8 @@ app.get('*', function (req, res) {
     let status = state.error ? state.error : 200
 
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-    let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts />)
+    let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
+
     let renderedHtml = renderFullPageHtml(componentHtml, componentHead, componentScripts, JSON.stringify(state))
     return res.status(status).send(renderedHtml)
   })
