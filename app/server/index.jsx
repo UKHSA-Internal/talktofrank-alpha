@@ -30,7 +30,7 @@ import packageInfo from '../../package.json'
 var store
 
 const app = express()
-const cacheBusterTS = Date.now();
+const cacheBusterTS = Date.now()
 
 app.use('/api/v1', apiRoutes)
 app.use(cookieParser())
