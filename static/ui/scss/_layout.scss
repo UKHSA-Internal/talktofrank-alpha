@@ -1,0 +1,81 @@
+/* =============================================================================
+   Layout
+   ===========================================================================*/
+$grid-gutter: 30px;
+
+.outer-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  background-color: $black;
+
+  @include media-breakpoint-up(md) {
+    background-color: $gray-500;
+  }
+}
+
+%constrain {
+  max-width: $max-width;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-left: $grid-gutter / 2;
+  padding-right: $grid-gutter / 2;
+
+  @include media-breakpoint-up(lg) {
+    padding-left: $grid-gutter;
+    padding-right: $grid-gutter;
+  }
+}
+
+%constrain-narrow {
+  max-width: $max-width-inner;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.main-wrapper {
+  @extend %constrain;
+}
+
+#main {
+  outline: none;  // Prevent focus outline
+}
+
+.content-wrapper {
+  @extend %constrain-narrow;
+  padding: 0 ($grid-gutter / 2);
+
+  @include media-breakpoint-up(lg) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+.content-wrapper--main {
+  padding: 3rem 1.5rem 5rem;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 4rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding: 4rem 0 10rem;
+  }
+}
+
+.section {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid $gray-900;
+
+  @include media-breakpoint-up(sm) {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+}
+

@@ -6,6 +6,6 @@ module.exports = {
     }
   },
   js: {
-    tasks: ['webpack:server']
+    tasks: ['webpack:client', 'webpack:server']
   }
 }

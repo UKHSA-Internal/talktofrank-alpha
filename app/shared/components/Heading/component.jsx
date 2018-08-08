@@ -4,7 +4,7 @@ const Heading = props => {
   const Tag = `${props.type || 'h2'}`
 
   return (
-    <Tag className={props.modifiers}><span dangerouslySetInnerHTML={{__html: props.text}}></span></Tag>
+    <Tag className={props.modifiers} dangerouslySetInnerHTML={{__html: props.text}}></Tag>
   )
 }
 

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="50px" height="36px" viewBox="0 0 50 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>Group 7</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="New-FRANK-visual-concept---Cocaine---Mobile-Copy-15" transform="translate(-247.000000, -543.000000)">
+            <g id="Group-7" transform="translate(247.000000, 543.000000)">
+                <g id="Group-2" fill="#000000">
+                    <path d="M17.8226601,2.25276074 C13.3891626,2.25276074 9.84236453,5.83067485 9.84236453,10.203681 C9.84236453,14.6208589 13.3891626,18.1546012 17.8226601,18.1546012 C22.2118227,18.1546012 25.7586207,14.6208589 25.7586207,10.203681 C25.7586207,5.83067485 22.2118227,2.25276074 17.8226601,2.25276074 M11.2167488,22.1300613 L24.8275862,22.1300613 C30.9901478,22.1300613 36,27.1214724 36,33.2613497 L36,36 L33.7389163,36 L33.7389163,33.2613497 C33.7389163,28.402454 29.7487685,24.3828221 24.8275862,24.3828221 L11.2167488,24.3828221 C6.2955665,24.3828221 2.30541872,28.402454 2.30541872,33.2613497 L2.30541872,36 L0,36 L0,33.2613497 C0,27.1214724 5.05418719,22.1300613 11.2167488,22.1300613 M17.8226601,0 C23.453202,0 28.0640394,4.59386503 28.0640394,10.203681 C28.0640394,15.8576687 23.453202,20.407362 17.8226601,20.407362 C12.1477833,20.407362 7.53694581,15.8576687 7.53694581,10.203681 C7.53694581,4.59386503 12.1477833,0 17.8226601,0" id="Fill-1"></path>
+                </g>
+                <text id="?-copy" font-family=".AppleSystemUIFont" font-size="14" font-weight="normal" line-spacing="21" fill="#1C1C1C">
+                    <tspan x="43" y="19">?</tspan>
+                </text>
+                <g id="Group-4" transform="translate(29.000000, 13.000000)">
+                    <path d="M3.5,2.5 L13.5,2.5" id="Line" stroke="#000000" stroke-dasharray="1"></path>
+                    <polygon id="Triangle" fill="#000000" transform="translate(2.000000, 2.500000) rotate(-90.000000) translate(-2.000000, -2.500000) " points="2 0.5 4 4.5 0 4.5"></polygon>
+                </g>
+                <g id="Group-4" transform="translate(39.000000, 19.500000) rotate(-45.000000) translate(-39.000000, -19.500000) translate(32.000000, 17.000000)">
+                    <path d="M3.5,2.5 L13.5,2.5" id="Line" stroke="#000000" stroke-dasharray="1"></path>
+                    <polygon id="Triangle" fill="#000000" transform="translate(2.000000, 2.500000) rotate(-90.000000) translate(-2.000000, -2.500000) " points="2 0.5 4 4.5 0 4.5"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

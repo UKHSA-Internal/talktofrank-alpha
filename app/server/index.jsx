@@ -2,7 +2,7 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import basicAuth from 'express-basic-auth'
+import favicon from 'serve-favicon'
 import { RouterContext, match } from 'react-router'
 import React from 'react'
 import { Provider } from 'react-redux'
@@ -14,7 +14,6 @@ import { exists } from '../shared/utilities'
 import { generateStore } from '../shared/store'
 
 import Head from '../shared/components/Head/component.jsx'
-import Scripts from '../shared/components/Scripts/component.jsx'
 
 /*
  * Express routes
@@ -25,7 +24,6 @@ import apiRoutes from './api/v1/api.js'
  * Project configuration
 */
 import { config } from 'config'
-
 import packageInfo from '../../package.json'
 
 var store
@@ -36,7 +34,7 @@ app.use('/api/v1', apiRoutes)
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
-
+app.use(favicon('../../static/ui/favicon.ico'))
 /*
  * Pass Express over to the App via the React Router
  */
@@ -64,7 +62,7 @@ app.get('*', function (req, res) {
 
     // changed from renderToString to renderToStaticMarkup
     try {
-      componentHtml = ReactDOMServer.renderToStaticMarkup((
+      componentHtml = ReactDOMServer.renderToString((
         <Provider store={store}>
           <RouterContext {...renderProps} />
         </Provider>
@@ -92,14 +90,12 @@ app.get('*', function (req, res) {
     let status = state.error ? state.error : 200
 
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-    let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts />)
-    let renderedHtml = renderFullPageHtml(componentHtml, componentHead, componentScripts, JSON.stringify(state))
-
+    let renderedHtml = renderFullPageHtml(componentHtml, componentHead, JSON.stringify(state))
     return res.status(status).send(renderedHtml)
   })
 })
 
-function renderFullPageHtml (html, head, scripts, initialState) {
+function renderFullPageHtml (html, head, initialState) {
   return `
     <!DOCTYPE html>
     <html lang='en'>
@@ -107,7 +103,8 @@ function renderFullPageHtml (html, head, scripts, initialState) {
     <body>
       <div id='app'>${html}</div>
       <script>window.$REDUX_STATE=${initialState};</script>
-      ${scripts}
+      <script src='/ui/js/vendor.bundle.js?v=${config.buildTimestamp}'></script>
+      <script src='/ui/js/client.bundle.js?v=${config.buildTimestamp}'></script>
     </body>
     </html>
   `

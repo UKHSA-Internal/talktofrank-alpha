@@ -1,5 +1,8 @@
+const sass = require('node-sass');
+
 module.exports = {
   options: {
+    implementation: sass,
     debugInfo: true,
     lineNumbers: true,
     sourceMap: true,
