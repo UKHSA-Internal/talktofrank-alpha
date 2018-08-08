@@ -96,7 +96,16 @@
     "standard": "^10.0.3",
     "time-grunt": "^1.4.0",
     "webpack": "^2.2.0-rc.1",
+<<<<<<< Updated upstream
     "yaml-import": "^0.2.3"
+=======
+    "express-basic-auth": "^1.1.4",
+    "install": "^0.10.4",
+    "notifications-node-client": "^4.1.0",
+    "npm": "^5.7.1",
+    "yaml-import": "^0.2.3",
+    "pa11y": "^5.0.4"
+>>>>>>> Stashed changes
   },
   "dependencies": {}
 }
