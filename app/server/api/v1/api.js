@@ -37,7 +37,9 @@ router.get('/drugList', (req, res, next) => {
       json.data.items.map((item) => {
         response.list[response.list.length] = {
           name: item.fields.name.toLowerCase(),
-          slug: `/drug/${item.fields.slug}`
+          slug: `/drug/${item.fields.slug}`,
+          synonyms: item.fields.synonyms,
+          description: item.fields.description
         }
 
         item.fields.synonyms.split(',').map(synonym => {
