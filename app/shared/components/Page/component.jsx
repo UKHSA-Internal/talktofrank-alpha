@@ -21,7 +21,7 @@ const Page = props => {
         <Grid>
           <GridCol className='col-12 col-sm-8'>
             <p className='lead muted'>{props.synonyms}</p>
-            <Longform text={props.description} />
+            <Longform text={props.description} className='spacing-bottom--large'/>
             <section className='section'>
 
               <Svg url='/ui/svg/eye.svg' className='ml-5 mb-5 float-right'/>
