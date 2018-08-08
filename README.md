@@ -20,6 +20,10 @@ The `BUILD_CONFIG=staging|production|development` (defaults to `development`) en
 
 Setting `BUILD_CONFIG` sets `NODE_ENV` automatically accordingly in webpack.js.
 
+### Live configuration
+
+No passwords / keys etc. are kept in the repo. Any live environments needs a `config.creds.yaml` file in the root of the project to store keys etc.
+
 ## Development
 
 A feature branch branching strategy is in use, specifically:
