@@ -79,6 +79,10 @@ $grid-gutter: 30px;
   padding-bottom: 1.5rem;
   border-bottom: 2px solid $gray-900;
 
+  &:first-of-type {
+    border-top: 2px solid $gray-900;
+  }
+
   @include media-breakpoint-up(sm) {
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
