@@ -35,12 +35,12 @@ export default class Masthead extends React.PureComponent {
 
       <header className={classes} id='header'>
         <div className='masthead__inner container-fluid'>
+          <Button className='float-left d-block d-md-none mt-4' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
+            <span className=''>MENU</span>
+          </Button>
           <Logo />
-          <div className='nav nav--primary'>
-            <Button className='navbar-toggler hidden-sm-up' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
-              <span className='navbar-toggler-icon'>MENU</span>
-            </Button>
-            <nav className='navbar navbar-expand-md text-center' id='navbarSupportedContent'>
+          <div className='nav nav--primary navbar navbar-expand-md d-none d-md-block'>
+            <nav className='navbar text-center' id='navbarSupportedContent'>
               <ul className='navbar-nav mr-auto'>
                 <li className='nav-item active'>
                   <a className='nav-link' href='#'>Link item 1</a>

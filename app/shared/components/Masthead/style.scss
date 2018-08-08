@@ -1,52 +1,26 @@
 
-@import 'main-nav';
-@import 'offcanvas-menu';
+//@import 'main-nav';
+//@import 'offcanvas-menu';
 
 .masthead {
+  background-color: $black;
+
   @include media-breakpoint-up(sm) {
     //position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 100;
+
   }
 }
 
 .masthead__inner {
-  padding: 1rem 0 2rem;
-  background-color: $white;
 
-  @include media-breakpoint-up(sm) {
-    transition: .3s height ease-in-out;
-    height: 8rem;
-    padding-bottom: 0;
-    padding-top: 0;
-    position: relative;
-  }
-
-  &:after {
-    content: '';
-    display: block;
-    height: 4px;
-    background-color: #f7f7f7;
-    clear: both;
-    position: relative;
-    margin: 0 -2rem -2rem;
-
-    @include media-breakpoint-up(sm) {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      margin: 0;
-    }
-  }
 }
 
 .logo {
   height: auto;
-  margin-top: 1.8rem;
-  transition: margin-top .3s ease-in-out;
   width: 20rem;
 
   &:focus {
@@ -54,27 +28,7 @@
   }
 
   @include media-breakpoint-up(sm) {
-    margin-top: 2.8rem; // See _sticky-masthead.css
-    overflow: hidden;
     position: relative;
     width: 25rem;
-  }
-
-  @include media-breakpoint-up(sm) {
-    margin-top: 2.4rem; // See _sticky-masthead.css
-
-    &:after {
-      left: 45px;
-    }
-  }
-}
-
-.logo__image {
-  width: 14rem;
-  height: auto;
-  max-width: none;
-
-  @include media-breakpoint-up(sm) {
-    width: 19rem;
   }
 }

@@ -36,6 +36,12 @@ $grid-gutter: 30px;
 
 .main-wrapper {
   @extend %constrain;
+  padding-top: 3rem;
+
+  @include media-breakpoint-up(sm) {
+    padding-top: 5rem;
+  }
+
 }
 
 #main {

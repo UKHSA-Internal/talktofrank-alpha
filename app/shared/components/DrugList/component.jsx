@@ -6,21 +6,24 @@ import GridCol from '../GridCol/component.jsx'
 
 const DrugList = props => {
   return (
-    <div className='main-wrapper'>
+    <React.Fragment>
       <Masthead />
-      <h1>A-Z</h1>
-      <Grid>
-        <GridCol className='col-12 col-sm-8'>
-          <ul>
-            {props.list && props.list.map((item, key) => (
-              <li key={`drug-${key}`}>
-                <Link to={item.slug}>{item.name}</Link>
-              </li>
-            ))}
-          </ul>
-        </GridCol>
-      </Grid>
-    </div>
+      <div className='main-wrapper'>
+
+        <h1>A-Z</h1>
+        <Grid>
+          <GridCol className='col-12 col-sm-8'>
+            <ul>
+              {props.list && props.list.map((item, key) => (
+                <li key={`drug-${key}`}>
+                  <Link to={item.slug}>{item.name}</Link>
+                </li>
+              ))}
+            </ul>
+          </GridCol>
+        </Grid>
+      </div>
+    </React.Fragment>
   )
 }
 export default DrugList
