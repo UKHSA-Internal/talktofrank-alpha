@@ -18,3 +18,4 @@ js:
 validate:
   - eslint
   - sasslint
+  - pa11y # temporary
