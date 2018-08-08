@@ -22,15 +22,17 @@ const Page = props => {
           <p className='lead'>{props.synonyms}</p>
           <Longform text={props.description} />
           <section className='section'>
+/* eslint-disable no-irregular-whitespace */
             <Svg url='/ui/svg/eye.svg' className='ml-5 mb-5 float-right'/>
             <Heading modifiers='h3' text={`How do you tell if something  is ${props.name}?`}/>
             <p className='muted'>Read about what {props.name} looks, smells and tastes like</p>
+/* eslint-enable no-irregular-whitespace */
             <Toggle text={`How to recognise ${props.name}`} className='collapsible--chevron' hidden='true'>
               {props.appearance_whatDoesItLookLike && <React.Fragment><Heading {...modifiers} text={'What does it look like?'}/>
-                <Longform text={props.appearance_whatDoesItLookLike} /></React.Fragment>
+                <Longform text={props.appearance_whatDoesItLookLike}/></React.Fragment>
               }
               {props.appearance_whatDoesItTastesmellLike && <React.Fragment><Heading {...modifiers} text={'What does it taste/smell like?'}/>
-                <Longform text={props.appearance_whatDoesItTastesmellLike} /></React.Fragment>
+                <Longform text={props.appearance_whatDoesItTastesmellLike}/></React.Fragment>
               }
             </Toggle>
           </section>
