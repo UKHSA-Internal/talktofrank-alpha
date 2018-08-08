@@ -39,7 +39,7 @@ export default class Masthead extends React.PureComponent {
             <span className=''>MENU</span>
           </Button>
           <Logo />
-          <div className='nav nav--primary navbar navbar-expand-md d-none d-md-block'>
+          <div className='nav nav--primary navbar navbar-expand-md d-none'>
             <nav className='navbar text-center' id='navbarSupportedContent'>
               <ul className='navbar-nav mr-auto'>
                 <li className='nav-item active'>

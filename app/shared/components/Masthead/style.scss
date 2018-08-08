@@ -32,3 +32,9 @@
     width: 25rem;
   }
 }
+
+.navbar-expand-md {
+  @include media-breakpoint-up(md) {
+    display: flex !important;
+  }
+}
