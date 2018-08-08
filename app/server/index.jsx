@@ -14,6 +14,7 @@ import { exists } from '../shared/utilities'
 import { generateStore } from '../shared/store'
 
 import Head from '../shared/components/Head/component.jsx'
+import Scripts from '../shared/components/Scripts/component.jsx'
 
 /*
  * Express routes
@@ -29,6 +30,7 @@ import packageInfo from '../../package.json'
 var store
 
 const app = express()
+const cacheBusterTS = Date.now();
 
 app.use('/api/v1', apiRoutes)
 app.use(cookieParser())
@@ -96,12 +98,14 @@ app.get('*', function (req, res) {
     let status = state.error ? state.error : 200
 
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-    let renderedHtml = renderFullPageHtml(componentHtml, componentHead, JSON.stringify(state))
+    let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
+
+    let renderedHtml = renderFullPageHtml(componentHtml, componentHead, componentScripts, JSON.stringify(state))
     return res.status(status).send(renderedHtml)
   })
 })
 
-function renderFullPageHtml (html, head, initialState) {
+function renderFullPageHtml (html, head, scripts, initialState) {
   return `
     <!DOCTYPE html>
     <html lang='en'>
@@ -109,8 +113,7 @@ function renderFullPageHtml (html, head, initialState) {
     <body>
       <div id='app'>${html}</div>
       <script>window.$REDUX_STATE=${initialState};</script>
-      <script src='/ui/js/vendor.bundle.js?v=${config.buildTimestamp}'></script>
-      <script src='/ui/js/client.bundle.js?v=${config.buildTimestamp}'></script>
+      ${scripts}
     </body>
     </html>
   `
