@@ -2,7 +2,7 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
-import basicAuth from 'express-basic-auth'
+import favicon from 'serve-favicon'
 import { RouterContext, match } from 'react-router'
 import React from 'react'
 import { Provider } from 'react-redux'
@@ -36,6 +36,12 @@ app.use('/api/v1', apiRoutes)
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
+app.use(favicon('../static/ui/favicon.ico'))
+
+app.get('/robots.txt', function (req, res) {
+  res.type('text/plain')
+  res.send('User-agent: *\nDisallow: /')
+})
 
 /*
  * Pass Express over to the App via the React Router
@@ -94,7 +100,6 @@ app.get('*', function (req, res) {
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
     let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts />)
     let renderedHtml = renderFullPageHtml(componentHtml, componentHead, componentScripts, JSON.stringify(state))
-
     return res.status(status).send(renderedHtml)
   })
 })
