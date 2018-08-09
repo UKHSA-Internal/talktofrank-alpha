@@ -20,6 +20,7 @@ import Scripts from '../shared/components/Scripts/component.jsx'
  * Express routes
  */
 import apiRoutes from './api/v1/api.js'
+import contentFulWebhookRoutes from './contentful/webhooks.js'
 
 /*
  * Project configuration
@@ -33,6 +34,7 @@ const app = express()
 const cacheBusterTS = Date.now()
 
 app.use('/api/v1', apiRoutes)
+app.use('/contentful/webhook', contentFulWebhookRoutes)
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
