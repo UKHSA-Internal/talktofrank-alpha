@@ -4,11 +4,12 @@ import Masthead from '../Masthead/component.jsx'
 import Grid from '../Grid/component.jsx'
 import GridCol from '../GridCol/component.jsx'
 import Heading from '../Heading/component.jsx'
-import AlphabetList from '../AlphabetList/component.jsx'
+import FormGroup from '../FormGroup/component.jsx'
 import Toggle from '../Toggle/component.jsx'
 
 const DrugList = props => {
   let output = {}
+  const limit = 3
 
   // remove all but parent drugs
   let listing = props.list && props.list.filter(item => {
@@ -28,6 +29,7 @@ const DrugList = props => {
   return (
     <React.Fragment>
       <Masthead />
+      <FormGroup />
       <div className='main-wrapper'>
         <Heading type='h1' text='Drugs A-Z'/>
         <Grid>
@@ -35,15 +37,22 @@ const DrugList = props => {
             <ul className='list-unstyled'>
               {output && Object.keys(output).map((val, i) => {
                 return (
-                  <li id={i}>
-                    <Heading type='h3' text={val} modifiers='h4 underlined'/>
+                  <li id={val} key={'outer'+i}>
+                    <Heading text={val} modifiers='underlined underlined--offscreen'/>
                     <ul className='list-unstyled'>
                     {output[val].map((v, index) => {
+                      let syn = v.synonyms.split(',')
+                      {/*let desc = v.description.split(' ')*/}
+
+                      let synonyms = syn.length > limit ? `${syn.splice(0, limit).join(', ')} +${syn.length} more` : syn.join(', ')
+{/*                      let descriptions = desc.length > (limit * 4) ? <React.Fragment>{desc.splice(0, (limit * 4)).join(' ')} <Toggle text='Read more' className='d-inline-block'>{desc.join(' ')}</Toggle></React.Fragment> : <React.Fragment>{desc.join(' ')}</React.Fragment>*/}
+
                       return (
-                        <li key={'inner'+index}>
-                          <Link to={v.slug}>{v.name}</Link>
-                          <p>{v.synonyms}</p>
-                          <p className='muted'>{v.description}</p>
+                        <li key={'inner'+index} className='underlined underlined--dotted'>
+                          <Link to={v.slug}><Heading type='h3' text={v.name} modifiers='h4 grey'/>
+                          {syn.length && <p>Also called: {synonyms}</p>}
+                          <p><span className='muted'>{v.description}</span></p>
+                          </Link>
                         </li>)
                     })}
                     </ul>
