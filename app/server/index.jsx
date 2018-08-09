@@ -28,18 +28,23 @@ import contentFulWebhookRoutes from './contentful/webhooks.js'
 import { config } from 'config'
 import packageInfo from '../../package.json'
 
+/*
+ * Elasticsearch config
+*/
+const search = new ContentfulTextSearch({
+  space: config.contentful.contentSpace,
+  token: config.contentful.contentAccessToken,
+  elasticHost: config.elasticsearch.host,
+  contentType: config.contentful.contentTypes.drug
+})
+
 var store
 
 const app = express()
 const cacheBusterTS = Date.now()
 
 const addSearch = (req, res, next) => {
-  res.search = new ContentfulTextSearch({
-    space: config.contentful.contentSpace,
-    token: config.contentful.contentAccessToken,
-    elasticHost: config.elasticsearch.host,
-    contentType: config.contentful.contentTypes.drug
-  })
+  res.search = search
   return next()
 }
 
