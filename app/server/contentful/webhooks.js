@@ -17,7 +17,7 @@ const search = new ContentfulTextSearch({
  * Add middleware to parse json
  */
 
-router.use(bodyParser.json({type: 'application/*'}));
+router.use(bodyParser.json({type: 'application/*'}))
 /**
  * Get page data
  */
@@ -25,11 +25,10 @@ router.use('/', (req, res, next) => {
   debug('\nRequests header\n', req.headers)
   debug('\nRequests body\n', req.body)
 
-  const webhookName = req.headers["x-contentful-topic"]
+  const webhookName = req.headers['x-contentful-topic']
   debug(`Webhook called ${webhookName}`)
 
   switch (webhookName) {
-
     case 'ContentManagement.Entry.publish' :
       search.indexer.indexSingleEntry(req.body)
       break
@@ -39,7 +38,8 @@ router.use('/', (req, res, next) => {
       search.indexer.deleteSingleEntry(req.body)
       break
   }
-  res.status(202);
+
+  res.status(202)
   res.send({ status: 'ACCEPTED' })
 })
 
@@ -59,4 +59,3 @@ router.use(function (err, req, res, next) {
 })
 
 export default router
-
