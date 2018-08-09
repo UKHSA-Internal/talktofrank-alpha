@@ -48,8 +48,8 @@ const Page = props => {
                 }
                 {props.effects_howDoesItMakePeopleBehave && <React.Fragment><Heading {...modifiers} text={`How does ${props.name} make people behave?`}/><Longform text={props.effects_howDoesItMakePeopleBehave} /></React.Fragment>
                 }
-{/*                {props.effects_whatAreThePhysicalEffects && <React.Fragment><Heading {...modifiers} text={`What are the physical effects of ${props.name}?`}/><Longform text={props.effects_whatAreThePhysicalEffects} /></React.Fragment>
-                }*/}
+                {/* {props.effects_whatAreThePhysicalEffects && <React.Fragment><Heading {...modifiers} text={`What are the physical effects of ${props.name}?`}/><Longform text={props.effects_whatAreThePhysicalEffects} /></React.Fragment>
+                } */}
                 {props.effects_whatIsTheComedownLike && <React.Fragment><Heading {...modifiers} text={`What is the comedown off ${props.name} like?`}/><Longform text={props.effects_whatIsTheComedownLike} /></React.Fragment>
                 }
                 {props.effects_howLongDoesItStayInYourBody && <React.Fragment><Heading {...modifiers} text={`How long does ${props.name} stay in your body?`}/><Longform text={props.effects_howLongDoesItStayInYourBody} /></React.Fragment>

@@ -41,26 +41,23 @@ const DrugList = props => {
             <ul className='list-unstyled'>
               {output && Object.keys(output).map((val, i) => {
                 return (
-                  <li id={val} key={'outer'+i}>
-                    <Heading text={val} modifiers='h1 underlined underlined--offscreen'/>
-                    <ul className='list-unstyled'>
-                    {output[val].map((v, index) => {
-                      let syn = v.synonyms.split(',')
-                      let synonyms = syn.length > limit ? `${syn.splice(0, limit).join(', ')} +${syn.length} more` : syn.join(', ')
-
-                      return (
-                        <li key={'inner'+index} className='underlined underlined--dotted'>
-                          <Link to={v.slug}><Heading type='h3' text={v.name} modifiers='h4 grey'/>
-                          {syn.length && <p className='grey'>Also called: {synonyms}</p>}
-                          <p><span className='muted'>{v.description}</span></p>
-                          </Link>
-                        </li>)
-                    })}
-                    </ul>
-                  </li>)
-                })
-              }
-
+                <li id={val} key={'outer' + i}>
+                  <Heading text={val} modifiers='h1 underlined underlined--offscreen'/>
+                  <ul className='list-unstyled'>
+                  {output[val].map((v, index) => {
+                    let syn = v.synonyms.split(',')
+                    let synonyms = syn.length > limit ? `${syn.splice(0, limit).join(', ')} +${syn.length} more` : syn.join(', ')
+                    return (
+                    <li key={'inner' + index} className='underlined underlined--dotted'>
+                      <Link to={v.slug}><Heading type='h3' text={v.name} modifiers='h4 grey'/>
+                      {syn.length && <p className='grey'>Also called: {synonyms}</p>}
+                      <p><span className='muted'>{v.description}</span></p>
+                      </Link>
+                    </li>)
+                  })}
+                  </ul>
+                </li>)
+              })}
             </ul>
           </GridCol>
         </Grid>
