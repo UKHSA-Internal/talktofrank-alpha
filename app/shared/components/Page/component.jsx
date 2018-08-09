@@ -24,7 +24,7 @@ const Page = props => {
             <p className='lead muted'>{props.synonyms}</p>
             <Longform text={props.description} className='spacing-bottom--large'/>
             <section className='section section--has-toggle'>
-              <Svg url='/ui/svg/eye.svg' className='ml-5 mb-5 float-right'/>
+              <Svg url='/ui/svg/eye.svg' className='ml-5 mt-3 mb-5 mr-3 float-right'/>
               <Heading modifiers='h3'
                 // eslint-disable-next-line no-irregular-whitespace
                 text={`How it looks, tastes and smells`}/>
@@ -42,7 +42,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
-              <Svg url='/ui/svg/effects.svg' className='ml-5 mr-3 mb-5 float-right'/>
+              <Svg url='/ui/svg/effects.svg' className='ml-5 mt-3 mr-3 mr-5 mb-5 float-right'/>
               <Heading modifiers='h3' text={`The effects`}/>
               <Toggle text='How to recognise cocaine' className='collapsible--chevron' hidden='true'>
                 {props.effects_howDoesItMakeYouFeel && <React.Fragment><Heading {...modifiers} text={`How does ${props.name} make you feel?`}/><Longform text={props.effects_howDoesItMakeYouFeel} /></React.Fragment>
@@ -58,7 +58,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
-              <Svg url='/ui/svg/risks.svg' className='ml-5 mb-5 float-right'/>
+              <Svg url='/ui/svg/risks.svg' className='ml-5 mt-3 mb-5 mr-3 float-right'/>
               <Heading modifiers='h3' text={`The risks`}/>
               <Toggle text={`How to recognise ${props.name}`} className='collapsible--chevron' hidden='true'>
                 {props.risks_whatAreTheRisks && <React.Fragment><Heading {...modifiers} text={`What are the risks of ${props.name}?`}/><Longform text={props.risks_whatAreTheRisks} /></React.Fragment>
@@ -74,7 +74,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
-              <Svg url='/ui/svg/law.svg' className='ml-5 mb-5 float-right'/>
+              <Svg url='/ui/svg/law.svg' className='ml-5 mt-3 mb-5 mr-3 float-right'/>
               <Heading modifiers='h3' text={`The law`}/>
               <Toggle text={'How to recognise cocaine'} className='collapsible--chevron' hidden='true'>
                 {props.law_whatIsTheDrugClassification && <React.Fragment><Heading {...modifiers} text={`What is the drug classification of ${props.name}?`}/><Longform text={props.law_whatIsTheDrugClassification} /></React.Fragment>
@@ -84,7 +84,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
-              <Svg url='/ui/svg/worried.svg' className='ml-5 mb-5 float-right'/>
+              <Svg url='/ui/svg/worried.svg' className='ml-5 mb-5 mt-5 mr-5 float-right'/>
               <Heading modifiers='h3' text={`Worried about ${props.name} use?`}/>
               <p className='muted'>If you are worried about your {props.name} use, you can call FRANK on <a href='tel:0800776600'>0800 77 66 00</a> for friendly, confidential advice.</p>
               <Toggle text={'How to recognise cocaine'} className='collapsible--chevron' hidden='true'>
