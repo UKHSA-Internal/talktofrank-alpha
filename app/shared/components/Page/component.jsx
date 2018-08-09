@@ -12,6 +12,7 @@ const Page = props => {
     type: 'p',
     modifiers: 'h6'
   }
+  console.log(props)
 
   return (
     <React.Fragment>
@@ -83,6 +84,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/worried.svg' className='ml-5 mb-5 float-right'/>
               <Heading modifiers='h3' text={`Worried about ${props.name} use?`}/>
               <p className='muted'>If you are worried about your {props.name} use, you can call FRANK on <a href='tel:0800776600'>0800 77 66 00</a> for friendly, confidential advice.</p>
               <Toggle text={'How to recognise cocaine'} className='collapsible--chevron' hidden='true'>
