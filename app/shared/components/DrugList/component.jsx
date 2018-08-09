@@ -19,7 +19,7 @@ const DrugList = props => {
 
   // get list of beginning numbers / letters
   // really, this is pretty inelegant : /
-  let sections = listing && listing.map(item => {
+  let sections = listing.length && listing.map(item => {
     return item.name.substring(0, 1)
   }).filter((value, index, self) => {
     return self.indexOf(value) === index
