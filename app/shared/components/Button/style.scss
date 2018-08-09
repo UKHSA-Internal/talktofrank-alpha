@@ -4,4 +4,11 @@
   background-size: cover;
   border-radius: 0;
   text-indent: 100%;
+  width: 2rem;
+  height: 1.6rem;
+  padding: .5rem .8rem;
+}
+
+.btn--secondary {
+  background-color: $green;
 }

@@ -1,0 +1,11 @@
+.form-control {
+  &--search {
+    border-width: 3px;
+    border-style: solid;
+    border-color: $green;
+  }
+}
+
+.input-group--raised {
+  box-shadow: 3px 3px 0 0 $black;
+}

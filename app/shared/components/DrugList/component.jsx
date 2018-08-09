@@ -34,7 +34,7 @@ const DrugList = props => {
         <Heading type='h1' text='Drugs A-Z'/>
         <Heading type='p' modifiers='lead' text='Search for any drug, you can use street names, slang names or the proper name'/>
         <Form>
-          <FormGroup />
+          <FormGroup button='true' className='input-group--raised' modifiers='form-control--search'/>
         </Form>
         <Grid>
           <GridCol className='col-12 col-sm-8'>
