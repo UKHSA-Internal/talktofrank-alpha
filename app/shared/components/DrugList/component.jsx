@@ -4,6 +4,7 @@ import Masthead from '../Masthead/component.jsx'
 import Grid from '../Grid/component.jsx'
 import GridCol from '../GridCol/component.jsx'
 import Heading from '../Heading/component.jsx'
+import Form from '../Form/component.jsx'
 import FormGroup from '../FormGroup/component.jsx'
 import Toggle from '../Toggle/component.jsx'
 
@@ -29,7 +30,9 @@ const DrugList = props => {
   return (
     <React.Fragment>
       <Masthead />
-      <FormGroup />
+      <Form>
+        <FormGroup />
+      </Form>
       <div className='main-wrapper'>
         <Heading type='h1' text='Drugs A-Z'/>
         <Grid>
@@ -42,10 +45,7 @@ const DrugList = props => {
                     <ul className='list-unstyled'>
                     {output[val].map((v, index) => {
                       let syn = v.synonyms.split(',')
-                      {/*let desc = v.description.split(' ')*/}
-
                       let synonyms = syn.length > limit ? `${syn.splice(0, limit).join(', ')} +${syn.length} more` : syn.join(', ')
-{/*                      let descriptions = desc.length > (limit * 4) ? <React.Fragment>{desc.splice(0, (limit * 4)).join(' ')} <Toggle text='Read more' className='d-inline-block'>{desc.join(' ')}</Toggle></React.Fragment> : <React.Fragment>{desc.join(' ')}</React.Fragment>*/}
 
                       return (
                         <li key={'inner'+index} className='underlined underlined--dotted'>

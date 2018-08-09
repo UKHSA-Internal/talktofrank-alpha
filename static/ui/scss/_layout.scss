@@ -75,16 +75,26 @@ $grid-gutter: 30px;
 }
 
 .section {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   border-bottom: 2px solid $gray-900;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  position: relative;
+  overflow: hidden;
+
+  &.section--has-toggle {
+    padding-left: 5rem;
+  }
 
   &:first-of-type {
     border-top: 2px solid $gray-900;
   }
 
   @include media-breakpoint-up(sm) {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
   }
 }
