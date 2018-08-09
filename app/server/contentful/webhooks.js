@@ -1,27 +1,18 @@
-import { config } from 'config'
 const debug = require(`debug`)(`contentful-webhook`)
 const express = require('express')
 const bodyParser = require('body-parser')
 const router = express.Router()
-const ngrok = require('ngrok')
-const ContentfulTextSearch = require('contentful-text-search')
-
-const search = new ContentfulTextSearch({
-  space: config.contentful.contentSpace,
-  token: config.contentful.contentAccessToken,
-  elasticHost: config.elasticsearch.host,
-  contentType: config.contentful.contentTypes.drug
-})
 
 /**
  * Add middleware to parse json
  */
-
 router.use(bodyParser.json({type: 'application/*'}))
+
 /**
  * Get page data
  */
 router.use('/', (req, res, next) => {
+  const search = res.search
   debug('\nRequests header\n', req.headers)
   debug('\nRequests body\n', req.body)
 

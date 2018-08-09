@@ -9,6 +9,7 @@ const util = require('util')
 const marked = require('marked')
 const router = express.Router()
 const sortBy = require('lodash.sortby')
+
 axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.contentAccessToken}`
 
 /**
@@ -20,10 +21,40 @@ router.use(bodyParser.json())
 /**
  * Get page data
  */
+
+router.get('/search/term/:term', (req, res, next) => {
+  try {
+    if (!req.params.term) {
+      const error = new Error()
+      error.status = 404
+      return next(error)
+    }
+    const search = res.search
+    search.query(req.params.term, 'en-US').then((results) => (
+      res.status(200).json({
+        'results': results.hits.hits
+      })
+    ))
+  } catch (err) {
+    /* eslint-disable */
+    console.error(err);
+    /* eslint-enable */
+    res.status(500).json({
+      'message': err.response.statusText
+    })
+  }
+})
+
 router.get('/drugList', (req, res, next) => {
   try {
-    let lookupUrl = config.contentful.contentHost + '/spaces/%s/entries?content_type=%s'
-    let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug)
+    const lookupUrl = config.contentful.contentHost +
+       '/spaces/%s/entries?content_type=%s'
+
+    const pageUrl = util.format(
+      lookupUrl,
+      config.contentful.contentSpace,
+      config.contentful.contentTypes.drug
+    )
     axios.get(pageUrl).then(json => {
       if (json.data.total === 0) {
         let error = new Error()
@@ -52,7 +83,7 @@ router.get('/drugList', (req, res, next) => {
 
       res.send(response)
     })
-  } catch (e) {
+  } catch (err) {
     /* eslint-disable */
     console.error(err);
     /* eslint-enable */
