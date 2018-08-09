@@ -38,21 +38,22 @@ export default class Masthead extends React.PureComponent {
           <Button className='float-left d-block d-md-none mt-4 navbar-toggler' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
             <span className="navbar-toggler-icon">Menu</span>
           </Button>
-          <Logo />
+          <Logo url='/ui/svg/logo-frank.svg' className='d-block d-md-none'/>
+          <Logo url='/ui/svg/logo-frank-inverted.svg' className='d-none d-md-block'/>
           <div className='nav nav--primary navbar navbar-expand-md d-none'>
             <nav className='navbar text-center' id='navbarSupportedContent'>
               <ul className='navbar-nav mr-auto'>
                 <li className='nav-item active'>
-                  <a className='nav-link' href='#'>Link item 1</a>
+                  <a className='nav-link' href='#'>Drugs A-Z</a>
                 </li>
                 <li className='nav-item active'>
-                  <a className='nav-link' href='#'>Link item 1</a>
+                  <a className='nav-link' href='#'>Drugs news</a>
                 </li>
                 <li className='nav-item active'>
-                  <a className='nav-link' href='#'>Link item 1</a>
+                  <a className='nav-link' href='#'>Get help</a>
                 </li>
                 <li className='nav-item active'>
-                  <a className='nav-link' href='#'>Link item 1</a>
+                  <a className='nav-link' href='#'>Contact</a>
                 </li>
               </ul>
             </nav>

@@ -5,8 +5,8 @@
 .masthead {
   background-color: $black;
 
-  @include media-breakpoint-up(sm) {
-    //position: fixed;
+  @include media-breakpoint-up(md) {
+    background-color: $white;
     width: 100%;
     top: 0;
     left: 0;

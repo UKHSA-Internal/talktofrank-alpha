@@ -98,3 +98,18 @@ $grid-gutter: 30px;
     padding-bottom: 2rem;
   }
 }
+
+// THIS IS BAD AND WILL GO!! @joel @refactor
+.homepage {
+  background-color: $black;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: contain;
+  min-height: 120rem;
+  background-image: url(../img/bg-homepage-mobile.png);
+
+  @include media-breakpoint-up(md) {
+    min-height: 120rem;
+    background-image: url(../img/bg-homepage-desktop.png);
+  }
+}
