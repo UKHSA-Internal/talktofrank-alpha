@@ -50,7 +50,7 @@ const DrugList = props => {
                       return (
                         <li key={'inner'+index} className='underlined underlined--dotted'>
                           <Link to={v.slug}><Heading type='h3' text={v.name} modifiers='h4 grey'/>
-                          {syn.length && <p>Also called: {synonyms}</p>}
+                          {syn.length && <p className='grey'>Also called: {synonyms}</p>}
                           <p><span className='muted'>{v.description}</span></p>
                           </Link>
                         </li>)

@@ -13,18 +13,8 @@ export default class Masthead extends React.PureComponent {
   }
 
   handleMenuClick () {
-    var nextState
-
-    if (this.state.mobileMenuOpen) {
-      document.body.classList.remove('js-offcanvas-menu-visible')
-      nextState = false
-    } else {
-      document.body.classList.add('js-offcanvas-menu-visible')
-      nextState = true
-    }
-
     this.setState({
-      mobileMenuOpen: nextState
+      mobileMenuOpen: !this.state.mobileMenuOpen
     })
   }
 
