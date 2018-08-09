@@ -30,18 +30,19 @@ const DrugList = props => {
   return (
     <React.Fragment>
       <Masthead />
-      <Form>
-        <FormGroup />
-      </Form>
       <div className='main-wrapper'>
         <Heading type='h1' text='Drugs A-Z'/>
+        <Heading type='p' modifiers='lead' text='Search for any drug, you can use street names, slang names or the proper name'/>
+        <Form>
+          <FormGroup />
+        </Form>
         <Grid>
           <GridCol className='col-12 col-sm-8'>
             <ul className='list-unstyled'>
               {output && Object.keys(output).map((val, i) => {
                 return (
                   <li id={val} key={'outer'+i}>
-                    <Heading text={val} modifiers='underlined underlined--offscreen'/>
+                    <Heading text={val} modifiers='h1 underlined underlined--offscreen'/>
                     <ul className='list-unstyled'>
                     {output[val].map((v, index) => {
                       let syn = v.synonyms.split(',')

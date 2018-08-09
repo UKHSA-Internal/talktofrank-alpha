@@ -27,6 +27,20 @@
     position: relative;
     width: 25rem;
   }
+
+  .logo__link {
+    position: relative;
+
+    &:before {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      z-index: 2;
+    }
+  }
 }
 
 .navbar-expand-md {
