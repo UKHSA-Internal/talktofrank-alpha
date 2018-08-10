@@ -17,7 +17,7 @@ var store = createStore(
   )
 )
 
-export const routes = (
+const routes = (
   <Provider store={store}>
     <Router history={browserHistory}>
       <Route path='/'>
@@ -63,3 +63,5 @@ export const routes = (
 if ( !store.getState().error  ) {
   render(routes, document.getElementById('app'));
 }
+
+export default routes

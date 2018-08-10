@@ -17,7 +17,6 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.con
 
 // router.use(bodyParser.json())
 router.get('/pages/:slug', (req, res, next) => {
-
   if (!req.params.slug) {
     let error = new Error()
     error.status = 404
@@ -34,7 +33,6 @@ router.get('/pages/:slug', (req, res, next) => {
     }
   }
 
-  console.log('running lookup for drug page');
   let lookupUrl = config.contentful.contentHost + '/spaces/%s/entries?content_type=%s&fields.slug[match]=%s'
   let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug, req.params.slug)
 
@@ -131,7 +129,6 @@ router.get('/pages/:slug', (req, res, next) => {
     })
   })
 })
-
 
 /**
  * Get page data
