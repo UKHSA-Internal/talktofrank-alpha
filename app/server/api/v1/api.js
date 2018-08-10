@@ -34,20 +34,26 @@ router.get('/drugList', (req, res, next) => {
       let response = {
         list: []
       }
+
       json.data.items.map((item) => {
         response.list[response.list.length] = {
-          name: item.fields.name.toLowerCase(),
-          slug: `/drug/${item.fields.slug}`
+          // name: item.fields.name.toLowerCase(),
+          name: item.fields.name,
+          slug: `/drug/${item.fields.slug}`,
+          synonyms: item.fields.synonyms,
+          description: item.fields.description
         }
 
-        item.fields.synonyms.split(',').map(synonym => {
-          response.list[response.list.length] = {
-            name: synonym.trim().toLowerCase(),
-            slug: `/drug/${item.fields.slug}`,
-            parent: item.fields.name
-          }
-        })
+        // temporarily removing this
+        // item.fields.synonyms.split(',').map(synonym => {
+        //   response.list[response.list.length] = {
+        //     name: synonym.trim().toLowerCase(),
+        //     slug: `/drug/${item.fields.slug}`,
+        //     parent: item.fields.name
+        //   }
+        // })
       })
+
       response.list = sortBy(response.list, (item) => (item.name))
 
       res.send(response)

@@ -1,0 +1,15 @@
+.underlined {
+  border-bottom: 1px solid $gray-900;
+
+  &--dotted {
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;
+    border-bottom-color: $gray-500;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+  }
+
+  &--offscreen {
+    border-bottom-width: 2px;
+  }
+}
