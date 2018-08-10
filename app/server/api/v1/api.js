@@ -167,8 +167,19 @@ router.get('/drugList', (req, res, next) => {
         // })
       })
 
+      let numbers = []
       response.list = sortBy(response.list, (item) => (item.name))
+        .filter(v => {
+          if (!isNaN(parseFloat(v.name))) {
+            numbers.push(v)
+            return
+          }
+        return isNaN(parseFloat(v.name))
+      })
 
+      // @joel - commenting this out as the filtering / mapping at the component
+      // level messes the order up again and ignores that the numers come last : /
+      // response.list = response.list.concat(numbers)
       res.send(response)
     })
   } catch (e) {
