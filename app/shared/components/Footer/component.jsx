@@ -8,12 +8,11 @@ const Footer = props => {
     <footer className='footer'>
       <div className='content-wrapper text-center'>
         <Grid>
-          <GridCol className='col-12 col-sm-6'>
-            <Button className='btn--primary btn--large btn--raised' label='Call us: 0300 123 6600'/>
-          </GridCol>
-          <GridCol className='col-12 col-sm-6'>
-            <p>Email us: <a href='mailto:frank@talktofrank.com'></a></p>
-            <p>Text us: <a href='tel:82111'></a></p>
+          <GridCol className='col-12 col-sm-8'>
+            <Button className='btn--primary btn--large btn--raised mb-5' label='Call us: 0300 123 6600'/>
+            <p>Email us: <a href='mailto:frank@talktofrank.com'>frank@talktofrank.com</a></p>
+            <p>Text us: <a href='tel:82111'>82111</a></p>
+            <p><a href='#'>Find a support centre</a></p>
           </GridCol>
         </Grid>
       </div>

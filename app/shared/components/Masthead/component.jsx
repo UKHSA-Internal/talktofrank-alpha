@@ -29,7 +29,7 @@ export default class Masthead extends React.PureComponent {
       <header className={classes} id='header'>
         <div className='masthead__inner container-fluid'>
           <Button className='float-left d-block d-md-none mt-4 navbar-toggler' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
-            <span className="navbar-toggler-icon">Menu</span>
+            <span className='navbar-toggler-icon'>Menu</span>
           </Button>
           <Logo url='/ui/svg/logo-frank.svg' className='d-block d-md-none'/>
           <Logo url='/ui/svg/logo-frank-inverted.svg' className='d-none d-md-block'/>
