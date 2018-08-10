@@ -37,6 +37,7 @@ $grid-gutter: 30px;
 .main-wrapper {
   @extend %constrain;
   padding-top: 3rem;
+  padding-bottom: 5rem;
 
   @include media-breakpoint-up(sm) {
     padding-top: 5rem;
@@ -62,7 +63,7 @@ $grid-gutter: 30px;
   }
 }
 
-.content-wrapper--main {
+.content-wrapper {
   padding: 1.5rem 1.5rem 5rem;
 
   @include media-breakpoint-up(md) {
