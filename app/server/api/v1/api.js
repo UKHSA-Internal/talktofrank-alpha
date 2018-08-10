@@ -17,8 +17,6 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.con
 
 // router.use(bodyParser.json())
 router.get('/pages/:slug', (req, res, next) => {
-
-  console.log('hitting')
   if (!req.params.slug) {
     let error = new Error()
     error.status = 404
