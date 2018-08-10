@@ -5,7 +5,11 @@ module.exports = function (grunt) {
     let done = this.async()
 
     let promises = this.data.urls.map((url) => {
-      return pa11y(url)
+      return pa11y(url, {
+        chromeLaunchConfig: {
+          args: ['--no-sandbox']
+        }
+      })
     })
 
     var total = 0
