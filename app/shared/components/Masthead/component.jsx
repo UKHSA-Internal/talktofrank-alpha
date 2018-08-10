@@ -43,10 +43,10 @@ export default class Masthead extends React.PureComponent {
                   <a className='nav-link' href='#'>Drugs news</a>
                 </li>
                 <li className='nav-item active'>
-                  <a className='nav-link' href='#'>Help for you</a>
+                  <a className='nav-link' href='#'>Drug treatment</a>
                 </li>
                 <li className='nav-item active'>
-                  <a className='nav-link' href='#'>Help for others</a>
+                  <a className='nav-link' href='#'>Worried about someone</a>
                 </li>
                 <li className='nav-item active'>
                   <a className='nav-link' href='#'>Contact Frank</a>
