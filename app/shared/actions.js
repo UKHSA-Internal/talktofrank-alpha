@@ -32,6 +32,7 @@ function receivePage (pageData) {
 }
 
 export function fetchDrugList () {
+console.log('fetching the drug list page ')
   return dispatch => {
     dispatch(requestPage())
     let lookupUrl = apiHost + '/api/v1/drugList'
@@ -48,6 +49,8 @@ export function fetchDrugList () {
 }
 
 export function fetchPage (slug, type = 'pages') {
+
+  console.log('hitting the fetch page function ' + slug)
   return dispatch => {
     dispatch(requestPage())
     let lookupUrl = apiHost + '/api/v1/' + type + '/' + slug
