@@ -7,6 +7,7 @@ import Heading from '../Heading/component.jsx'
 import Form from '../Form/component.jsx'
 import FormGroup from '../FormGroup/component.jsx'
 import Toggle from '../Toggle/component.jsx'
+import Footer from '../Footer/component.jsx'
 
 const DrugList = props => {
   let output = {}
@@ -62,6 +63,7 @@ const DrugList = props => {
           </GridCol>
         </Grid>
       </div>
+      <Footer />
     </React.Fragment>
   )
 }

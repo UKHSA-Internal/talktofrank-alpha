@@ -6,13 +6,13 @@ import GridCol from '../GridCol/component.jsx'
 import Toggle from '../Toggle/component.jsx'
 import Heading from '../Heading/component.jsx'
 import Svg from '../Svg/component.jsx'
+import Footer from '../Footer/component.jsx'
 
 const Page = props => {
   const modifiers = {
     type: 'p',
     modifiers: 'h6'
   }
-  console.log(props)
 
   return (
     <React.Fragment>
@@ -99,6 +99,7 @@ const Page = props => {
           </GridCol>
         </Grid>
       </div>
+      <Footer />
     </React.Fragment>
   )
 }
