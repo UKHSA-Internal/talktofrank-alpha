@@ -43,7 +43,7 @@ const DrugList = props => {
               {output && Object.keys(output).map((val, i) => {
                 return (
                 <li id={val} key={'outer' + i}>
-                  <Heading text={val} modifiers='h1 underlined underlined--offscreen'/>
+                  <Heading text={val} modifiers='display-2 underlined underlined--offscreen'/>
                   <ul className='list-unstyled'>
                   {output[val].map((v, index) => {
                     let syn = v.synonyms.split(',')

@@ -174,7 +174,18 @@ mark,
   color: $gray-900;
 }
 
+.display-2 {
+  font-size: 6rem;
 
+  @include media-breakpoint-up(md) {
+    font-size: 8rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 10rem;
+  }
+
+}
 
 
 
