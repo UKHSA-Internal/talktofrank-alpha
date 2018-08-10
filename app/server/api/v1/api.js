@@ -168,12 +168,11 @@ router.get('/drugList', (req, res, next) => {
       })
 
       let numbers = []
-      response.list = sortBy(response.list, (item) => (item.name))
-        .filter(v => {
-          if (!isNaN(parseFloat(v.name))) {
-            numbers.push(v)
-            return
-          }
+      response.list = sortBy(response.list, (item) => (item.name)).filter(v => {
+        if (!isNaN(parseFloat(v.name))) {
+          numbers.push(v)
+          return
+        }
         return isNaN(parseFloat(v.name))
       })
 
