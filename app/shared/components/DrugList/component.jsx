@@ -50,10 +50,10 @@ const DrugList = props => {
                     let synonyms = syn.length > limit ? `${syn.splice(0, limit).join(', ')} +${syn.length} more` : syn.join(', ')
                     return (
                     <li key={'inner' + index} className='underlined underlined--dotted'>
-                      <Link to={v.slug}><Heading type='h3' text={v.name} modifiers='h4 grey'/>
+                      <a href={v.slug}><Heading type='h3' text={v.name} modifiers='h4 grey'/>
                       {syn.length && <p className='grey'>Also called: {synonyms}</p>}
                       <p><span className='muted'>{v.description}</span></p>
-                      </Link>
+                      </a>
                     </li>)
                   })}
                   </ul>
