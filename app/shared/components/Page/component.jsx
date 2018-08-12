@@ -7,6 +7,7 @@ import Toggle from '../Toggle/component.jsx'
 import Heading from '../Heading/component.jsx'
 import Svg from '../Svg/component.jsx'
 import Footer from '../Footer/component.jsx'
+import Main from '../Main/component.jsx'
 
 const Page = props => {
   const modifiers = {
@@ -17,12 +18,12 @@ const Page = props => {
   return (
     <React.Fragment>
       <Masthead />
-      <div className='main-wrapper'>
+      <Main>
         <h1>{props.name}</h1>
+        <p className='lead muted'>{props.synonyms}</p>
+        <Longform text={props.description} className='spacing-bottom--large'/>
         <Grid>
           <GridCol className='col-12 col-sm-8'>
-            <p className='lead muted'>{props.synonyms}</p>
-            <Longform text={props.description} className='spacing-bottom--large'/>
             <section className='section section--has-toggle'>
               <Svg url='/ui/svg/eye.svg' className='ml-5 mt-3 mb-5 mr-3 float-right'/>
               <Heading modifiers='h3'
@@ -98,7 +99,7 @@ const Page = props => {
             </section>
           </GridCol>
         </Grid>
-      </div>
+      </Main>
       <Footer />
     </React.Fragment>
   )
