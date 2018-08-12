@@ -15,6 +15,7 @@ import { generateStore } from '../shared/store'
 
 import Head from '../shared/components/Head/component.jsx'
 import Scripts from '../shared/components/Scripts/component.jsx'
+import Skiplinks from '../shared/components/Skiplinks/component.jsx'
 
 /*
  * Express routes
@@ -68,7 +69,6 @@ app.get('*', function (req, res) {
     let componentHtml = ''
     let state = store.getState()
 
-    // changed from renderToString to renderToStaticMarkup
     try {
       componentHtml = ReactDOMServer.renderToString((
         <Provider store={store}>
@@ -96,21 +96,22 @@ app.get('*', function (req, res) {
     }
 
     let status = state.error ? state.error : 200
-
+    let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
     let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
 
-    let renderedHtml = renderFullPageHtml(componentHtml, componentHead, componentScripts, JSON.stringify(state))
+    let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
     return res.status(status).send(renderedHtml)
   })
 })
 
-function renderFullPageHtml (html, head, scripts, initialState) {
+function renderFullPageHtml (skip, html, head, scripts, initialState) {
   return `
     <!DOCTYPE html>
     <html lang='en'>
     ${head}
     <body>
+      ${skip}
       <div id='app'>${html}</div>
       <script>window.$REDUX_STATE=${initialState};</script>
       ${scripts}
