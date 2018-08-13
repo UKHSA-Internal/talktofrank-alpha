@@ -1,14 +1,11 @@
 var path = require('path')
 var webpack = require('webpack')
 
-
-const processEnv = {NODE_ENV: !process.env.BUILD_CONFIG
-  ? JSON.stringify('development')
-  : process.env.BUILD_CONFIG === 'development'
-    ? JSON.stringify('development')
-    : JSON.stringify('production'),
-BUILD_CONFIG: JSON.stringify(process.env.BUILD_CONFIG),
-PORT: JSON.stringify(process.env.PORT)}
+const processEnv = {
+  NODE_ENV: !process.env.BUILD_CONFIG ? JSON.stringify('development') : process.env.BUILD_CONFIG === 'development' ? JSON.stringify('development') : JSON.stringify('production'),
+  BUILD_CONFIG: JSON.stringify(process.env.BUILD_CONFIG),
+  PORT: JSON.stringify(process.env.PORT)
+}
 
 module.exports = {
   client: {
