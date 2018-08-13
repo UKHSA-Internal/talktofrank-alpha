@@ -175,6 +175,7 @@ mark,
 }
 
 .display-2 {
+  margin-top: .3em;
   font-size: 6rem;
 
   @include media-breakpoint-up(md) {
@@ -182,7 +183,7 @@ mark,
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 10rem;
+    font-size: 12rem;
   }
 
 }
