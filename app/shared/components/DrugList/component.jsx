@@ -15,18 +15,18 @@ const DrugList = props => {
   const limit = 3
 
   // remove all but parent drugs
-  let listing = props.list && props.list.filter(item => {
-    return !item.parent
-  })
+  // let listing = props.list && props.list.filter(item => {
+  //   return !item.parent
+  // })
 
   // get list of beginning numbers / letters
   // really, this is pretty inelegant : /
-  let sections = listing.length && listing.map(item => {
+  let sections = props.list && props.list.map(item => {
     return item.name.substring(0, 1)
   }).filter((value, index, self) => {
     return self.indexOf(value) === index
   }).forEach(v => {
-    output[v] = listing.filter(val => val.name.substring(0, 1) === v)
+    output[v] = props.list.filter(val => val.name.substring(0, 1) === v)
   })
 
   return (
@@ -47,12 +47,17 @@ const DrugList = props => {
                   <Heading text={val} modifiers='display-2 underlined underlined--offscreen'/>
                   <ul className='list-unstyled'>
                   {output[val].map((v, index) => {
-                    let syn = v.synonyms.split(',')
-                    let synonyms = syn.length > limit ? `${syn.splice(0, limit).join(', ')} +${syn.length} more` : syn.join(', ')
+                    let synonyms
+                    let name = v.parent ? <span>{v.name} <span className='muted smaller'>({v.parent})</span></span> : <span>{v.name}</span>
+                    if (v.synonyms) {
+                      let item = v.synonyms.split(',')
+                      synonyms = item.length > limit ? `${item.splice(0, limit).join(', ')} +${item.length} more` : item.join(', ')
+                    }
+
                     return (
                     <li key={'inner' + index} className='underlined underlined--dotted'>
-                      <a href={v.slug}><Heading type='h3' text={v.name} modifiers='h4 grey'/>
-                      {syn.length && <p className='grey'>Also called: {synonyms}</p>}
+                      <a href={v.slug}><h3 className='h4 grey'>{name}</h3>
+                      {synonyms && <p className='grey'>Also called: {synonyms}</p>}
                       <p><span className='muted'>{v.description}</span></p>
                       </a>
                     </li>)
