@@ -21,3 +21,4 @@ validate:
 
 post-build-validate:
   - pa11y
+  - lighthouse
