@@ -73,3 +73,21 @@
       working_directory: "/home/deploy/app/"
       commands:
       - "pm2 startOrRestart ecosystem.json --env staging"
+    - action: "Run validation"
+      type: "RUN_NEXT_PIPELINE"
+      comment: "Triggered by ${execution.pipeline.name} execution #${execution.id}"
+      revision: "INHERIT"
+      next_pipeline_id: 1
+- pipeline: "Validate"
+  trigger_mode: "MANUAL"
+  ref_name: "develop"
+  actions:
+    - action: "Dependencies and validate"
+      type: "BUILD"
+      docker_image_name: "koded/ttf-builder"
+      docker_image_tag: "latest"
+      execute_commands:
+      - "npm install"
+      - "npm install -g grunt-cli"
+      - "grunt post-build-validate"
+      trigger_condition: "ALWAYS"

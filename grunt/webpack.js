@@ -28,8 +28,7 @@ module.exports = {
       extensions: ['.js', '.jsx'],
       modules: [
         './node_modules',
-        path.resolve(__dirname, './client'),
-
+        path.resolve(__dirname, './client')
       ],
       // need this to ensure Webpack can read
       mainFields: ['webpack', 'browser', 'web', 'main'],
@@ -53,7 +52,6 @@ module.exports = {
       new webpack.optimize.CommonsChunkPlugin({
         name: 'vendor',
         minChunks: Infinity,
-        //filename: '[name].[hash].js'
         filename: '[name].bundle.js'
       }),
       new webpack.DefinePlugin({
