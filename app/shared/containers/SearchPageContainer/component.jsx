@@ -4,7 +4,7 @@ import { fetchSearchTerm } from '../../actions'
 import SearchPage from '../../components/SearchPage/component.jsx'
 
 const mapStateToProps = (state, ownProps) => {
-  return state.app.pageData
+  return state.app
 }
 
 const mapDispatchToProps = (dispatch) => {

@@ -11,7 +11,8 @@ export function app (state = initialState, action) {
   switch (action.type) {
     case actions.RECEIVE_PAGE:
       return Object.assign({}, state, {
-        pageData: action.pageData
+        pageData: action.pageData,
+        loading: false
       })
     case actions.REQUEST_PAGE:
       return Object.assign({}, state, {
@@ -19,11 +20,8 @@ export function app (state = initialState, action) {
       })
     case actions.RECEIVE_PAGE_ERROR:
       return Object.assign({}, state, {
-        error: action.error
-      })
-    case actions.SEND_NOTIFICATION:
-      return Object.assign({}, state, {
-        userData: action.userData
+        error: action.error,
+        loading: false
       })
     default:
       return state

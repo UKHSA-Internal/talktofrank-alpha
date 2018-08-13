@@ -1,6 +1,8 @@
 .search {
 
-  border: 1px solid;
+  .search--suggestions {
+    margin-top: $spacer;
+  }
 
   .search__input {
     padding: 1rem;
@@ -11,16 +13,23 @@
     list-style: none;
 
     li {
-      padding: 0;
       margin: 0;
       border-bottom: 1px solid #ccc;
+      padding: 5px 0 20px 0;
 
-      strong {
-        font-family: 'robotomedium', Roboto, Arial, sans-serif;
+      &.search__list-suggestion-item {
+        border-bottom: none;
+        padding: 0
       }
 
+      p {
+        margin-top: 1em;
+        strong,
+        em {
+          font-family: 'robotomedium', Roboto, Arial, sans-serif;
+          font-style: normal;
+        }
+      }
     }
-
   }
-
 }
