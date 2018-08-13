@@ -8,6 +8,7 @@ import Form from '../Form/component.jsx'
 import FormGroup from '../FormGroup/component.jsx'
 import Toggle from '../Toggle/component.jsx'
 import Footer from '../Footer/component.jsx'
+import Main from '../Main/component.jsx'
 
 const DrugList = props => {
   let output = {}
@@ -31,11 +32,11 @@ const DrugList = props => {
   return (
     <React.Fragment>
       <Masthead />
-      <div className='main-wrapper'>
+      <Main>
         <Heading type='h1' text='Drugs A-Z'/>
         <Heading type='p' modifiers='lead' text='Search for any drug, you can use street names, slang names or the proper name'/>
         <Form>
-          <FormGroup button='true' className='input-group--raised' modifiers='form-control--search'/>
+          <FormGroup button='true' className='input-group--raised' modifiers='form-control--search' id='search-a-z' label='Search for any drug, you can use street names, slang names or the proper name'/>
         </Form>
         <Grid>
           <GridCol className='col-12 col-sm-8'>
@@ -62,7 +63,7 @@ const DrugList = props => {
             </ul>
           </GridCol>
         </Grid>
-      </div>
+      </Main>
       <Footer />
     </React.Fragment>
   )
