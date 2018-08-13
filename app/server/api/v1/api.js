@@ -172,7 +172,7 @@ router.get('/drugList', (req, res, next) => {
         //   numbers.push(v)
         //   return
         // }
-        return isNaN(parseFloat(v.name))
+        return isNaN(parseFloat(v.name)) && v.name !== ''
       })
 
       // @joel - commenting this out as the filtering / mapping at the component
