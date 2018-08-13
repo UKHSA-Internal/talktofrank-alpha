@@ -1,6 +1,15 @@
 var path = require('path')
 var webpack = require('webpack')
 
+
+const processEnv = {NODE_ENV: !process.env.BUILD_CONFIG
+  ? JSON.stringify('development')
+  : process.env.BUILD_CONFIG === 'development'
+    ? JSON.stringify('development')
+    : JSON.stringify('production'),
+BUILD_CONFIG: JSON.stringify(process.env.BUILD_CONFIG),
+PORT: JSON.stringify(process.env.PORT)}
+
 module.exports = {
   client: {
     entry: {
@@ -48,9 +57,7 @@ module.exports = {
         filename: '[name].bundle.js'
       }),
       new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: JSON.stringify('production')
-        }
+        'process.env': processEnv
       })
     ],
     stats: {
@@ -97,15 +104,7 @@ module.exports = {
     },
     plugins: [
       new webpack.DefinePlugin({
-        'process.env': {
-          NODE_ENV: !process.env.BUILD_CONFIG
-            ? JSON.stringify('development')
-            : process.env.BUILD_CONFIG === 'development'
-              ? JSON.stringify('development')
-              : JSON.stringify('production'),
-          BUILD_CONFIG: JSON.stringify(process.env.BUILD_CONFIG),
-          PORT: JSON.stringify(process.env.PORT)
-        }
+        'process.env': processEnv
       })
     ],
     stats: {
