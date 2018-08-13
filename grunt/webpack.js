@@ -2,6 +2,64 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
+  client: {
+    entry: {
+      client: './app/client/index.jsx',
+      vendor: ['react', 'react-dom', 'react-router', 'react-redux', 'redux-thunk']
+    },
+    output: {
+      path: path.resolve(__dirname, '../dist/static/ui/js/'),
+      filename: '[name].bundle.js',
+      devtoolLineToLine: true,
+      sourceMapFilename: './bundle.js.map',
+      pathinfo: true,
+      publicPath: '/ui/js/' // need this to ensure that the lazy loaded components can map PATH > URL
+    },
+    resolve: {
+      extensions: ['.js', '.jsx'],
+      modules: [
+        './node_modules',
+        path.resolve(__dirname, './client'),
+
+      ],
+      // need this to ensure Webpack can read
+      mainFields: ['webpack', 'browser', 'web', 'main'],
+      // require this for build, but don't want to expose config to browser.
+      alias: {
+        'config': path.resolve(__dirname, '../app/client/client-config-loader.js')
+      }
+
+    },
+    resolveLoader: {
+    },
+    module: {
+      rules: [{
+        test: [/\.jsx$/, /\.js$/],
+        use: [{
+          loader: 'babel-loader'
+        }]
+      }]
+    },
+    plugins: [
+      new webpack.optimize.CommonsChunkPlugin({
+        name: 'vendor',
+        minChunks: Infinity,
+        //filename: '[name].[hash].js'
+        filename: '[name].bundle.js'
+      }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('production')
+        }
+      })
+    ],
+    stats: {
+      colors: true,
+      modules: false,
+      reasons: false,
+      errorDetails: true
+    }
+  },
   server: {
     devtool: 'eval',
     entry: {

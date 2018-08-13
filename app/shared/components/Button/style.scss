@@ -1,0 +1,76 @@
+.navbar-toggler {
+  background-image: url(../svg/menu.svg);
+  background-position: center;
+  background-size: cover;
+  border-radius: 0;
+  text-indent: 100%;
+  width: 2.4rem;
+  height: 1.8rem;
+
+}
+
+.btn--search {
+  background-color: $green;
+}
+
+.btn--large {
+  font-size: 1.6rem;
+  padding-top: 2.2rem;
+  padding-bottom: 1.8rem;
+
+  &:active {
+    padding-top: 2.4rem;
+    padding-bottom: 1.6rem;
+  }
+}
+
+.btn--primary {
+  color: $black;
+  background-color: $green;
+  overflow: hidden;
+
+  border-radius: 0;
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 1.2rem 2rem 1rem;
+  text-decoration: none;
+  text-align: center;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  @include media-breakpoint-up(sm) {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+    outline: 0;
+  }
+
+  &:active {
+    padding-top: 1.4rem;
+    padding-bottom: .8rem;
+  }
+}
+
+.btn--raised {
+  box-shadow: 5px 5px 0 0 rgba($green, .5);
+}
+
+.btn--full-width {
+  @include media-breakpoint-up(sm) {
+    display: block;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    width: 100%;
+  }
+}
+
+.navbar-toggler-icon {
+  visibility: hidden;
+}
