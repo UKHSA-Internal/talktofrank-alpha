@@ -100,10 +100,35 @@ app.get('*', function (req, res) {
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
     let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
 
-    let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
+    let renderedHtml
+
+    if ( renderProps.location.search === '?amp=1' ) {
+      renderedHtml = renderFullPageHtmlAmp(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
+    }
+    else {
+      renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
+    }
+
+
     return res.status(status).send(renderedHtml)
   })
 })
+
+function renderFullPageHtmlAmp (skip, html, head, scripts, initialState) {
+  return `
+    <!doctype html>
+    <html ⚡>
+     <head>
+       <meta charset="utf-8">
+       <link rel="canonical" href="hello-world.html">
+       <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+       <style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>
+       <script async src="https://cdn.ampproject.org/v0.js"></script>
+     </head>
+     <body>Hello World!</body>
+    </html>
+  `
+}
 
 function renderFullPageHtml (skip, html, head, scripts, initialState) {
   return `
