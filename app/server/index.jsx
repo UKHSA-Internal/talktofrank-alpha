@@ -16,11 +16,14 @@ import { generateStore } from '../shared/store'
 import Head from '../shared/components/Head/component.jsx'
 import Scripts from '../shared/components/Scripts/component.jsx'
 import Skiplinks from '../shared/components/Skiplinks/component.jsx'
+import ContentfulTextSearch from 'contentful-text-search'
+const path = require('path')
 
 /*
  * Express routes
  */
 import apiRoutes from './api/v1/api.js'
+import contentFulWebhookRoutes from './contentful/webhooks.js'
 
 /*
  * Project configuration
@@ -34,6 +37,18 @@ const app = express()
 const cacheBusterTS = Date.now()
 
 app.use('/api/v1', apiRoutes)
+app.use('/contentful/webhook', contentFulWebhookRoutes)
+
+/*
+ * Adding service worker files direct to express callbacks
+ */
+app.use('/sw.js', (req, res) => {
+  res.sendFile(path.resolve('../static/ui/js/sw.js'))
+})
+app.use('/service-worker.js', (req, res) => {
+  res.sendFile(path.resolve('../static/ui/js/service-worker.js'))
+})
+
 app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))

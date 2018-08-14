@@ -5,6 +5,7 @@ const Scripts = (props) => {
     <React.Fragment>
       <script src={'/ui/js/vendor.bundle.js?v=' + props.cacheTS}></script>
       <script src={'/ui/js/client.bundle.js?v=' + props.cacheTS}></script>
+      <script type="text/javascript" src={'/sw.js'}></script>
     </React.Fragment>
   )
 }
