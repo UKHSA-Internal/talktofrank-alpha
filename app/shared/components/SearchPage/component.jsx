@@ -144,7 +144,7 @@ export default class SearchPage extends React.Component {
     return (
       <React.Fragment>
         <p>
-          <span class="h4">Did you mean:</span>{' '}
+          <span className="h4">Did you mean:</span>{' '}
           { displayValues.map((item, key) =>
             <React.Fragment>
               <a onClick={this.handleSuggestionClick}>
@@ -196,8 +196,7 @@ export default class SearchPage extends React.Component {
   }
 
   render () {
-    const { loading } = this.props
-    const { results, suggest } = this.props.pageData
+    const { loading, results, suggest } = this.props
     const { searchValue } = this.state
     return (
       <React.Fragment>

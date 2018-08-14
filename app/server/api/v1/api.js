@@ -196,7 +196,6 @@ router.get('/drugList', (req, res, next) => {
   }
 })
 
-
 // router.use(bodyParser.json())
 
 router.get('/pages/:slug', (req, res, next) => {

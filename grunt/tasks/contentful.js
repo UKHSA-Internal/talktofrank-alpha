@@ -1,6 +1,6 @@
 const ContentfulTextSearch = require('contentful-text-search')
-const yaml = require('js-yaml');
-const fs   = require('fs');
+const yaml = require('js-yaml')
+const fs = require('fs')
 
 module.exports = function (grunt) {
   grunt.registerMultiTask('contentful', 'Sync and reindex entries from contentful to Elasticsearch', function () {
@@ -40,7 +40,6 @@ module.exports = function (grunt) {
       contentType: config.contentful.contentTypes.drug
     })
 
-
     if (this.target === 'deleteAllIndices') {
       grunt.log.subhead(`Deleting all indices`)
       this.search.indexer.deleteAllIndices().then(() => {
@@ -65,6 +64,5 @@ module.exports = function (grunt) {
         done()
       })
     }
-
   })
 }
