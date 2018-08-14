@@ -3,6 +3,11 @@ default:
   - build
   - concurrent:monitor
 
+localtunnel:
+  - clean
+  - build
+  - concurrent:monitorTunnel
+
 css:
   - sass
   - postcss

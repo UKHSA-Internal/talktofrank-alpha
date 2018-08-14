@@ -5,6 +5,13 @@ module.exports = {
       logConcurrentOutput: true
     }
   },
+  monitorTunnel: {
+    tasks: ['nodemon', 'watch', 'ngrok'],
+    options: {
+      logConcurrentOutput: true,
+      limit: 3
+    }
+  },
   js: {
     tasks: ['webpack:client', 'webpack:server']
   }

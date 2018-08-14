@@ -12,7 +12,6 @@ import cookieParser from 'cookie-parser'
 import { getRoutes } from '../shared/routes'
 import { exists } from '../shared/utilities'
 import { generateStore } from '../shared/store'
-
 import Head from '../shared/components/Head/component.jsx'
 import Scripts from '../shared/components/Scripts/component.jsx'
 import Skiplinks from '../shared/components/Skiplinks/component.jsx'
@@ -31,10 +30,29 @@ import contentFulWebhookRoutes from './contentful/webhooks.js'
 import { config } from 'config'
 import packageInfo from '../../package.json'
 
+/*
+ * Elasticsearch config
+*/
+const search = new ContentfulTextSearch({
+  space: config.contentful.contentSpace,
+  token: config.contentful.contentAccessToken,
+  elasticHost: config.elasticsearch.host,
+  contentType: config.contentful.contentTypes.drug
+})
+
 var store
 
 const app = express()
 const cacheBusterTS = Date.now()
+
+const addSearch = (req, res, next) => {
+  res.search = search
+  return next()
+}
+
+// Add search middleware
+app.use('/api/v1/search', addSearch)
+app.use('/contentful/webhook', addSearch)
 
 app.use('/api/v1', apiRoutes)
 app.use('/contentful/webhook', contentFulWebhookRoutes)
