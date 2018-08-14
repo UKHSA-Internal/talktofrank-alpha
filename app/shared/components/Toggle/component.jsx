@@ -11,7 +11,7 @@ export default class Toggle extends React.PureComponent {
   }
 
   toggle (event) {
-    //event.preventDefault()
+    event.preventDefault()
     this.setState({ visible: !this.state.visible })
   }
 
@@ -24,7 +24,6 @@ export default class Toggle extends React.PureComponent {
       'collapsible_trigger--active': this.state.visible
     })
 
-
     return (
       <div className={classes} id={id}>
         {this.state.visible &&
@@ -32,7 +31,7 @@ export default class Toggle extends React.PureComponent {
             {this.props.children}
           </div>
         }
-        <a href='#' className={toggleClass} onClick={this.toggle.bind(this)}>
+        <a href={'#' + id} className={toggleClass} onClick={this.toggle.bind(this)}>
           {text}
         </a>
       </div>
