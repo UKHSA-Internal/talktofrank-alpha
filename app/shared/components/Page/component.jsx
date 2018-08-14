@@ -6,88 +6,97 @@ import GridCol from '../GridCol/component.jsx'
 import Toggle from '../Toggle/component.jsx'
 import Heading from '../Heading/component.jsx'
 import Svg from '../Svg/component.jsx'
+import Footer from '../Footer/component.jsx'
+import Main from '../Main/component.jsx'
 
 const Page = props => {
   const modifiers = {
     type: 'p',
     modifiers: 'h6'
   }
+  const name = props.name.toLowerCase()
 
   return (
     <React.Fragment>
       <Masthead />
-      <div className='main-wrapper'>
+      <Main>
         <h1>{props.name}</h1>
+        <p className='lead muted'>{props.synonyms}</p>
+        <Longform text={props.description} className='spacing-bottom--large'/>
         <Grid>
           <GridCol className='col-12 col-sm-8'>
-            <p className='lead muted'>{props.synonyms}</p>
-            <Longform text={props.description} />
-            <section className='section'>
-
-              <Svg url='/ui/svg/eye.svg' className='ml-5 mb-5 float-right'/>
-              <Heading modifiers='h3'
+            <section className='section section--has-toggle'>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight'
                 // eslint-disable-next-line no-irregular-whitespace
-                text={`How do you tell if something  is ${props.name}?`}/>
-              <p className='muted'>Read about what {props.name} looks, smells and tastes like</p>
-              <Toggle text={`How to recognise ${props.name}`} className='collapsible--chevron' hidden='true'>
-                {props.appearance_whatDoesItLookLike && <React.Fragment><Heading {...modifiers} text={`What does ${props.name} look like?`}/>
+                text={`How it looks, tastes and smells`}/>
+              <Toggle text={`How to recognise ${name}`} className='collapsible--chevron' hidden='true'>
+                {props.appearance_whatDoesItLookLike && <React.Fragment><Heading {...modifiers} text={`What does ${name} look like?`}/>
                   <Longform text={props.appearance_whatDoesItLookLike}/></React.Fragment>
                 }
-                {props.appearance_whatDoesItTastesmellLike && <React.Fragment><Heading {...modifiers} text={`What does ${props.name} taste/smell like?`}/>
+                {props.risks_whatIsCutWith && <React.Fragment><Heading {...modifiers} text={`What is ${name} cut with?`}/><Longform text={props.risks_whatIsCutWith} /></React.Fragment>
+                }
+                {props.appearance_whatDoesItTastesmellLike && <React.Fragment><Heading {...modifiers} text={`What does ${name} taste/smell like?`}/>
                   <Longform text={props.appearance_whatDoesItTastesmellLike}/></React.Fragment>
                 }
-
-                {props.appearance_howDoPeopleTakeIt && <React.Fragment><Heading {...modifiers} text={`How do people take ${props.name}?`}/><Longform text={props.appearance_howDoPeopleTakeIt} /></React.Fragment>
+                {props.appearance_howDoPeopleTakeIt && <React.Fragment><Heading {...modifiers} text={`How do people take ${name}?`}/><Longform text={props.appearance_howDoPeopleTakeIt} /></React.Fragment>
                 }
               </Toggle>
             </section>
-            <section className='section'>
-              <Svg url='/ui/svg/effects.svg' className='ml-5 mb-5 float-right'/>
-              <Heading modifiers='h3' text={`What are the effects of taking ${props.name}?`}/>
-              <p className='muted'>Read about the effects that {props.name} has on your body and mind.</p>
+            <section className='section section--has-toggle'>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`How it feels`}/>
               <Toggle text='How to recognise cocaine' className='collapsible--chevron' hidden='true'>
-                {props.effects_howDoesItMakeYouFeel && <React.Fragment><Heading {...modifiers} text={`How does ${props.name} make you feel?`}/><Longform text={props.effects_howDoesItMakeYouFeel} /></React.Fragment>
+                {props.effects_howDoesItMakeYouFeel && <React.Fragment><Heading {...modifiers} text={`How does ${name} make you feel?`}/><Longform text={props.effects_howDoesItMakeYouFeel} /></React.Fragment>
                 }
-                {props.effects_howDoesItMakePeopleBehave && <React.Fragment><Heading {...modifiers} text={`How does ${props.name} make people behave?`}/><Longform text={props.effects_howDoesItMakePeopleBehave} /></React.Fragment>
+                 {props.effects_whatAreThePhysicalEffects && <React.Fragment><Heading {...modifiers} text={`What are the physical effects of ${name}?`}/><Longform text={props.effects_whatAreThePhysicalEffects} /></React.Fragment>
                 }
-                {props.effects_whatAreThePhysicalEffects && <React.Fragment><Heading {...modifiers} text={`What are the physical effects of ${props.name}?`}/><Longform text={props.effects_whatAreThePhysicalEffects} /></React.Fragment>
-                }
-                {props.effects_whatIsTheComedownLike && <React.Fragment><Heading {...modifiers} text={`What is the comedown off ${props.name} like?`}/><Longform text={props.effects_whatIsTheComedownLike} /></React.Fragment>
-                }
-                {props.effects_howLongDoesItStayInYourBody && <React.Fragment><Heading {...modifiers} text={`How long does ${props.name} stay in your body?`}/><Longform text={props.effects_howLongDoesItStayInYourBody} /></React.Fragment>
+                {props.effects_howDoesItMakePeopleBehave && <React.Fragment><Heading {...modifiers} text={`How does ${name} make people behave?`}/><Longform text={props.effects_howDoesItMakePeopleBehave} /></React.Fragment>
                 }
               </Toggle>
             </section>
-            <section className='section'>
-              <Svg url='/ui/svg/risks.svg' className='ml-5 mb-5 float-right'/>
-              <Heading modifiers='h3' text={`What are the risks of taking ${props.name}?`}/>
-              <p className='muted'>Read about addiction, the risks of mixing {props.name} with other drugs and the risks to your health.</p>
-              <Toggle text={`How to recognise ${props.name}`} className='collapsible--chevron' hidden='true'>
-                {props.risks_whatAreTheRisks && <React.Fragment><Heading {...modifiers} text={`What are the risks of ${props.name}?`}/><Longform text={props.risks_whatAreTheRisks} /></React.Fragment>
+
+            <section className='section section--has-toggle'>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text='Duration'/>
+              <Toggle text={`Duration of ${name}`} className='collapsible--chevron' hidden='true'>
+                {props.effects_howLongDoesItStayInYourBody && <React.Fragment><Heading {...modifiers} text={`How long does ${name} stay in your body?`}/><Longform text={props.effects_howLongDoesItStayInYourBody} /></React.Fragment>
                 }
-                {props.risks_canYouGetAddicted && <React.Fragment><Heading {...modifiers} text={`Can you get addicted to ${props.name}?`}/><Longform text={props.risks_canYouGetAddicted} /></React.Fragment>
-                }
-                {props.risks_isItDangerousToMixWithOtherDrugs && <React.Fragment><Heading {...modifiers} text={`Is ${props.name} dangerous to mix with other drugs?`}/><Longform text={props.risks_isItDangerousToMixWithOtherDrugs} /></React.Fragment>
-                }
-                {props.risks_whatIsCutWith && <React.Fragment><Heading {...modifiers} text={`What is ${props.name} cut with?`}/><Longform text={props.risks_whatIsCutWith} /></React.Fragment>
-                }
-                {props.effects_howDoesItEffectSocietyAndTheEnvironment && <React.Fragment><Heading {...modifiers} text={`How does ${props.name} effect society and the environment`}/><Longform text={props.effects_howDoesItEffectSocietyAndTheEnvironment} /></React.Fragment>
+                {props.effects_whatIsTheComedownLike && <React.Fragment><Heading {...modifiers} text={`What is the comedown off ${name} like?`}/><Longform text={props.effects_whatIsTheComedownLike} /></React.Fragment>
                 }
               </Toggle>
             </section>
-            <section className='section'>
-              <Svg url='/ui/svg/law.svg' className='ml-5 mb-5 float-right'/>
-              <Heading modifiers='h3' text={`What does the law say about ${props.name}?`}/>
-              <p className='muted'>Read more about {props.name} being a Class A drug.</p>
+            <section className='section section--has-toggle'>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`The risks`}/>
+              <Toggle text={`Risks of ${name}`} className='collapsible--chevron' hidden='true'>
+                {props.risks_whatAreTheRisks && <React.Fragment><Heading {...modifiers} text={`What are the risks of ${name}?`}/><Longform text={props.risks_whatAreTheRisks} /></React.Fragment>
+                }
+                {props.effects_howDoesItEffectSocietyAndTheEnvironment && <React.Fragment><Heading {...modifiers} text={`How does ${name} effect society and the environment`}/><Longform text={props.effects_howDoesItEffectSocietyAndTheEnvironment} /></React.Fragment>
+                }
+              </Toggle>
+            </section>
+            <section className='section section--has-toggle'>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text='Mixing'/>
+              <Toggle text={`Risks of mixing with ${name}`} className='collapsible--chevron' hidden='true'>
+                {props.risks_isItDangerousToMixWithOtherDrugs && <React.Fragment><Heading {...modifiers} text={`Is ${name} dangerous to mix with other drugs?`}/><Longform text={props.risks_isItDangerousToMixWithOtherDrugs} /></React.Fragment>
+                }
+              </Toggle>
+            </section>
+            <section className='section section--has-toggle'>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text='Addiction'/>
+              <Toggle text={`Addiction risks of ${name}`} className='collapsible--chevron' hidden='true'>
+                {props.risks_canYouGetAddicted && <React.Fragment><Heading {...modifiers} text={`Can you get addicted to ${name}?`}/><Longform text={props.risks_canYouGetAddicted} /></React.Fragment>
+                }
+              </Toggle>
+            </section>
+            <section className='section section--has-toggle'>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`The law`}/>
               <Toggle text={'How to recognise cocaine'} className='collapsible--chevron' hidden='true'>
-                {props.law_whatIsTheDrugClassification && <React.Fragment><Heading {...modifiers} text={`What is the drug classification of ${props.name}?`}/><Longform text={props.law_whatIsTheDrugClassification} /></React.Fragment>
+                {props.law_whatIsTheDrugClassification && <React.Fragment><Heading {...modifiers} text={`What is the drug classification of ${name}?`}/><Longform text={props.law_whatIsTheDrugClassification} /></React.Fragment>
                 }
-                {props.law_whatIfYouAreCaughtWithIt && <React.Fragment><Heading {...modifiers} text={`What if you are caught with ${props.name}?`}/><Longform text={props.law_whatIfYouAreCaughtWithIt} /></React.Fragment>
+                {props.law_whatIfYouAreCaughtWithIt && <React.Fragment><Heading {...modifiers} text={`What if you are caught with ${name}?`}/><Longform text={props.law_whatIfYouAreCaughtWithIt} /></React.Fragment>
                 }
               </Toggle>
             </section>
-            <section className='section'>
-              <Heading modifiers='h3' text={`Worried about your  ${props.name} use?`}/>
+            <section className='section section--has-toggle'>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`Worried about ${name} use?`}/>
               <p className='muted'>If you are worried about your {props.name} use, you can call FRANK on <a href='tel:0800776600'>0800 77 66 00</a> for friendly, confidential advice.</p>
               <Toggle text={'How to recognise cocaine'} className='collapsible--chevron' hidden='true'>
                 {props.worried_iFeelPressuredIntoTakingItWhatCanIDo && <React.Fragment><Heading {...modifiers} text={'I feel pressured into taking it, what can I do?'}/><Longform text={props.worried_iFeelPressuredIntoTakingItWhatCanIDo} /></React.Fragment>
@@ -100,7 +109,8 @@ const Page = props => {
             </section>
           </GridCol>
         </Grid>
-      </div>
+      </Main>
+      <Footer />
     </React.Fragment>
   )
 }

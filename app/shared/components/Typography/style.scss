@@ -169,26 +169,27 @@ mark,
   color: $gray-600;
 }
 
-// Blockquotes
-.blockquote {
-  margin-bottom: $spacer;
-  font-size: $blockquote-font-size;
+.grey {
+  color: $gray-900;
 }
 
-.blockquote-footer {
-  display: block;
-  font-size: 80%; // back to default font-size
-  color: $blockquote-small-color;
+.display-2 {
+  margin-top: .3em;
+  font-size: 6rem;
 
-  &::before {
-    content: '\2014 \00A0'; // em dash, nbsp
+  @include media-breakpoint-up(md) {
+    font-size: 8rem;
   }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 12rem;
+  }
+
 }
 
-
-
-
-
+.smaller {
+  font-size: 80%;
+}
 
 
 

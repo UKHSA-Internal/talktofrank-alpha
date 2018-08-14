@@ -2,6 +2,8 @@ module.exports = {
   target: [
     'app/**/*.js',
     'app/**/*.jsx',
-    '!app/server/api/static/**/*'
+    'grunt/**/*.js',
+    '!app/server/api/static/**/*',
+    '!app/client/index.jsx'
   ]
 }

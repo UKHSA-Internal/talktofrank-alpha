@@ -26,7 +26,7 @@ export default class Toggle extends React.PureComponent {
     return (
       <div className={classes}>
         {this.state.visible &&
-          <div className='collapsible__content mt-3'>
+          <div className='collapsible__content'>
             {this.props.children}
           </div>
         }

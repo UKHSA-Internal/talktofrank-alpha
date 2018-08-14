@@ -37,6 +37,7 @@ $grid-gutter: 30px;
 .main-wrapper {
   @extend %constrain;
   padding-top: 3rem;
+  padding-bottom: 5rem;
 
   @include media-breakpoint-up(sm) {
     padding-top: 5rem;
@@ -62,25 +63,54 @@ $grid-gutter: 30px;
   }
 }
 
-.content-wrapper--main {
-  padding: 3rem 1.5rem 5rem;
+.content-wrapper {
+  padding: 1.5rem 1.5rem 5rem;
 
   @include media-breakpoint-up(md) {
     padding-top: 4rem;
   }
 
   @include media-breakpoint-up(lg) {
-    padding: 4rem 0 10rem;
+    padding: 3rem 0 10rem;
   }
 }
 
 .section {
-  padding-top: 1.5rem;
-  padding-bottom: 1.5rem;
+  padding-top: 1rem 1.5rem;
   border-bottom: 2px solid $gray-900;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  position: relative;
+  overflow: hidden;
+
+  &.section--has-toggle {
+    padding-left: 5rem;
+    padding-right: 2rem;
+  }
+
+  &:first-of-type {
+    border-top: 2px solid $gray-900;
+  }
 
   @include media-breakpoint-up(sm) {
-    padding-top: 2.5rem;
-    padding-bottom: 2.5rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+}
+
+// THIS IS BAD AND WILL GO!! @joel @refactor
+.homepage {
+  background-color: $black;
+  background-position: center top;
+  background-repeat: no-repeat;
+  padding-left: 0;
+  padding-right: 0;
+  background-size: contain;
+  min-height: 120rem;
+  background-image: url(../img/bg-homepage-mobile.png);
+
+  @include media-breakpoint-up(md) {
+    min-height: 120rem;
+    background-image: url(../img/bg-homepage-desktop.png);
   }
 }

@@ -16,13 +16,13 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.con
  * Add middleware to parse json
  */
 
-router.use(bodyParser.json())
+var jsonParser = bodyParser.json()
 
 /**
  * Get page data
  */
 
-router.get('/search/term/:term', (req, res, next) => {
+router.get('/search/term/:term', jsonParser, (req, res, next) => {
   try {
     if (!req.params.term) {
       const error = new Error()
@@ -196,6 +196,9 @@ router.get('/drugList', (req, res, next) => {
   }
 })
 
+
+// router.use(bodyParser.json())
+
 router.get('/pages/:slug', (req, res, next) => {
   if (!req.params.slug) {
     let error = new Error()
@@ -308,6 +311,66 @@ router.get('/pages/:slug', (req, res, next) => {
       'message': error.response.statusText
     })
   })
+})
+
+/**
+ * Get page data
+ */
+router.get('/drugList', (req, res, next) => {
+  try {
+    let lookupUrl = config.contentful.contentHost + '/spaces/%s/entries?content_type=%s'
+    let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug)
+    axios.get(pageUrl).then(json => {
+      if (json.data.total === 0) {
+        let error = new Error()
+        error.status = 404
+        return next(error)
+      }
+
+      let response = {
+        list: []
+      }
+
+      json.data.items.map((item) => {
+        response.list[response.list.length] = {
+          // name: item.fields.name.toLowerCase(),
+          name: item.fields.name,
+          slug: `/drug/${item.fields.slug}`,
+          synonyms: item.fields.synonyms,
+          description: item.fields.description
+        }
+
+        item.fields.synonyms.split(',').map(synonym => {
+          response.list[response.list.length] = {
+            name: synonym.trim(),
+            slug: `/drug/${item.fields.slug}`,
+            parent: item.fields.name
+          }
+        })
+      })
+
+      // let numbers = []
+      response.list = sortBy(response.list, (item) => (item.name)).filter(v => {
+        // if (!isNaN(parseFloat(v.name))) {
+        //   numbers.push(v)
+        //   return
+        // }
+        return isNaN(parseFloat(v.name)) && v.name !== ''
+      })
+
+      // @joel - commenting this out as the filtering / mapping at the component
+      // level messes the order up again and ignores that the numers come last : /
+      // response.list = response.list.concat(numbers)
+      res.send(response)
+    })
+  } catch (e) {
+    /* eslint-disable */
+    console.error(err);
+    /* eslint-enable */
+    res.status(err.response.status).json({
+      'message': err.response.statusText
+    })
+  }
 })
 
 /**
