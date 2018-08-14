@@ -25,7 +25,6 @@ const routes = (
     <Router history={browserHistory}>
       <Route path='/'>
         <Route path='drug'>
-
           <IndexRoute getComponent={(location, callback) => {
             import('../shared/containers/DrugListContainer/component.jsx').then((component) => {
               callback(null, component);
