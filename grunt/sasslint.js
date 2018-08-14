@@ -4,6 +4,6 @@ module.exports = {
   },
   target: [
     'app/shared/components/**/*.scss',
-    'static/ui/scss/sass/main.scss'
+    'static/ui/scss/main.scss'
   ]
 }
