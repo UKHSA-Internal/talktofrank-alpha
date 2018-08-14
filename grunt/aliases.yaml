@@ -10,6 +10,7 @@ css:
 build:
   - css
   - copy
+  - cssmin
   - js
 
 js:
@@ -21,4 +22,4 @@ validate:
 
 post-build-validate:
   - pa11y
-  - lighthouse
+  #- lighthouse
