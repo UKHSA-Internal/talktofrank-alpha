@@ -14,11 +14,6 @@ const DrugList = props => {
   let output = {}
   const limit = 3
 
-  // remove all but parent drugs
-  // let listing = props.list && props.list.filter(item => {
-  //   return !item.parent
-  // })
-
   // get list of beginning numbers / letters
   // really, this is pretty inelegant : /
   let sections = props.list && props.list.map(item => {
