@@ -27,9 +27,7 @@ const Page = props => {
           <GridCol className='col-12 col-sm-8'>
             <section className='section section--has-toggle'>
               <Svg url='/ui/svg/looks.svg' className='float-right spacing--tight' />
-              <Heading modifiers='h3 spacing--single sm-spacing--tight'
-                // eslint-disable-next-line no-irregular-whitespace
-                text={`How it looks, tastes and smells`}/>
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`How it looks, tastes and smells`}/>
               <Toggle text={`How to recognise ${name}`} className='collapsible--chevron' hidden='true'>
                 {props.appearance_whatDoesItLookLike && <React.Fragment><Heading {...modifiers} text={`What does ${name} look like?`}/>
                   <Longform text={props.appearance_whatDoesItLookLike}/></React.Fragment>
