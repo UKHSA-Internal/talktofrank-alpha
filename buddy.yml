@@ -77,7 +77,7 @@
       type: "RUN_NEXT_PIPELINE"
       comment: "Triggered by ${execution.pipeline.name} execution #${execution.id}"
       revision: "INHERIT"
-      next_pipeline_id: 1
+      next_pipeline_id: 147976
 - pipeline: "Validate"
   trigger_mode: "MANUAL"
   ref_name: "develop"
