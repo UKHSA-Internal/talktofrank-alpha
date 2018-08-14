@@ -9,6 +9,8 @@ const util = require('util')
 const marked = require('marked')
 const router = express.Router()
 const sortBy = require('lodash.sortby')
+const groupBy = require('lodash.groupby')
+
 axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.contentAccessToken}`
 
 /**
@@ -137,6 +139,7 @@ router.get('/drugList', (req, res, next) => {
   try {
     let lookupUrl = config.contentful.contentHost + '/spaces/%s/entries?content_type=%s'
     let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug)
+
     axios.get(pageUrl).then(json => {
       if (json.data.total === 0) {
         let error = new Error()
@@ -166,18 +169,31 @@ router.get('/drugList', (req, res, next) => {
         })
       })
 
-      // let numbers = []
-      response.list = sortBy(response.list, (item) => (item.name)).filter(v => {
-        // if (!isNaN(parseFloat(v.name))) {
-        //   numbers.push(v)
-        //   return
-        // }
-        return isNaN(parseFloat(v.name)) && v.name !== ''
+      let grouped = groupBy(response.list, val => {
+        return val.name.charAt(0)
       })
 
-      // @joel - commenting this out as the filtering / mapping at the component
-      // level messes the order up again and ignores that the numers come last : /
-      // response.list = response.list.concat(numbers)
+      var groupedArray = [];
+      for (var i in grouped) {
+        groupedArray.push({
+          group: i,
+          values: grouped[i]
+        })
+      }
+
+      let numbers = []
+
+      response.list = sortBy(groupedArray, (item) => (item.group)).filter(v => {
+        if (!isNaN(parseFloat(v.group))) {
+          numbers.push(v)
+          return false
+        }
+
+        return isNaN(parseFloat(v.group)) && v.group !== ''
+      })
+
+      response.list = response.list.concat(numbers)
+
       res.send(response)
     })
   } catch (e) {
