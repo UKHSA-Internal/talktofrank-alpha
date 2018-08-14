@@ -173,7 +173,7 @@ router.get('/drugList', (req, res, next) => {
         return val.name.charAt(0)
       })
 
-      var groupedArray = [];
+      var groupedArray = []
       for (var i in grouped) {
         groupedArray.push({
           group: i,
