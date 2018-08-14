@@ -6,12 +6,12 @@ export default class Toggle extends React.PureComponent {
     super(props)
 
     this.state = {
-      visible: this.props.className === 'collapsible_trigger--active'
+      visible: this.props.open || this.props.className === 'collapsible_trigger--active'
     }
   }
 
   toggle (event) {
-    event.preventDefault()
+    //event.preventDefault()
     this.setState({ visible: !this.state.visible })
   }
 
