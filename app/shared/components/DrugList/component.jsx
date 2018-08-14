@@ -40,7 +40,7 @@ const DrugList = props => {
         </Form>
         <Grid>
           <GridCol className='col-12 col-sm-8'>
-            <ul className='list-unstyled'>
+            <ul className='list-unstyled' role='list'>
               {output && Object.keys(output).map((val, i) => {
                 return (
                 <li id={val} key={'outer' + i}>
