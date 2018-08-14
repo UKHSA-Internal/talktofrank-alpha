@@ -2,7 +2,7 @@ import React from 'react'
 
 const Skiplinks = () => {
   return (
-    <a className='skip' href='#main' tabindex='0'>Skip to main content</a>
+    <a className='skip' href='#main' tabIndex='0'>Skip to main content</a>
   )
 }
 

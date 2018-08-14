@@ -157,23 +157,22 @@ router.get('/drugList', (req, res, next) => {
           description: item.fields.description
         }
 
-        // temporarily removing this
-        // item.fields.synonyms.split(',').map(synonym => {
-        //   response.list[response.list.length] = {
-        //     name: synonym.trim().toLowerCase(),
-        //     slug: `/drug/${item.fields.slug}`,
-        //     parent: item.fields.name
-        //   }
-        // })
+        item.fields.synonyms.split(',').map(synonym => {
+          response.list[response.list.length] = {
+            name: synonym.trim(),
+            slug: `/drug/${item.fields.slug}`,
+            parent: item.fields.name
+          }
+        })
       })
 
-      let numbers = []
+      // let numbers = []
       response.list = sortBy(response.list, (item) => (item.name)).filter(v => {
-        if (!isNaN(parseFloat(v.name))) {
-          numbers.push(v)
-          return
-        }
-        return isNaN(parseFloat(v.name))
+        // if (!isNaN(parseFloat(v.name))) {
+        //   numbers.push(v)
+        //   return
+        // }
+        return isNaN(parseFloat(v.name)) && v.name !== ''
       })
 
       // @joel - commenting this out as the filtering / mapping at the component
