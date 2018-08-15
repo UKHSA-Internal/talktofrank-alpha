@@ -80,6 +80,7 @@
     "lighthouse": "^3.0.3",
     "load-grunt-config": "^0.19.2",
     "load-grunt-tasks": "^3.5.2",
+    "lodash.groupby": "^4.6.0",
     "lodash.sortby": "^4.7.0",
     "marked": "^0.3.12",
     "merge": "^1.2.0",
