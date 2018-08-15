@@ -53,13 +53,13 @@ export default class SearchPage extends React.Component {
         { title &&
           <li className="search__list-item">
             <p className="h3">{item._source.title}</p>
-            <Link to={`/drug/${item._source.slug}`}>read more...</Link>
+            <a href={`/drug/${item._source.slug}`}>read more...</a>
           </li>
         }
         { synonyms &&
           <li className="search__list-item">
             <p className="h3">{this.getFullSynonym(item, synonyms)}</p>
-            <Link to={`/drug/${item._source.slug}`}>read more...</Link>
+            <a href={`/drug/${item._source.slug}`}>read more...</a>
           </li>
         }
         {
@@ -110,9 +110,9 @@ export default class SearchPage extends React.Component {
         {showDrug &&
           <p className="h3">{item._source.title}</p>
         }
-        <Link to={`/drug/${item._source.slug}`}>
+        <a href={`/drug/${item._source.slug}`}>
           <span dangerouslySetInnerHTML={{__html: name}}/>
-        </Link>
+        </a>
       </React.Fragment>
     )
   }
@@ -122,9 +122,9 @@ export default class SearchPage extends React.Component {
       <React.Fragment>
         <p dangerouslySetInnerHTML={{__html: matchingText}}/>
         <p>more about{' '}
-          <Link to={`/drug/${item._source.slug}`}>
+          <a href={`/drug/${item._source.slug}`}>
             {this.getHeading(fieldName.split('_')[0], item._source.title)}
-            </Link>
+            </a>
         </p>
       </React.Fragment>
     )
@@ -196,7 +196,9 @@ export default class SearchPage extends React.Component {
   }
 
   render () {
-    const { loading, results, suggest } = this.props
+    const { loading } = this.props
+    const { results, suggest } = this.props.pageData
+    console.log(this.props)
     const { searchValue } = this.state
     return (
       <React.Fragment>

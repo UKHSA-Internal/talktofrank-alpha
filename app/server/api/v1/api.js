@@ -16,13 +16,13 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.con
  * Add middleware to parse json
  */
 
-var jsonParser = bodyParser.json()
+router.use(bodyParser.json())
 
 /**
  * Get page data
  */
 
-router.get('/search/term/:term', jsonParser, (req, res, next) => {
+router.get('/search/term/:term', (req, res, next) => {
   try {
     if (!req.params.term) {
       const error = new Error()
@@ -137,7 +137,14 @@ router.get('/search/term/:term', jsonParser, (req, res, next) => {
         'results': results.hits.hits,
         'suggest': results.suggest
       })
-    ))
+    )).catch(e => {
+      /* eslint-disable */
+      console.error(e);
+      /* eslint-enable */
+      res.status(500).json({
+        'message': 'Internal error'
+      })
+    })
   } catch (err) {
     /* eslint-disable */
     console.error(err);
@@ -206,7 +213,7 @@ router.get('/pages/:slug', (req, res, next) => {
     return
   }
 
-  if (req.params.slug === 'index' || req.params.slug === 'no-match') {
+  if (req.params.slug === 'index' || req.params.slug === 'no-match' || req.params.slug === 'offline' ) {
     try {
       return res.send(yaml.safeLoad(fs.readFileSync('./static/' + req.params.slug + '.yml', 'utf8')))
     } catch (e) {

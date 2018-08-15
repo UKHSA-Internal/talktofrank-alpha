@@ -5,6 +5,7 @@ import { fetchPage, fetchDrugList, receivePageError } from './actions'
 import NoMatchContainer from './containers/NoMatchContainer/component.jsx'
 import ServerError from './components/ServerError/component.jsx'
 import PageContainer from './containers/PageContainer/component'
+import PageStaticContainer from './containers/PageStaticContainer/component'
 import SearchPageContainer from './containers/SearchPageContainer/component'
 import TypographyContainer from './containers/TypographyContainer/component' // @todo @refactor @joel - remove this in due time - replace with generic static page handler
 import DrugListContainer from './containers/DrugListContainer/component'
@@ -70,6 +71,7 @@ let getRoutes = store => {
         <Route path='search' component={withFallback(SearchPageContainer)} />
         <Route path=':drugName' component={withFallback(PageContainer)} onEnter={getPage} />
       </Route>
+      <Route path='offline' component={withFallback(PageStaticContainer)} onEnter={getPage} slug='offline' />
       <Route path='*' component={withFallback(NoMatchContainer)} onEnter={getPage} slug='no-match' />
     </Route>
   )
