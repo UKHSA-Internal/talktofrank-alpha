@@ -31,7 +31,8 @@ module.exports = function (grunt) {
 
       results.forEach(result => {
         if (result.categories.performance.score < taskOptions.threshold) {
-          grunt.log.subhead(`\u2716 ${result.finalUrl} failed\n`)
+          let score = (result.categories.performance.score * 100)
+          grunt.log.subhead(`\u2716 ${result.finalUrl} failed (${score}%)\n`)
           errors = true
           total++
         }
@@ -39,9 +40,9 @@ module.exports = function (grunt) {
 
       if (errors) {
         grunt.fail.warn(`${total} pages failed performance`, 3)
-      } else {
-        done()
       }
+      done()
+
     })
   })
 }
