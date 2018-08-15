@@ -42,7 +42,6 @@ module.exports = function (grunt) {
         grunt.fail.warn(`${total} pages failed performance`, 3)
       }
       done()
-
     })
   })
 }
