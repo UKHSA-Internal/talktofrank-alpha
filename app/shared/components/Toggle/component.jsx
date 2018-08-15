@@ -14,12 +14,7 @@ export default class Toggle extends React.PureComponent {
 
     if (this.props.history) {
       if ('replaceState' in history) {
-        let path
-        if (window.location.hash === event.target.getAttribute('data-url')) {
-          path = this.props.history.pathname
-        } else {
-          path = event.target.href
-        }
+        let path = (window.location.hash === event.target.getAttribute('data-url')) ? this.props.history.pathname : event.target.href
         window.history.replaceState({}, document.title, path)
       }
     }
