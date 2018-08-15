@@ -24,15 +24,16 @@ export default class Toggle extends React.PureComponent {
     })
 
     return (
-      <div className={classes} id={id}>
+      <div className={classes}>
+        <a role='button' href={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible} aria-controls={id}>
+          {text}
+        </a>
         {this.state.visible &&
-          <div className='collapsible__content'>
+          <div className='collapsible__content' id={id}>
             {this.props.children}
           </div>
         }
-        <a role='button' href={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
-          {text}
-        </a>
+
       </div>
     )
   }
