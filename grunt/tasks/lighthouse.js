@@ -17,7 +17,7 @@ module.exports = function (grunt) {
     const taskOptions = this.options({})
 
     const opts = {
-      chromeFlags: ['--show-paint-rects'],
+      chromeFlags: ['--headless', '--no-sandbox'],
       onlyCategories: ['performance']
     }
 
