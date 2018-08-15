@@ -43,7 +43,7 @@ const DrugList = props => {
                   <ul className='list-unstyled'>
                   {output[val].map((v, index) => {
                     let synonyms
-                    let name = v.parent ? <span>{v.name} <span className='muted smaller'>({v.parent})</span></span> : <span>{v.name}</span>
+                    let name = v.parent ? <span>{v.name} <span className='muted smaller regular'>({v.parent})</span></span> : <span>{v.name}</span>
                     if (v.synonyms) {
                       let item = v.synonyms.split(',')
                       synonyms = item.length > limit ? `${item.splice(0, limit).join(', ')} +${item.length} more` : item.join(', ')
