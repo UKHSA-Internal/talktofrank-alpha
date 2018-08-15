@@ -173,16 +173,18 @@ router.get('/drugList', (req, res, next) => {
         return val.name.charAt(0)
       })
 
-      var groupedArray = []
+      let groupedArray = []
       for (var i in grouped) {
+        let sortedValues = sortBy(grouped[i], (item) => {
+          return item.name.toLowerCase()
+        })
         groupedArray.push({
           group: i,
-          values: grouped[i]
+          values: sortedValues
         })
       }
 
       let numbers = []
-
       response.list = sortBy(groupedArray, (item) => (item.group)).filter(v => {
         if (!isNaN(parseFloat(v.group))) {
           numbers.push(v)
