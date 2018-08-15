@@ -26,9 +26,8 @@ const Page = props => {
         <Grid>
           <GridCol className='col-12 col-sm-8'>
             <section className='section section--has-toggle'>
-              <Heading modifiers='h3 spacing--single sm-spacing--tight'
-                // eslint-disable-next-line no-irregular-whitespace
-                text={`How it looks, tastes and smells`}/>
+              <Svg url='/ui/svg/looks.svg' className='float-right spacing--tight' />
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`How it looks, tastes and smells`}/>
               <Toggle text={`How to recognise ${name}`} className='collapsible--chevron' hidden='true'>
                 {props.appearance_whatDoesItLookLike && <React.Fragment><Heading {...modifiers} text={`What does ${name} look like?`}/>
                   <Longform text={props.appearance_whatDoesItLookLike}/></React.Fragment>
@@ -43,8 +42,9 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/feels.svg' className='float-right spacing--tight' />
               <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`How it feels`}/>
-              <Toggle text='How to recognise cocaine' className='collapsible--chevron' hidden='true'>
+              <Toggle text={`How does ${name} feel`} className='collapsible--chevron' hidden='true'>
                 {props.effects_howDoesItMakeYouFeel && <React.Fragment><Heading {...modifiers} text={`How does ${name} make you feel?`}/><Longform text={props.effects_howDoesItMakeYouFeel} /></React.Fragment>
                 }
                  {props.effects_whatAreThePhysicalEffects && <React.Fragment><Heading {...modifiers} text={`What are the physical effects of ${name}?`}/><Longform text={props.effects_whatAreThePhysicalEffects} /></React.Fragment>
@@ -55,6 +55,7 @@ const Page = props => {
             </section>
 
             <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/duration.svg' className='float-right spacing--tight' />
               <Heading modifiers='h3 spacing--single sm-spacing--tight' text='Duration'/>
               <Toggle text={`Duration of ${name}`} className='collapsible--chevron' hidden='true'>
                 {props.effects_howLongDoesItStayInYourBody && <React.Fragment><Heading {...modifiers} text={`How long does ${name} stay in your body?`}/><Longform text={props.effects_howLongDoesItStayInYourBody} /></React.Fragment>
@@ -64,6 +65,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/risks.svg' className='float-right spacing--tight' />
               <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`The risks`}/>
               <Toggle text={`Risks of ${name}`} className='collapsible--chevron' hidden='true'>
                 {props.risks_whatAreTheRisks && <React.Fragment><Heading {...modifiers} text={`What are the risks of ${name}?`}/><Longform text={props.risks_whatAreTheRisks} /></React.Fragment>
@@ -73,6 +75,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/mixing.svg' className='float-right spacing--tight' />
               <Heading modifiers='h3 spacing--single sm-spacing--tight' text='Mixing'/>
               <Toggle text={`Risks of mixing with ${name}`} className='collapsible--chevron' hidden='true'>
                 {props.risks_isItDangerousToMixWithOtherDrugs && <React.Fragment><Heading {...modifiers} text={`Is ${name} dangerous to mix with other drugs?`}/><Longform text={props.risks_isItDangerousToMixWithOtherDrugs} /></React.Fragment>
@@ -80,6 +83,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/addiction.svg' className='float-right spacing--tight' />
               <Heading modifiers='h3 spacing--single sm-spacing--tight' text='Addiction'/>
               <Toggle text={`Addiction risks of ${name}`} className='collapsible--chevron' hidden='true'>
                 {props.risks_canYouGetAddicted && <React.Fragment><Heading {...modifiers} text={`Can you get addicted to ${name}?`}/><Longform text={props.risks_canYouGetAddicted} /></React.Fragment>
@@ -87,6 +91,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/law.svg' className='float-right spacing--tight' />
               <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`The law`}/>
               <Toggle text={'How to recognise cocaine'} className='collapsible--chevron' hidden='true'>
                 {props.law_whatIsTheDrugClassification && <React.Fragment><Heading {...modifiers} text={`What is the drug classification of ${name}?`}/><Longform text={props.law_whatIsTheDrugClassification} /></React.Fragment>
@@ -96,6 +101,7 @@ const Page = props => {
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/worried.svg' className='float-right spacing--tight' />
               <Heading modifiers='h3 spacing--single sm-spacing--tight' text={`Worried about ${name} use?`}/>
               <p className='muted'>If you are worried about your {props.name} use, you can call FRANK on <a href='tel:0800776600'>0800 77 66 00</a> for friendly, confidential advice.</p>
               <Toggle text={'How to recognise cocaine'} className='collapsible--chevron' hidden='true'>
@@ -114,5 +120,4 @@ const Page = props => {
     </React.Fragment>
   )
 }
-
 export default Page

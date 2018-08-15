@@ -9,6 +9,7 @@ const util = require('util')
 const marked = require('marked')
 const router = express.Router()
 const sortBy = require('lodash.sortby')
+const groupBy = require('lodash.groupby')
 
 axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.contentAccessToken}`
 
@@ -148,56 +149,6 @@ router.get('/search/term/:term', jsonParser, (req, res, next) => {
   }
 })
 
-router.get('/drugList', (req, res, next) => {
-  try {
-    const lookupUrl = config.contentful.contentHost +
-       '/spaces/%s/entries?content_type=%s'
-
-    const pageUrl = util.format(
-      lookupUrl,
-      config.contentful.contentSpace,
-      config.contentful.contentTypes.drug
-    )
-    axios.get(pageUrl).then(json => {
-      if (json.data.total === 0) {
-        let error = new Error()
-        error.status = 404
-        return next(error)
-      }
-
-      let response = {
-        list: []
-      }
-      json.data.items.map((item) => {
-        response.list[response.list.length] = {
-          name: item.fields.name.toLowerCase(),
-          slug: `/drug/${item.fields.slug}`
-        }
-
-        item.fields.synonyms.split(',').map(synonym => {
-          response.list[response.list.length] = {
-            name: synonym.trim().toLowerCase(),
-            slug: `/drug/${item.fields.slug}`,
-            parent: item.fields.name
-          }
-        })
-      })
-      response.list = sortBy(response.list, (item) => (item.name))
-
-      res.send(response)
-    })
-  } catch (err) {
-    /* eslint-disable */
-    console.error(err);
-    /* eslint-enable */
-    res.status(err.response.status).json({
-      'message': err.response.statusText
-    })
-  }
-})
-
-// router.use(bodyParser.json())
-
 router.get('/pages/:slug', (req, res, next) => {
   if (!req.params.slug) {
     let error = new Error()
@@ -319,6 +270,7 @@ router.get('/drugList', (req, res, next) => {
   try {
     let lookupUrl = config.contentful.contentHost + '/spaces/%s/entries?content_type=%s'
     let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug)
+
     axios.get(pageUrl).then(json => {
       if (json.data.total === 0) {
         let error = new Error()
@@ -348,18 +300,33 @@ router.get('/drugList', (req, res, next) => {
         })
       })
 
-      // let numbers = []
-      response.list = sortBy(response.list, (item) => (item.name)).filter(v => {
-        // if (!isNaN(parseFloat(v.name))) {
-        //   numbers.push(v)
-        //   return
-        // }
-        return isNaN(parseFloat(v.name)) && v.name !== ''
+      let grouped = groupBy(response.list, val => {
+        return val.name.charAt(0)
       })
 
-      // @joel - commenting this out as the filtering / mapping at the component
-      // level messes the order up again and ignores that the numers come last : /
-      // response.list = response.list.concat(numbers)
+      let groupedArray = []
+      for (var i in grouped) {
+        let sortedValues = sortBy(grouped[i], (item) => {
+          return item.name.toLowerCase()
+        })
+        groupedArray.push({
+          group: i,
+          values: sortedValues
+        })
+      }
+
+      let numbers = []
+      response.list = sortBy(groupedArray, (item) => (item.group)).filter(v => {
+        if (!isNaN(parseFloat(v.group))) {
+          numbers.push(v)
+          return false
+        }
+
+        return isNaN(parseFloat(v.group)) && v.group !== ''
+      })
+
+      response.list = response.list.concat(numbers)
+
       res.send(response)
     })
   } catch (e) {
