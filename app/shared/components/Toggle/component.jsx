@@ -18,6 +18,9 @@ export default class Toggle extends React.PureComponent {
     const id = this.props.text.toLowerCase().trim().replace(/ /g, '-')
     let text = this.props.hidden ? <span className='sr-only'>{this.props.text}</span> : this.props.text
     let classes = classNames('collapsible', this.props.className)
+    let contentClasses = classNames('collapsible__content', {
+      'collapsible__content--active': this.state.visible
+    })
     let toggleClass = classNames('collapsible__trigger', {
       'collapsible__trigger--active': this.state.visible
     })
@@ -27,12 +30,9 @@ export default class Toggle extends React.PureComponent {
         <a role='button' href={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
           {text}
         </a>
-        {this.state.visible &&
-          <div className='collapsible__content' id={id}>
-            {this.props.children}
-          </div>
-        }
-
+        <div className={contentClasses}>
+          {this.props.children}
+        </div>
       </div>
     )
   }
