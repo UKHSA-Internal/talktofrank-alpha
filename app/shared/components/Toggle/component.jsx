@@ -31,7 +31,7 @@ export default class Toggle extends React.PureComponent {
             {this.props.children}
           </div>
         }
-        <a href={'#' + id} className={toggleClass} onClick={this.toggle.bind(this)}>
+        <a role='button' href='#' className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
           {text}
         </a>
       </div>
