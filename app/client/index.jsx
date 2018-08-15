@@ -2,15 +2,18 @@ import { render } from 'react-dom'
 import React from 'react'
 
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux';
 
 import { app } from '../shared/reducers'
 import { fetchPage } from '../shared/actions'
 import thunkMiddleware from 'redux-thunk'
 
+const rootReducer = combineReducers({
+  app
+})
 var store = createStore(
-  app,
+  rootReducer,
   window.$REDUX_STATE,
   applyMiddleware(
     thunkMiddleware
@@ -22,9 +25,15 @@ const routes = (
     <Router history={browserHistory}>
       <Route path='/'>
         <Route path='drug'>
-
           <IndexRoute getComponent={(location, callback) => {
             import('../shared/containers/DrugListContainer/component.jsx').then((component) => {
+              callback(null, component);
+            }).catch(err => {
+              console.log(err);
+            })
+          }} />
+          <Route path='search' getComponent={(location, callback) => {
+            import('../shared/containers/SearchPageContainer/component.jsx').then((component) => {
               callback(null, component);
             }).catch(err => {
               console.log(err);
