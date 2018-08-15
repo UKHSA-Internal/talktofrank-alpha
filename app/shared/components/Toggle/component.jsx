@@ -4,7 +4,6 @@ import classNames from 'classnames'
 export default class Toggle extends React.PureComponent {
   constructor (props) {
     super(props)
-
     this.state = {
       visible: this.props.open || this.props.className === 'collapsible_trigger--active'
     }
@@ -24,8 +23,8 @@ export default class Toggle extends React.PureComponent {
     })
 
     return (
-      <div className={classes}>
-        <a role='button' href={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible} aria-controls={id}>
+      <div className={classes} id={id}>
+        <a role='button' href={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
           {text}
         </a>
         {this.state.visible &&
