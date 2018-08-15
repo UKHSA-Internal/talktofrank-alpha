@@ -89,5 +89,5 @@
       execute_commands:
       - "npm install"
       - "npm install -g grunt-cli"
-      - "grunt post-build-validate --force"
+      - "grunt post-build-validate"
       trigger_condition: "ALWAYS"
