@@ -11,11 +11,34 @@ export default class Toggle extends React.PureComponent {
 
   toggle (event) {
     event.preventDefault()
+
+    if (this.props.history) {
+      if ('replaceState' in history) {
+        let path
+        if (window.location.hash === event.target.getAttribute('data-url')) {
+          path = this.props.history.pathname
+        } else {
+          path = event.target.href
+        }
+        window.history.replaceState({}, document.title, path)
+      }
+    }
+
     this.setState({ visible: !this.state.visible })
   }
 
+  componentDidMount () {
+    if (this.props.history.hash === '#' + this.returnId()) {
+      this.setState({ visible: true })
+    }
+  }
+
+  returnId () {
+    return this.props.text.toLowerCase().trim().replace(/ /g, '-')
+  }
+
   render () {
-    const id = this.props.text.toLowerCase().trim().replace(/ /g, '-')
+    const id = this.returnId()
     let text = this.props.hidden ? <span className='sr-only'>{this.props.text}</span> : this.props.text
     let classes = classNames('collapsible', this.props.className)
     let contentClasses = classNames('collapsible__content', {
@@ -27,7 +50,7 @@ export default class Toggle extends React.PureComponent {
 
     return (
       <div className={classes} id={id}>
-        <a role='button' href={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
+        <a role='button' href={`#${id}`} data-url={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
           {text}
         </a>
         <div className={contentClasses}>
