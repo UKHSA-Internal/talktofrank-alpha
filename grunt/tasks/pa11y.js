@@ -4,6 +4,8 @@ module.exports = function (grunt) {
   grunt.registerMultiTask('pa11y', 'Accessibility checker', function () {
     let done = this.async()
 
+
+
     let promises = this.data.urls.map((url) => {
       return pa11y(url, {
         chromeLaunchConfig: {
@@ -35,9 +37,8 @@ module.exports = function (grunt) {
 
       if (error) {
         grunt.fail.warn(`${total} accessibility errors`, 3)
-      } else {
-        done()
       }
+      done()
     })
   })
 }
