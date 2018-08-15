@@ -131,14 +131,21 @@ router.get('/search/term/:term', jsonParser, (req, res, next) => {
       }
     }
     search.elasticsearch.client.search({
-      index: `contentful_mltlrs3kods6_en-us_0.0.3`,
+      index: `contentful_mltlrs3kods6_en-us`,
       body: generatedQuery
-    }).then((results) => (
+    }).then(results => (
       res.status(200).json({
         'results': results.hits.hits,
         'suggest': results.suggest
       })
-    ))
+    )).catch(err => {
+      /* eslint-disable */
+      console.error(err);
+      /* eslint-enable */
+      res.status(500).json({
+        'message': 'Internal error'
+      })
+    })
   } catch (err) {
     /* eslint-disable */
     console.error(err);
