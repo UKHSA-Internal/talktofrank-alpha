@@ -38,9 +38,13 @@ A feature branch branching strategy is in use, specifically:
 
 | Task | Description                                                                      |
 | --------------- | -------------------------------------------------------------------------------- |
-| `grunt`  (default)          | Clean existing & build new bundled files. Run your app on the development server at `localhost:3000`.  |
-| `grunt build `         | Create new bundled files                  |
-| `grunt validate`         | Run eslint and sasslint          |
+| `grunt`  (default)                    | Clean existing & build new bundled files. Run your app on the development server at `localhost:3000`.  |
+| `grunt build `                        | Create new bundled files                                                      |
+| `grunt ngrok`                         | Setup an grok tunnel to your local web server                                 |
+| `grunt contentful:deleteAllIndices`   | Delete all elasticsearch indexes                                              |
+| `grunt contentful:fullReindex`        | Delete existing index, create a new ES index and pull entries from contentful |
+| `grunt contentful:reindexContent`     | Pull entries from contentful into Elasticsearch & reindex                     |
+| `grunt localtunnel`                   | Run local server (monitor for changes) with ngrok tunnel                      |
 
 
 ### Contenftul CLI

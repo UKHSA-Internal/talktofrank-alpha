@@ -3,6 +3,11 @@ default:
   - build
   - concurrent:monitor
 
+localtunnel:
+  - clean
+  - build
+  - concurrent:monitorTunnel
+
 css:
   - sass
   - postcss
@@ -22,4 +27,4 @@ validate:
 
 post-build-validate:
   - pa11y
-  #- lighthouse
+  - lighthouse

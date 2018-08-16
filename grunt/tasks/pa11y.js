@@ -35,9 +35,8 @@ module.exports = function (grunt) {
 
       if (error) {
         grunt.fail.warn(`${total} accessibility errors`, 3)
-      } else {
-        done()
       }
+      done()
     })
   })
 }
