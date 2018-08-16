@@ -11,21 +11,49 @@ export default class Toggle extends React.PureComponent {
 
   toggle (event) {
     event.preventDefault()
+    this.setState({ visible: !this.state.visible })
 
     if (this.props.history) {
       if ('replaceState' in history) {
-        let path = (window.location.hash === event.target.getAttribute('data-url')) ? this.props.history.pathname : event.target.href
+        let path = (window.location.hash === event.target.getAttribute('data-target')) ? this.props.history.pathname : event.target.href
         window.history.replaceState({}, document.title, path)
       }
     }
-
-    this.setState({ visible: !this.state.visible })
   }
 
   componentDidMount () {
     if (this.props.history.hash === '#' + this.returnId()) {
       this.setState({ visible: true })
+      this.scrollIntoView(document.documentElement)
     }
+  }
+
+  scrollIntoView (node, to = 0, duration= 1000) {
+
+    const start = node.scrollTop
+    const change = to - start
+    const increment = 20
+    let currentTime = 0
+
+    const animateScroll = (() => {
+      console.log(node, start)
+      currentTime += increment
+      const val = Math.easeInOutQuad(currentTime, start, change, duration)
+      node.scrollTop = val
+
+      if (currentTime < duration) {
+        setTimeout(animateScroll, increment)
+      }
+    })
+
+    Math.easeInOutQuad = function (t, b, c, d) {
+      t /= d/2
+      if (t < 1) return c/2 * t * t + b
+      t--
+      return -c/2 * (t*(t-2) - 1) + b
+    }
+
+    animateScroll()
   }
 
   returnId () {
@@ -44,8 +72,8 @@ export default class Toggle extends React.PureComponent {
     })
 
     return (
-      <div className={classes} id={id}>
-        <a role='button' href={`#${id}`} data-url={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
+      <div className={classes} id={id} ref={node => this.node = node}>
+        <a role='button' href={`#${id}`} data-target={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
           {text}
         </a>
         <div className={contentClasses}>
