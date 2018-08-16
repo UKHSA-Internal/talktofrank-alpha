@@ -11,7 +11,7 @@ const FormGroup = props => {
     <div className={classes}>
       <label htmlFor={props.id}><input className={controlClasses} id={props.id} name={props.name} type={props.type || 'text'}/></label>
       {props.button && <div className='input-group-append'>
-      <Button className='btn--primary icon-magnifying' id='search-button'><Svg url='/ui/svg/magnifying.svg'/></Button>
+      <Button className='btn--primary icon-magnifying' id='search-button'><Svg url='/ui/svg/magnifying.svg' alt=''/></Button>
       </div>}
     </div>
   )
