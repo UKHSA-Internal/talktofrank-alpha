@@ -5,7 +5,7 @@ module.exports = {
       'https://alpha-talktofrank.cxp.io/drug/cocaine'
     ],
     options: {
-      threshold: 0.9
+      threshold: 0.75
     }
   }
 }

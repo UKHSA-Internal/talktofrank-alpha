@@ -49,15 +49,15 @@ export default class SearchPage extends React.Component {
     const synonyms = otherHighlights['synonyms.comma_separated']
 
     return (
-      <React.Fragment>
+      <React.Fragment key={`highlight-${item._source.title}`}>
         { title &&
-          <li className="search__list-item">
+          <li key={`result-title-${item._source.slug}`} className="search__list-item">
             <p className="h3">{item._source.title}</p>
             <a href={`/drug/${item._source.slug}`}>read more...</a>
           </li>
         }
         { synonyms &&
-          <li className="search__list-item">
+          <li key={`result-title-${synonyms[0]}`} className="search__list-item">
             <p className="h3">{this.getFullSynonym(item, synonyms)}</p>
             <a href={`/drug/${item._source.slug}`}>read more...</a>
           </li>
@@ -66,7 +66,7 @@ export default class SearchPage extends React.Component {
           Object.keys(otherHighlights).map(highlightName => {
             if (highlightName === 'synonyms.comma_separated') return null
             return (
-              <li className="search__list-item">
+              <li key={`result-title-${highlightName}`} className="search__list-item">
                 { this.resultItemText(item, otherHighlights[highlightName], highlightName) }
               </li>
             )
@@ -146,7 +146,7 @@ export default class SearchPage extends React.Component {
         <p>
           <span className="h4">Did you mean:</span>{' '}
           { displayValues.map((item, key) =>
-            <React.Fragment>
+            <React.Fragment key={`suggestion-${item._source ? item._source.title : item.text}-${key}`}>
               <a onClick={this.handleSuggestionClick}>
                 {item._source ? item._source.title : item.text}
               </a>
@@ -198,7 +198,6 @@ export default class SearchPage extends React.Component {
   render () {
     const { loading } = this.props
     const { results, suggest } = this.props.pageData
-    console.log(this.props)
     const { searchValue } = this.state
     return (
       <React.Fragment>
