@@ -36,8 +36,7 @@ export default class Toggle extends React.PureComponent {
     let currentTime = 0
     let timerid
 
-    const animateScroll = (() => {
-
+    const animateScroll = () => {
       currentTime += increment
       const val = Math.easeInOutQuad(currentTime, start, change, duration)
       document.documentElement.scrollTop = val
@@ -45,23 +44,22 @@ export default class Toggle extends React.PureComponent {
       if (currentTime < duration) {
         setTimeout(animateScroll, increment)
       }
-    })
+    }
 
     Math.easeInOutQuad = function (t, b, c, d) {
-      t /= d/2
-      if (t < 1) return c/2 * t * t + b
+      t /= d / 2
+      if (t < 1) return c / 2 * t * t + b
       t--
-      return -c/2 * (t*(t-2) - 1) + b
+      return -c / 2 * (t * (t - 2) - 1) + b
     }
 
     if (timerid) {
-      clearTimeout(timerid);
+      clearTimeout(timerid)
     }
 
     timerid = setTimeout(() => {
       animateScroll()
-    }, duration);
-
+    }, duration)
   }
 
   returnId () {
@@ -80,7 +78,7 @@ export default class Toggle extends React.PureComponent {
     })
 
     return (
-      <div className={classes} id={id} ref={node => this.node = node}>
+      <div className={classes} id={id} ref={node => { this.node = node }}>
         <a role='button' href={`#${id}`} data-target={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
           {text}
         </a>
