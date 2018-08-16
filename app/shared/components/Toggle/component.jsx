@@ -24,22 +24,23 @@ export default class Toggle extends React.PureComponent {
   componentDidMount () {
     if (this.props.history.hash === '#' + this.returnId()) {
       this.setState({ visible: true })
-      this.scrollIntoView(this.node, )
+      this.scrollIntoView(this.node)
     }
   }
 
-  scrollIntoView (node,duration= 1000) {
-
+  scrollIntoView (node, duration = 300, offset = 80) {
+    document.documentElement.scrollTop = 0
     const start = document.documentElement.scrollTop
-    const change = node.getBoundingClientRect().top - start
+    const change = (node.getBoundingClientRect().top - offset) - start
     const increment = 20
     let currentTime = 0
+    let timerid
 
     const animateScroll = (() => {
-      console.log(change)
+
       currentTime += increment
       const val = Math.easeInOutQuad(currentTime, start, change, duration)
-      node.scrollTop = val
+      document.documentElement.scrollTop = val
 
       if (currentTime < duration) {
         setTimeout(animateScroll, increment)
@@ -53,7 +54,14 @@ export default class Toggle extends React.PureComponent {
       return -c/2 * (t*(t-2) - 1) + b
     }
 
-    animateScroll()
+    if (timerid) {
+      clearTimeout(timerid);
+    }
+
+    timerid = setTimeout(() => {
+      animateScroll()
+    }, duration);
+
   }
 
   returnId () {
