@@ -9,10 +9,13 @@ const FormGroup = props => {
 
   return (
     <div className={classes}>
-      <label htmlFor={props.id}><input className={controlClasses} id={props.id} name={props.name} type={props.type || 'text'}/></label>
-      {props.button && <div className='input-group-append'>
-      <Button className='btn--primary icon-magnifying' id='search-button'><Svg url='/ui/svg/magnifying.svg' alt=''/></Button>
-      </div>}
+      <label htmlFor={props.id} className='form-label lead'>{props.label}</label>
+      <div className='input-group--raised d-flex'>
+        <input className={controlClasses} id={props.id} name={props.name} type={props.type || 'text'}/>
+          {props.button && <div className='input-group-append'>
+          <Button className='btn--primary icon-magnifying' id='search-button'><Svg url='/ui/svg/magnifying.svg' alt=''/></Button>
+        </div>}
+      </div>
     </div>
   )
 }
