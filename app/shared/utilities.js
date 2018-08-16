@@ -70,12 +70,36 @@ export function exists (obj, key) {
   })
 }
 
-// a silly little map to gauge class names for grid columns
-export const mapper = {
-  1: 'full',
-  2: 'half',
-  3: 'third',
-  4: 'quarter',
-  5: 'fifth',
-  6: 'sixth'
+export function scrollIntoView (node, duration = 300, offset = 80) {
+  document.documentElement.scrollTop = 0
+  const start = document.documentElement.scrollTop
+  const change = (node.getBoundingClientRect().top - offset) - start
+  const increment = 20
+  let currentTime = 0
+  let timerid
+
+  const animateScroll = () => {
+    currentTime += increment
+    const val = Math.easeInOutQuad(currentTime, start, change, duration)
+    document.documentElement.scrollTop = val
+
+    if (currentTime < duration) {
+      setTimeout(animateScroll, increment)
+    }
+  }
+
+  Math.easeInOutQuad = function (t, b, c, d) {
+    t /= d / 2
+    if (t < 1) return c / 2 * t * t + b
+    t--
+    return -c / 2 * (t * (t - 2) - 1) + b
+  }
+
+  if (timerid) {
+    clearTimeout(timerid)
+  }
+
+  timerid = setTimeout(() => {
+    animateScroll()
+  }, duration)
 }

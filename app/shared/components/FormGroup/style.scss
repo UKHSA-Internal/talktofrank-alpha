@@ -5,9 +5,19 @@
     border-color: $green;
     font-size: 1.8rem;
     padding-left: .4em;
+    flex-grow: 1;
   }
 }
 
 .input-group--raised {
   box-shadow: 3px 3px 0 0 $black;
+  width: 100%;
+
+  @include media-breakpoint-up(sm) {
+    max-width: 80rem;
+  }
+}
+
+.form-label {
+  flex-basis: 100%;
 }
