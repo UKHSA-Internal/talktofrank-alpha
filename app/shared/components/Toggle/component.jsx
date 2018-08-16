@@ -1,5 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
+import { scrollIntoView } from '../../utilities'
 
 export default class Toggle extends React.PureComponent {
   constructor (props) {
@@ -24,42 +25,8 @@ export default class Toggle extends React.PureComponent {
   componentDidMount () {
     if (this.props.history.hash === '#' + this.returnId()) {
       this.setState({ visible: true })
-      this.scrollIntoView(this.node)
+      scrollIntoView(this.node)
     }
-  }
-
-  scrollIntoView (node, duration = 300, offset = 80) {
-    document.documentElement.scrollTop = 0
-    const start = document.documentElement.scrollTop
-    const change = (node.getBoundingClientRect().top - offset) - start
-    const increment = 20
-    let currentTime = 0
-    let timerid
-
-    const animateScroll = () => {
-      currentTime += increment
-      const val = Math.easeInOutQuad(currentTime, start, change, duration)
-      document.documentElement.scrollTop = val
-
-      if (currentTime < duration) {
-        setTimeout(animateScroll, increment)
-      }
-    }
-
-    Math.easeInOutQuad = function (t, b, c, d) {
-      t /= d / 2
-      if (t < 1) return c / 2 * t * t + b
-      t--
-      return -c / 2 * (t * (t - 2) - 1) + b
-    }
-
-    if (timerid) {
-      clearTimeout(timerid)
-    }
-
-    timerid = setTimeout(() => {
-      animateScroll()
-    }, duration)
   }
 
   returnId () {
