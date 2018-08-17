@@ -30,8 +30,8 @@ export default class Masthead extends React.PureComponent {
           <Button className='float-left d-block d-md-none mt-4 navbar-toggler' aria-controls='navigation' aria-expanded={this.state.mobileMenuOpen} aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
             <span className='navbar-toggler-icon'>Menu</span>
           </Button>
-          <Logo url='/ui/svg/logo-frank.svg' className='d-block d-md-none'/>
-          <Logo url='/ui/svg/logo-frank-inverted.svg' className='d-none d-md-block'/>
+          <Logo url='/ui/svg/logo-frank.svg' className='d-block d-md-none' alt='Frank logo'/>
+          <Logo url='/ui/svg/logo-frank-inverted.svg' className='d-none d-md-block' alt='Frank logo'/>
           <div className={navClasses}>
             <nav className='navbar text-center' id='navigation'>
               <ul className='navbar-nav mr-auto'>

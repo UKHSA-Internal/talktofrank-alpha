@@ -1,5 +1,13 @@
 .collapsible {
 
+  .collapsible__content {
+    display: none;
+
+    &.collapsible__content--active {
+      display: block;
+    }
+  }
+
   &.collapsible--chevron {
     .collapsible__trigger {
       position: absolute;
