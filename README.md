@@ -61,6 +61,8 @@ Migration and API query tools available using [contentful-cli](https://github.co
 
 ### Workbox (service worker)
 
+**Note: service workers require an HTTPS connection**
+
 [Workbox](https://developers.google.com/web/tools/workbox/modules/) is used to handle service-worker logic.  Configuration is 
 found in ```/workbox-config.js```
 
