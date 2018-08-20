@@ -1,119 +1,79 @@
-/*
- Copyright 2015 Google Inc. All Rights Reserved.
- Licensed under the Apache License, Version 2.0 (the "License");
- you may not use this file except in compliance with the License.
- You may obtain a copy of the License at
- http://www.apache.org/licenses/LICENSE-2.0
- Unless required by applicable law or agreed to in writing, software
- distributed under the License is distributed on an "AS IS" BASIS,
- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- See the License for the specific language governing permissions and
- limitations under the License.
-*/
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.4.1/workbox-sw.js')
 
-'use strict';
-
-// Incrementing CACHE_VERSION will kick off the install event and force previously cached
-// resources to be cached again.
-// configuration
-var version = '1.0.0';
-var cacheName = 'cache-' + version;
-var cachedResources = [
-  '/offline/offline.140818.html',
-  '/ui/css/main.css',
-  '/ui/svg/logo-frank.svg',
-  '/ui/svg/logo-frank-inverted.svg',
-  '/ui/svg/menu.svg',
-  '/ui/font/roboto-regular-webfont.woff',
-  '/ui/font/roboto-bolditalic-webfont.woff'
-];
-var expectedCaches = [
-  cacheName
-];
-
-const OFFLINE_URL = 'offline/offline.140818.html';
-
-// installs the service worker, setting up caches
-self.oninstall = function(event) {
-  console.log('installing');
-
-  // skip the waiting state and immediately activate even while service worker clients are using the registration
-  // to ensure that updates to the underlying service worker take effect immediately for both the current client and
-  // all other active clients
-  self.skipWaiting();
-
-  // install completes when we open the cache and cache all the requested resources
-  event.waitUntil(
-    caches.open(cacheName)
-      .then(function(cache) {
-        console.log('caching resources', cachedResources);
-
-        return cache.addAll(cachedResources);
-      }).then(function() {
-      console.log('install complete');
-    }).catch(function() {
-      console.warn('install failed');
-    })
-  );
-};
-
-// called on activation, removes un-needed caches
-self.onactivate = function(event) {
-  console.log('activate');
-
-  // set itself as the active worker for a client page when the worker and the page are in the same scope
-  if (self.clients && clients.claim) {
-    clients.claim();
+if (workbox) {
+  workbox.setConfig({
+    debug: false
+  })
+  // Custom tracking for GA see
+  // https://developers.google.com/web/tools/workbox/modules/workbox-google-analytics
+  workbox.googleAnalytics.initialize({
+    parameterOverrides: {
+      dimension1: 'offline',
+    },
+    hitFilter: (params) => {
+      const queueTimeInSeconds = Math.round(params.get('qt') / 1000)
+      params.set('metric1', queueTimeInSeconds)
+    },
+  })
+  workbox.skipWaiting()
+  workbox.clientsClaim()
+  workbox.precaching.precacheAndRoute([
+  {
+    "url": "ui/favicon.ico",
+    "revision": "69b83740d3321debb6938468fbbcf55d"
+  },
+  {
+    "url": "ui/font/roboto-bolditalic-webfont.woff",
+    "revision": "b9bf5a7f9c43423ca0ea2ff65e99fa22"
+  },
+  {
+    "url": "ui/font/roboto-bolditalic-webfont.woff2",
+    "revision": "0396609f0d7e5df73411fc22b5c96f3a"
+  },
+  {
+    "url": "ui/font/roboto-medium-webfont.woff",
+    "revision": "aa8eaad36d80b75e102bb56e9cc30a08"
+  },
+  {
+    "url": "ui/font/roboto-medium-webfont.woff2",
+    "revision": "32e06bfc3516aad49017a9ccc45f2aa2"
+  },
+  {
+    "url": "ui/font/roboto-regular-webfont.woff",
+    "revision": "36f62dedc1d7e15a3338c045119376d2"
+  },
+  {
+    "url": "ui/font/roboto-regular-webfont.woff2",
+    "revision": "4bde759fe5d8524e1fdf52c3f66f1066"
+  },
+  {
+    "url": "ui/img/bg-homepage-desktop.png",
+    "revision": "e3b66870c06d383c018babebf92b01e5"
+  },
+  {
+    "url": "ui/img/bg-homepage-mobile.png",
+    "revision": "4dfe2d1718be3020521ad3118cd02ece"
+  },
+  {
+    "url": "offline/offline.html",
+    "revision": "deade7226ca4ecac61f4c9bac0ee5ef1"
+  },
+  {
+    "url": "ui/css/main.css",
+    "revision": "a48e884213dab98f610f67f5b5923d38"
   }
+])
 
-  // list available caches and remove ones we don't use
-  event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      console.log('available caches', cacheNames);
+  // Using network first for development, cache will then be used
+  // for offline connections
+  workbox.routing.registerRoute(
+    /\.(?:ico|woff|woff2|png|svg|css)$/,
+    workbox.strategies.networkFirst()
+  )
 
-      // remove caches not in the expected caches list
-      return Promise.all(
-        cacheNames.map(function(cacheName) {
-          if (expectedCaches.indexOf(cacheName) == -1) {
-            console.log('delete cache', cacheName);
-
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-};
-
-// intercepts fetch requests, possibly responding with cached data
-self.onfetch = function (event) {
-  // the request url could be used to pass some resources through without matching cache
-  var requestURL = new URL(event.request.url);
-
-  // try to match request to cache
-  event.respondWith(
-    caches.match(event.request, {
-      ignoreVary: true
-    }).then(function(response) {
-      // we have a cache hit, return it
-      if (response) {
-        console.log('cache hit', requestURL.href);
-
-        return response;
-      }
-
-      console.log('cache miss', requestURL.href);
-
-      // didn't find it in the cache, pass request to fetch to try to load it from the internet
-      return fetch(event.request).catch(error => {
-        // The catch is only triggered if fetch() throws an exception, which will most likely
-        // happen due to the server being unreachable.
-        // If fetch() returns a valid HTTP response with an response code in the 4xx or 5xx
-        // range, the catch() will NOT be called. If you need custom handling for 4xx or 5xx
-        // errors, see https://github.com/GoogleChrome/samples/tree/gh-pages/service-worker/fallback-response
-        console.log('Fetch failed; returning offline page instead.', error);
-        return caches.match(OFFLINE_URL);
-      })
-    })
-  );
-};
+  workbox.routing.registerRoute(
+    ({event}) => event.request.mode === 'navigate',
+    ({url}) => fetch(url.href)
+      .catch(() => caches.match('/offline/offline.html'))
+  )
+}

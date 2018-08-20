@@ -164,7 +164,7 @@ router.get('/pages/:slug', (req, res, next) => {
     return
   }
 
-  if (req.params.slug === 'index' || req.params.slug === 'no-match' || req.params.slug === 'offline' ) {
+  if (req.params.slug === 'index' || req.params.slug === 'no-match' || req.params.slug === 'offline') {
     try {
       return res.send(yaml.safeLoad(fs.readFileSync('./static/' + req.params.slug + '.yml', 'utf8')))
     } catch (e) {
