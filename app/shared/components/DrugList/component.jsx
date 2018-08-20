@@ -9,6 +9,7 @@ import FormGroup from '../FormGroup/component.jsx'
 import Toggle from '../Toggle/component.jsx'
 import Footer from '../Footer/component.jsx'
 import Main from '../Main/component.jsx'
+import Autocomplete from 'react-autocomplete'
 
 const DrugList = props => {
   const limit = 3
@@ -21,6 +22,22 @@ const DrugList = props => {
         <Form>
           <FormGroup button='true' modifiers='form-control--search' id='search-a-z' label='Search for any drug, you can use street names, slang names or the proper name'/>
         </Form>
+        <Autocomplete
+          getItemValue={(item) => item.label}
+          items={[
+            { label: 'apple' },
+            { label: 'banana' },
+            { label: 'pear' }
+          ]}
+          renderItem={(item, isHighlighted) =>
+            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+              {item.label}
+            </div>
+          }
+          value={value}
+          onChange={(e) => value = e.target.value}
+          onSelect={(val) => value = val}
+        />
         <Grid>
           <GridCol className='col-12 col-sm-8'>
             <ul className='list-unstyled' role='list'>

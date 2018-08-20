@@ -91,6 +91,7 @@
     "npm": "^5.7.1",
     "pa11y": "^5.0.4",
     "react": "^16.2.0",
+    "react-autocomplete": "^1.8.1",
     "react-cookie": "^1.0.4",
     "react-dom": "^16.4.2",
     "react-redux": "^5.0.7",
