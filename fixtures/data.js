@@ -20,7 +20,7 @@ export function sortItems(a, b, value) {
 }
 
 export function fakeRequest(value, cb) {
-  setTimeout(cb, 500, value ?
+  setTimeout(cb, 200, value ?
     getItems().filter(item => articlePlusHeaders(item, value)) :
     getItems()
   )
@@ -28,9 +28,10 @@ export function fakeRequest(value, cb) {
 
 export function getItems() {
   return [
-    { header: 'News' },
-    { id: '0', name: 'Cocaine', content: '' },
-    { id: '1', name: 'Codeine', content: '' }
+
+    { id: '0', name: 'Cocaine', content: 'A powerful stimulant that is snorted as a powder (coke) or smoked from small rocks (crack)' },
+    { id: '1', name: 'Codeine', content: 'Something to chill you out' },
+    { id: '2', name: 'Fake cocaine (Methylphenidate)', content: 'A stimulant and is used to treat Attention Deficit Hyperactivity Disorder' },
   ]
 }
 
