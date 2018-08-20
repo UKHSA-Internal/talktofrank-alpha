@@ -71,7 +71,6 @@ let getRoutes = store => {
         <Route path='search' component={withFallback(SearchPageContainer)} />
         <Route path=':drugName' component={withFallback(PageContainer)} onEnter={getPage} />
       </Route>
-      <Route path='offline' component={withFallback(PageStaticContainer)} onEnter={getPage} slug='offline' />
       <Route path='*' component={withFallback(NoMatchContainer)} onEnter={getPage} slug='no-match' />
     </Route>
   )
