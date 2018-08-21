@@ -10,6 +10,7 @@ import Footer from '../Footer/component.jsx'
 import CardDeck from '../CardDeck/component.jsx'
 import LinkDeck from '../LinkDeck/component.jsx'
 
+// @todo @refactor @joel - haul this out of here and into a fixture / Contentful
 const PageHome = props => {
   const teasers = [{
     modifiers: '',
@@ -67,10 +68,10 @@ const PageHome = props => {
         </section>
         <Grid>
           <GridCol className='col-12'>
-            <CardDeck teasers={teasers} className='spacing-large'/>
+            <CardDeck teasers={teasers} className='spacing--large card-deck--compact'/>
           </GridCol>
           <GridCol className='col-12'>
-            <LinkDeck teasers={cta} className='spacing-large'/>
+            <LinkDeck teasers={cta} className='spacing-bottom--large'/>
           </GridCol>
         </Grid>
       </Main>

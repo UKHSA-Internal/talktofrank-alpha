@@ -24,11 +24,23 @@
   }
 }
 
+.btn--link {
+  background-color: transparent;
+  border-color: transparent;
+  text-decoration: underline;
+  box-shadow: none;
+
+  &:hover,
+  &:focus {
+    background-color: transparent;
+    text-decoration: none;
+  }
+}
+
 .btn--primary {
   color: $black;
   background-color: $green;
   overflow: hidden;
-
   border-radius: 0;
   font-size: 1.4rem;
   line-height: 1;
@@ -56,6 +68,10 @@
     padding-top: 1.4rem;
     padding-bottom: .8rem;
   }
+}
+
+.has-chevron {
+
 }
 
 .btn--raised {
