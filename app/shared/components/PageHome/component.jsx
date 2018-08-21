@@ -7,8 +7,48 @@ import Heading from '../Heading/component.jsx'
 import FormGroup from '../FormGroup/component.jsx'
 import Form from '../Form/component.jsx'
 import Footer from '../Footer/component.jsx'
+import CardDeck from '../CardDeck/component.jsx'
+import LinkDeck from '../LinkDeck/component.jsx'
 
 const PageHome = props => {
+  const teasers = [{
+    modifiers: '',
+    url: '/',
+    title: '5 tips for a safe festival experience',
+    category: 'News',
+    imageUrl: '/ui/img/content/news-1.jpg'
+  },
+  {
+    modifiers: '',
+    url: '/',
+    title: 'The total truth about legal highs',
+    category: 'News',
+    imageUrl: '/ui/img/content/news-2.jpg'
+  },
+  {
+    modifiers: '',
+    url: '/',
+    title: 'What are smart drugs and are they legal? ',
+    category: 'News',
+    imageUrl: '/ui/img/content/news-3.jpg'
+  }]
+
+  const cta = [{
+    modifiers: '',
+    url: '/',
+    title: 'Help for you'
+  },
+  {
+    modifiers: '',
+    url: '/',
+    title: 'Help for others'
+  },
+  {
+    modifiers: '',
+    url: '/',
+    title: 'A-Z of drugs'
+  }]
+
   return (
     <React.Fragment>
       <Masthead/>
@@ -27,7 +67,10 @@ const PageHome = props => {
         </section>
         <Grid>
           <GridCol className='col-12'>
-
+            <CardDeck teasers={teasers} className='spacing-large'/>
+          </GridCol>
+          <GridCol className='col-12'>
+            <LinkDeck teasers={cta} className='spacing-large'/>
           </GridCol>
         </Grid>
       </Main>

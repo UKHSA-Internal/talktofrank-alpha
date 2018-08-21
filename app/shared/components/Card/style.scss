@@ -1,0 +1,46 @@
+
+.card-deck {
+  @include media-breakpoint-up(md) {
+    margin-left: -.3rem;
+    margin-right: -.3rem;
+
+    .card {
+      margin-left: .3rem;
+      margin-right: .3rem;
+    }
+  }
+}
+
+.card {
+  border-radius: 0;
+
+  &.bg-black {
+    background-color: $black;
+
+    a {
+      color: $white;
+    }
+  }
+}
+
+.has-arrow {
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 5rem;
+    height: 5rem;
+    right: 0;
+    bottom: 0;
+    background-color: $green;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMTBweCIgaGVpZ2h0PSIxNXB4IiB2aWV3Qm94PSIwIDAgMTAgMTUiIHZlcnNpb249IjEuMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayI+CiAgICA8IS0tIEdlbmVyYXRvcjogU2tldGNoIDUxLjIgKDU3NTE5KSAtIGh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaCAtLT4KICAgIDx0aXRsZT5GaWxsIDE8L3RpdGxlPgogICAgPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+CiAgICA8ZGVmcz48L2RlZnM+CiAgICA8ZyBpZD0idGVzdGluZy00IiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj4KICAgICAgICA8ZyBpZD0iSG9tZV9ELUNvcHktNSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTEyODcuMDAwMDAwLCAtMTI4MS4wMDAwMDApIiBmaWxsPSIjMDAwMDAwIj4KICAgICAgICAgICAgPHBhdGggZD0iTTEyODcuMzIzNywxMjk1LjUwOTQ3IEMxMjg3LjU5NjE1LDEyOTUuODMzMTIgMTI4Ny45ODUwOSwxMjk2IDEyODguMzc3MjQsMTI5NiBDMTI4OC42OTAwNCwxMjk2IDEyODkuMDA0NjgsMTI5NS44OTM4IDEyODkuMjYzMzcsMTI5NS42NzU4OSBMMTI5Ni41MTA2MSwxMjg5LjU1ODMzIEMxMjk2LjgyMTEyLDEyODkuMjk2MjggMTI5NywxMjg4LjkxMDU3IDEyOTcsMTI4OC41MDM3MiBDMTI5NywxMjg4LjA5Njg2IDEyOTYuODIxMTIsMTI4Ny43MTA2OSAxMjk2LjUxMTA3LDEyODcuNDQ5MTEgTDEyODkuMjYzMzcsMTI4MS4zMjQ2NSBDMTI4OC42ODIyNSwxMjgwLjgzMzY2IDEyODcuODE0MDEsMTI4MC45MDgxMyAxMjg3LjMyMzcsMTI4MS40OTAxNSBDMTI4Ni44MzQzMiwxMjgyLjA3MjYyIDEyODYuOTA4MTYsMTI4Mi45NDI0MiAxMjg3LjQ4ODgyLDEyODMuNDMzNDEgTDEyOTMuNDg3NiwxMjg4LjUwMzI2IEwxMjg3LjQ4OTc0LDEyOTMuNTY2MjEgQzEyODYuOTA4NjIsMTI5NC4wNTY3NCAxMjg2LjgzNDMyLDEyOTQuOTI3IDEyODcuMzIzNywxMjk1LjUwOTQ3IiBpZD0iRmlsbC0xIj48L3BhdGg+CiAgICAgICAgPC9nPgogICAgPC9nPgo8L3N2Zz4=');
+  }
+}
+
+.card-body {
+  .has-arrow & {
+    padding-right: 6rem;
+  }
+}
