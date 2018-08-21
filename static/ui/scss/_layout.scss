@@ -100,11 +100,20 @@ $grid-gutter: 30px;
 .homepage {
 
   @include media-breakpoint-up(md) {
-    background-position: center top;
-    background-repeat: no-repeat;
-    padding-left: 0;
-    padding-right: 0;
-    background-size: cover;
-    background-image: url(../img/bg-homepage-desktop.jpg);
+    &::after {
+      position: absolute;
+      content: '';
+      z-index: -1;
+      top: 8rem;
+      left: 0;
+      width: 100%;
+      background-position: center top;
+      background-repeat: no-repeat;
+      padding-left: 0;
+      padding-right: 0;
+      background-size: cover;
+      height: 60rem;
+      background-image: url(../img/bg-homepage-desktop.jpg);
+    }
   }
 }

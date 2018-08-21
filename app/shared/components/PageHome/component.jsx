@@ -12,27 +12,25 @@ const PageHome = props => {
   return (
     <React.Fragment>
       <Masthead/>
-      <div className='homepage'>
-        <Main>
-          <section className='panel panel--padding-large has-bg bg-pills'>
-            <Grid>
-              <GridCol className='col-12 col-md-6'>
-                <Heading text='Honest information about drugs' type='h1' modifiers='display-3 spacing-top--flush'/>
-              </GridCol>
-            </Grid>
-          </section>
-          <section className='panel panel--padding-large panel--pink'>
-            <Form>
-              <FormGroup button='true' modifiers='form-control--search' id='search-a-z' label='Ask anything about any drug:'/>
-            </Form>
-          </section>
+      <Main className='homepage'>
+        <section className='panel panel--padding-large has-bg bg-pills'>
           <Grid>
-            <GridCol className='col-12'>
-
+            <GridCol className='col-12 col-md-6'>
+              <Heading text='Honest information about drugs' type='h1' modifiers='display-3 spacing-top--flush'/>
             </GridCol>
           </Grid>
-        </Main>
-      </div>
+        </section>
+        <section className='panel panel--padding-large panel--pink'>
+          <Form>
+            <FormGroup button='true' modifiers='form-control--search' id='search-a-z' label='Ask anything about any drug:'/>
+          </Form>
+        </section>
+        <Grid>
+          <GridCol className='col-12'>
+
+          </GridCol>
+        </Grid>
+      </Main>
       <Footer />
     </React.Fragment>
   )

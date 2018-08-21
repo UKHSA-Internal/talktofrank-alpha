@@ -6,7 +6,6 @@ import Button from '../Button/component.jsx'
 export default class Masthead extends React.PureComponent {
   constructor () {
     super()
-
     this.state = {
       mobileMenuOpen: false
     }
@@ -34,19 +33,19 @@ export default class Masthead extends React.PureComponent {
           <div className={navClasses}>
             <nav className='navbar' id='navigation'>
               <ul className='navbar-nav'>
-                <li className='nav-item active'>
+                <li className='nav-item'>
                   <a className='nav-link' href='#'>News</a>
                 </li>
-                <li className='nav-item active'>
+                <li className='nav-item'>
                   <a className='nav-link' href='#'>Help for you</a>
                 </li>
-                <li className='nav-item active'>
+                <li className='nav-item'>
                   <a className='nav-link' href='#'>Help for others</a>
                 </li>
-                <li className='nav-item active'>
+                <li className='nav-item'>
                   <a className='nav-link' href='/drug'>Drugs A-Z</a>
                 </li>
-                <li className='nav-item active'>
+                <li className='nav-item'>
                   <a className='nav-link' href='#'>Contact Frank</a>
                 </li>
               </ul>
