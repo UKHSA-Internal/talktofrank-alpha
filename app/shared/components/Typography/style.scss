@@ -184,7 +184,18 @@ mark,
   @include media-breakpoint-up(lg) {
     font-size: 12rem;
   }
+}
 
+.display-3 {
+  font-size: 3rem;
+
+  @include media-breakpoint-up(md) {
+    font-size: 4rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 6rem;
+  }
 }
 
 .smaller {

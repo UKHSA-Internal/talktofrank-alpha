@@ -1,26 +1,19 @@
-
-//@import 'main-nav';
-//@import 'offcanvas-menu';
-
 .masthead {
   background-color: $black;
-
-  @include media-breakpoint-up(md) {
-    background-color: $white;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 100;
-
-  }
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 100;
 }
 
-.logo {
+.logo__link {
   height: auto;
   width: 15rem;
+  display: inline-block;
+  margin-top: 2rem;
 
   &:focus {
-    outline: 1px dotted $black;
+    outline: 1px dotted $white;
   }
 
   @include media-breakpoint-up(sm) {
@@ -28,18 +21,8 @@
     width: 25rem;
   }
 
-  .logo__link {
-    position: relative;
-
-    &:before {
-      position: absolute;
-      content: '';
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      z-index: 2;
-    }
+  img {
+    max-width: 100%;
   }
 }
 

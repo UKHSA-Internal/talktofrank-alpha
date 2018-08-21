@@ -1,0 +1,12 @@
+/* =============================================================================
+   Backgrounds
+   ===========================================================================*/
+
+.has-bg {
+  background-repeat: no-repeat;
+
+  &.bg-pills {
+    background-position: right top;
+    background-image: url('/ui/img/bg-pills.jpg');
+  }
+}
