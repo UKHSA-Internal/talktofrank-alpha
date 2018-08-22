@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '../Button/component.jsx'
+import LinkItem from '../LinkItem/component.jsx'
 
 const Footer = props => {
   return (
@@ -11,18 +12,10 @@ const Footer = props => {
         <p><a href='#'>Find a support centre</a></p>
         <nav className='navbar navbar-expand-md text-center spacing-top--large' id='navigation-footer'>
           <ul className='navbar-nav mr-auto ml-auto'>
-            <li className='nav-item'>
-              <a className='nav-link' href='#'>Site Policy</a>
-            </li>
-            <li className='nav-item'>
-              <a className='nav-link' href='#'>Accessibility</a>
-            </li>
-            <li className='nav-item'>
-              <a className='nav-link' href='/drug'>Disclaimer</a>
-            </li>
-            <li className='nav-item'>
-              <a className='nav-link' href='#'>Cookie policy</a>
-            </li>
+            <LinkItem url='#' label='Site Policy'/>
+            <LinkItem url='#' label='Accessibility'/>
+            <LinkItem url='#' label='Disclaimer'/>
+            <LinkItem url='#' label='Cookie policy'/>
           </ul>
         </nav>
       </div>
