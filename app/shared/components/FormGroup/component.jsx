@@ -13,7 +13,7 @@ const FormGroup = props => {
       <div className='input-group--raised d-flex'>
         <input className={controlClasses} id={props.id} name={props.name} type={props.type || 'text'}/>
           {props.button && <div className='input-group-append'>
-          <Button className='btn--primary icon-magnifying'><span className='sr-only'>Search</span><Svg url='/ui/svg/magnifying.svg' alt='Submit search'/></Button>
+          <Button className='btn--primary icon-magnifying'><span className='sr-only'>Submit search</span><Svg url='/ui/svg/magnifying.svg' alt='Submit search'/></Button>
         </div>}
       </div>
     </div>
