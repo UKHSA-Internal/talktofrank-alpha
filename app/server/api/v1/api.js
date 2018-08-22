@@ -17,13 +17,13 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.con
  * Add middleware to parse json
  */
 
-var jsonParser = bodyParser.json()
+router.use(bodyParser.json())
 
 /**
  * Get page data
  */
 
-router.get('/search/term/:term', jsonParser, (req, res, next) => {
+router.get('/search/term/:term', (req, res, next) => {
   try {
     if (!req.params.term) {
       const error = new Error()
@@ -138,9 +138,9 @@ router.get('/search/term/:term', jsonParser, (req, res, next) => {
         'results': results.hits.hits,
         'suggest': results.suggest
       })
-    )).catch(err => {
+    )).catch(e => {
       /* eslint-disable */
-      console.error(err);
+      console.error(e);
       /* eslint-enable */
       res.status(500).json({
         'message': 'Internal error'
