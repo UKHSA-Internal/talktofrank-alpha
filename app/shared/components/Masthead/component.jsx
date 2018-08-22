@@ -29,33 +29,31 @@ export default class Masthead extends React.PureComponent {
       <section className={classes}>
         <div className='masthead__inner constrain-narrow'>
           <Button className='float-left d-block d-md-none mt-4 navbar-toggler' aria-controls='navigation' aria-expanded={this.state.mobileMenuOpen} aria-label='Toggle navigation' clickHandler={this.handleMenuClick.bind(this)}>
-            <span className='navbar-toggler-icon'>Menu</span>
+            <span className='sr-only'>Menu</span>
           </Button>
           <Logo url='/ui/img/logo-frank.png' alt='Frank logo'/>
-          <div className={navClasses}>
-            <nav className='navbar' id='navigation'>
-              <ul className='navbar-nav'>
-                <li className='nav-item'>
-                  <a className='nav-link' href='#'>News</a>
-                </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='#'>Help for you</a>
-                </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='#'>Help for others</a>
-                </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='/drug'>Drugs A-Z</a>
-                </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='#'>Contact Frank</a>
-                </li>
-              </ul>
-            </nav>
-            <Form>
-              <FormGroup button='true' modifiers='form-control--search' id='search-a-z' label=''/>
+          <nav className={navClasses} id='navigation'>
+            <ul className='navbar-nav'>
+              <li className='nav-item'>
+                <a className='nav-link' href='#'>News</a>
+              </li>
+              <li className='nav-item'>
+                <a className='nav-link' href='#'>Help for you</a>
+              </li>
+              <li className='nav-item'>
+                <a className='nav-link' href='#'>Help for others</a>
+              </li>
+              <li className='nav-item'>
+                <a className='nav-link' href='/drug'>Drugs A-Z</a>
+              </li>
+              <li className='nav-item'>
+                <a className='nav-link' href='#'>Contact Frank</a>
+              </li>
+            </ul>
+            <Form className='ml-auto'>
+              <FormGroup button='true' modifiers='form-control--search' id='search-masthead' label=''/>
             </Form>
-          </div>
+          </nav>
         </div>
       </section>
     )

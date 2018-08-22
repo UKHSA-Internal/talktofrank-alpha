@@ -46,7 +46,7 @@ const PageHome = props => {
   },
   {
     modifiers: '',
-    url: '/',
+    url: '/drug',
     title: 'A-Z of drugs'
   }]
 

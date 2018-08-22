@@ -34,6 +34,7 @@
 
   &.bg-black {
     background-color: $black;
+    border: 0;
 
     a {
       color: $white;
@@ -58,13 +59,15 @@
 
 
 .has-chevron {
+  padding-right: 2.5rem;
+
   &::after {
     position: absolute;
     content: '';
     background-size: contain;
     width: 2rem;
     height: 2rem;
-    right: 2rem;
+    right: .5rem;
     display: inline-block;
     vertical-align: middle;
     background-repeat: no-repeat;
