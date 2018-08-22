@@ -1,12 +1,16 @@
-.navbar-toggler {
-  background-image: url(../svg/menu.svg);
-  background-position: center;
-  background-size: cover;
-  border-radius: 0;
-  text-indent: 100%;
-  width: 2.4rem;
-  height: 1.8rem;
 
+.btn {
+  overflow: hidden;
+  border-radius: 0;
+  font-size: 1.6rem;
+  line-height: 1;
+  padding: 1.2rem 2rem 1rem;
+
+  &.raised {
+    @include media-breakpoint-up(sm) {
+      width: auto;
+    }
+  }
 }
 
 .btn--search {
@@ -25,7 +29,7 @@
 }
 
 .btn--link {
-  background-color: transparent;
+  background-color: $white;
   border-color: transparent;
   text-decoration: underline;
   box-shadow: none;
@@ -40,11 +44,6 @@
 .btn--primary {
   color: $black;
   background-color: $green;
-  overflow: hidden;
-  border-radius: 0;
-  font-size: 1.4rem;
-  line-height: 1;
-  padding: 1.2rem 2rem 1rem;
   text-decoration: none;
   text-align: center;
 
@@ -65,17 +64,9 @@
   }
 
   &:active {
-    padding-top: 1.4rem;
-    padding-bottom: .8rem;
+    position: relative;
+    top: .3rem;
   }
-}
-
-.has-chevron {
-
-}
-
-.btn--raised {
-  box-shadow: 5px 5px 0 0 rgba($green, .5);
 }
 
 .btn--full-width {
@@ -85,6 +76,18 @@
     padding-right: 1rem;
     width: 100%;
   }
+}
+
+// Dropping it here for the moment as they are indeed buttons
+.navbar-toggler {
+  background-image: url(../svg/menu.svg);
+  background-position: center;
+  background-size: cover;
+  border-radius: 0;
+  text-indent: 100%;
+  width: 2.4rem;
+  height: 1.8rem;
+
 }
 
 .navbar-toggler-icon {
