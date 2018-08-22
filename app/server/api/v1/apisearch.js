@@ -211,11 +211,10 @@ const buildShouldQuery = (searchTerm) => {
           'synonymsList': searchTerm
         }
       },
-      'boost': 5
     }}, {
     // Fuzzy matches
     'multi_match': {
-      'fields': [ 'title^2', 'synonymsList^2' ],
+      'fields': [ 'title^2', 'synonymsList' ],
       'query': searchTerm,
       'fuzziness': 'auto'
     }}, {
@@ -223,26 +222,28 @@ const buildShouldQuery = (searchTerm) => {
     'multi_match': {
       'query': searchTerm,
       'fields': [
-        'description.localised',
-        'appearance_whatDoesItTastesmellLike.localised',
-        'appearance_howDoPeopleTakeIt.localised',
-        'effects_howDoesItMakeYouFeel.localised',
-        'effects_howDoesItMakePeopleBehave.localised',
-        'effects_whatAreThePhysicalEffects.localised',
-        'effects_whatIsTheComedownLike.localised',
-        'effects_howLongDoesItStayInYourBody.localised',
-        'risks_whatAreTheRisks.localised',
-        'risks_canYouGetAddicted.localised',
-        'risks_isItDangerousToMixWithOtherDrugs.localised',
-        'risks_whatIsCutWith.localised',
-        'effects_howDoesItEffectSocietyAndTheEnvironment.localised',
-        'law_whatIsTheDrugClassification.localised',
-        'law_whatIfYouAreCaughtWithIt.localised',
-        'worried_iFeelPressuredIntoTakingItWhatCanIDo.localised',
-        'worried_howCanIHelpMyFriendWithTheirUse.localised',
-        'worried_iveSpentAllMyMoneyOnItWhatCanIDo.localised'
+        'description',
+        'appearance_whatDoesItTastesmellLike',
+        'appearance_howDoPeopleTakeIt',
+        'effects_howDoesItMakeYouFeel',
+        'effects_howDoesItMakePeopleBehave',
+        'effects_whatAreThePhysicalEffects',
+        'effects_whatIsTheComedownLike',
+        'effects_howLongDoesItStayInYourBody',
+        'risks_whatAreTheRisks',
+        'risks_canYouGetAddicted',
+        'risks_isItDangerousToMixWithOtherDrugs',
+        'risks_whatIsCutWith',
+        'effects_howDoesItEffectSocietyAndTheEnvironment',
+        'law_whatIsTheDrugClassification',
+        'law_whatIfYouAreCaughtWithIt',
+        'worried_iFeelPressuredIntoTakingItWhatCanIDo',
+        'worried_howCanIHelpMyFriendWithTheirUse',
+        'worried_iveSpentAllMyMoneyOnItWhatCanIDo'
       ],
-      'type': 'phrase'
+      'type': 'phrase',
+      'analyzer': 'question_analyzer',
+      'slop': 100
     }
   }];
 
@@ -261,8 +262,20 @@ const buildMustQuery = (searchTerm) => {
 
   const mustQuery = [{
     // Phrase matches
-    'match': {
-      'title': searchTerm
+    'bool': {
+      'minimum_should_match': 1,
+      'should': [{
+        'match' : {
+          'title': {
+            'query': searchTerm
+          }
+        }}, {
+        'match' : {
+          'synonymsList.completion': {
+            'query': searchTerm
+          }
+        }}
+      ]
     }
   }];
 
@@ -271,26 +284,28 @@ const buildMustQuery = (searchTerm) => {
     'multi_match': {
       'query': searchTerm,
       'fields': [
-        'description.localised',
-        'appearance_whatDoesItTastesmellLike.localised',
-        'appearance_howDoPeopleTakeIt.localised',
-        'effects_howDoesItMakeYouFeel.localised',
-        'effects_howDoesItMakePeopleBehave.localised',
-        'effects_whatAreThePhysicalEffects.localised',
-        'effects_whatIsTheComedownLike.localised',
-        'effects_howLongDoesItStayInYourBody.localised',
-        'risks_whatAreTheRisks.localised',
-        'risks_canYouGetAddicted.localised',
-        'risks_isItDangerousToMixWithOtherDrugs.localised',
-        'risks_whatIsCutWith.localised',
-        'effects_howDoesItEffectSocietyAndTheEnvironment.localised',
-        'law_whatIsTheDrugClassification.localised',
-        'law_whatIfYouAreCaughtWithIt.localised',
-        'worried_iFeelPressuredIntoTakingItWhatCanIDo.localised',
-        'worried_howCanIHelpMyFriendWithTheirUse.localised',
-        'worried_iveSpentAllMyMoneyOnItWhatCanIDo.localised'
+        'description',
+        'appearance_whatDoesItTastesmellLike',
+        'appearance_howDoPeopleTakeIt',
+        'effects_howDoesItMakeYouFeel',
+        'effects_howDoesItMakePeopleBehave',
+        'effects_whatAreThePhysicalEffects',
+        'effects_whatIsTheComedownLike',
+        'effects_howLongDoesItStayInYourBody',
+        'risks_whatAreTheRisks',
+        'risks_canYouGetAddicted',
+        'risks_isItDangerousToMixWithOtherDrugs',
+        'risks_whatIsCutWith',
+        'effects_howDoesItEffectSocietyAndTheEnvironment',
+        'law_whatIsTheDrugClassification',
+        'law_whatIfYouAreCaughtWithIt',
+        'worried_iFeelPressuredIntoTakingItWhatCanIDo',
+        'worried_howCanIHelpMyFriendWithTheirUse',
+        'worried_iveSpentAllMyMoneyOnItWhatCanIDo'
       ],
-      'type': 'phrase'
+      'type': 'phrase',
+      'analyzer': 'question_analyzer',
+      'slop': 100
     }
   }];
 
@@ -311,7 +326,7 @@ const hightlightsQuery = () => ({
   'number_of_fragments': 2,
   'pre_tags': ['<strong>'],
   'post_tags': ['</strong>'],
-  'fragment_size': 150,
+  'fragment_size': 250,
   'fields': {
     'title': {
       'fragment_size': 20
@@ -321,24 +336,24 @@ const hightlightsQuery = () => ({
       'pre_tags': [''],
       'post_tags': ['']
     },
-    'description.localised': {},
-    'appearance_whatDoesItTastesmellLike.localised': {},
-    'appearance_howDoPeopleTakeIt.localised': {},
-    'effects_howDoesItMakeYouFeel.localised': {},
-    'effects_howDoesItMakePeopleBehave.localised': {},
-    'effects_whatAreThePhysicalEffects.localised': {},
-    'effects_whatIsTheComedownLike.localised': {},
-    'effects_howLongDoesItStayInYourBody.localised': {},
-    'risks_whatAreTheRisks.localised': {},
-    'risks_canYouGetAddicted.localised': {},
-    'risks_isItDangerousToMixWithOtherDrugs.localised': {},
-    'risks_whatIsCutWith.localised': {},
-    'effects_howDoesItEffectSocietyAndTheEnvironment.localised': {},
-    'law_whatIsTheDrugClassification.localised': {},
-    'law_whatIfYouAreCaughtWithIt.localised': {},
-    'worried_iFeelPressuredIntoTakingItWhatCanIDo.localised': {},
-    'worried_howCanIHelpMyFriendWithTheirUse.localised': {},
-    'worried_iveSpentAllMyMoneyOnItWhatCanIDo.localised': {}
+    'description': {},
+    'appearance_whatDoesItTastesmellLike': {},
+    'appearance_howDoPeopleTakeIt': {},
+    'effects_howDoesItMakeYouFeel': {},
+    'effects_howDoesItMakePeopleBehave': {},
+    'effects_whatAreThePhysicalEffects': {},
+    'effects_whatIsTheComedownLike': {},
+    'effects_howLongDoesItStayInYourBody': {},
+    'risks_whatAreTheRisks': {},
+    'risks_canYouGetAddicted': {},
+    'risks_isItDangerousToMixWithOtherDrugs': {},
+    'risks_whatIsCutWith': {},
+    'effects_howDoesItEffectSocietyAndTheEnvironment': {},
+    'law_whatIsTheDrugClassification': {},
+    'law_whatIfYouAreCaughtWithIt': {},
+    'worried_iFeelPressuredIntoTakingItWhatCanIDo': {},
+    'worried_howCanIHelpMyFriendWithTheirUse': {},
+    'worried_iveSpentAllMyMoneyOnItWhatCanIDo': {}
   }
 })
 

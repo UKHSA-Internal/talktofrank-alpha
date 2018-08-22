@@ -77,7 +77,6 @@ export default class SearchPage extends React.Component {
     const { results, suggestions, phraseMatches } = this.props.pageData
     const { searchValue, shouldOrMustQuery } = this.state
     const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
-    console.log('shouldOrMustQuery', shouldOrMustQuery)
     return (
       <React.Fragment>
         <Masthead/>
