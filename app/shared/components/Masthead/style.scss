@@ -9,7 +9,7 @@
 .logo {
   text-align: center;
 
-  @include media-breakpoint-up(sm) {
+  @include media-breakpoint-up(md) {
     text-align: left;
   }
 }
@@ -18,13 +18,13 @@
   height: auto;
   width: 15rem;
   display: inline-block;
-  margin: 2rem auto;
+  margin: 1.8rem auto;
 
   &:focus {
     outline: 1px dotted $white;
   }
 
-  @include media-breakpoint-up(sm) {
+  @include media-breakpoint-up(md) {
     position: relative;
     width: 25rem;
     margin-bottom: 0;

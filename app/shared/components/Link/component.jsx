@@ -7,7 +7,7 @@ const Link = props => {
 
   return (
     <div className={classes}>
-      <Button href={props.url} className='raised has-chevron btn--link text-left btn--large'>
+      <Button href={props.url} className='raised has-chevron btn--link h3 text-left btn--large'>
         {props.title}
       </Button>
     </div>

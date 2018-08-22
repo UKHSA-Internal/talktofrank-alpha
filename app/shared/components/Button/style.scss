@@ -82,12 +82,14 @@
 .navbar-toggler {
   background-image: url(../svg/menu.svg);
   background-position: center;
-  background-size: cover;
+  background-size: contain;
   border-radius: 0;
   text-indent: 100%;
-  width: 2.4rem;
+  width: 1.8rem;
   height: 1.8rem;
-
+  position: absolute;
+  top: 1rem;
+  left: 1.5rem;
 }
 
 .navbar-toggler-icon {

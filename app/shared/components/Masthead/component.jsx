@@ -2,6 +2,8 @@ import React from 'react'
 import classNames from 'classnames'
 import Logo from '../Logo/component.jsx'
 import Button from '../Button/component.jsx'
+import FormGroup from '../FormGroup/component.jsx'
+import Form from '../Form/component.jsx'
 
 export default class Masthead extends React.PureComponent {
   constructor () {
@@ -50,6 +52,9 @@ export default class Masthead extends React.PureComponent {
                 </li>
               </ul>
             </nav>
+            <Form>
+              <FormGroup button='true' modifiers='form-control--search' id='search-a-z' label=''/>
+            </Form>
           </div>
         </div>
       </section>
