@@ -3,8 +3,8 @@ import Button from '../Button/component.jsx'
 
 const Footer = props => {
   return (
-    <footer className='footer'>
-      <div className='content-wrapper text-center spacing-bottom--large'>
+    <footer className='footer spacing-bottom--large'>
+      <div className='text-center'>
         <Button className='btn--primary btn--large raised mb-5' label='Call us: 0300 123 6600'/>
         <p>Email us: <a href='mailto:frank@talktofrank.com'>frank@talktofrank.com</a></p>
         <p>Text us: <a href='tel:82111'>82111</a></p>

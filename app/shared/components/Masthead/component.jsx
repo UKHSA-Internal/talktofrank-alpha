@@ -51,7 +51,7 @@ export default class Masthead extends React.PureComponent {
               </li>
             </ul>
             <Form className='ml-auto'>
-              <FormGroup button='true' modifiers='form-control--search' id='search-masthead' label=''/>
+              <FormGroup button='true' modifiers='form-control--search' id='search-masthead' label='Search site' labelHidden='true'/>
             </Form>
           </nav>
         </div>
