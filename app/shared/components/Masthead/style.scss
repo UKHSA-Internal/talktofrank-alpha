@@ -6,11 +6,19 @@
   z-index: 100;
 }
 
+.logo {
+  text-align: center;
+
+  @include media-breakpoint-up(sm) {
+    text-align: left;
+  }
+}
+
 .logo__link {
   height: auto;
   width: 15rem;
   display: inline-block;
-  margin-top: 2rem;
+  margin: 2rem auto;
 
   &:focus {
     outline: 1px dotted $white;
@@ -19,6 +27,7 @@
   @include media-breakpoint-up(sm) {
     position: relative;
     width: 25rem;
+    margin-bottom: 0;
   }
 
   img {
