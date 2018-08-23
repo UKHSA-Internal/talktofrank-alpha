@@ -105,12 +105,14 @@ const formatResults = (results, searchTerm) => {
             if (item.text === suggestionItem
               && item.score < suggestionItemScore) {
               formattedSuggestions.splice(index, 1)
-            } else {
+            } else if(item.text === suggestionItem) {
               skip = true
             }
           })
 
-          if (skip) return
+          if (skip) {
+            return
+          }
 
           formattedSuggestions.push({
             text: suggestionItem,
@@ -390,16 +392,6 @@ const suggestQuery = (searchTerm) => ({
   'synonym': {
     'term': {
       'field': 'synonymsList'
-    }
-  },
-  'synonymPhrase': {
-    'phrase': {
-      'field': 'synonymsList'
-    }
-  },
-  'synonymPartial': {
-    'phrase': {
-      'field': 'synonymsList.partial'
     }
   },
   'synonymcompletion': {
