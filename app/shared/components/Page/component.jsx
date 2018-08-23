@@ -14,7 +14,7 @@ const Page = props => {
     type: 'p',
     modifiers: 'h6'
   }
-  const name = props.name.toLowerCase()
+  const name = props.name && props.name.toLowerCase()
 
   return (
     <React.Fragment>
