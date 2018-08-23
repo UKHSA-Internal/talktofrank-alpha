@@ -9,7 +9,7 @@ const FormGroup = props => {
 
   return (
     <div className={classes}>
-      <label htmlFor={props.id} className={'form-label lead ' + props.labelHidden ? 'sr-only' : null}>{props.label}</label>
+      <label htmlFor={props.id} className={'form-label h3 ' + (props.labelHidden ? 'sr-only' : null)}>{props.label}</label>
       <div className='input-group--raised d-flex'>
         <input className={controlClasses} id={props.id} name={props.name} type={props.type || 'text'}/>
           {props.button && <div className='input-group-append'>

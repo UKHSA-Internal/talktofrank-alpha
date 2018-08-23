@@ -4,7 +4,7 @@ import LinkItem from '../LinkItem/component.jsx'
 
 const Footer = props => {
   return (
-    <footer className='footer spacing-bottom--large'>
+    <footer className='footer spacing-bottom--large' role='contentinfo'>
       <div className='text-center'>
         <Button className='btn--primary btn--large raised mb-5' label='Call us: 0300 123 6600'/>
         <p>Email us: <a href='mailto:frank@talktofrank.com'>frank@talktofrank.com</a></p>
