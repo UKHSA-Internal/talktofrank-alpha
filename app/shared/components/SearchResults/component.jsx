@@ -12,7 +12,6 @@ export default class SearchResults extends React.Component {
   constructor (props) {
     super(props)
     this.handleInputChange = this.handleInputChange.bind(this)
-    this.handleSuggestionClick = this.handleSuggestionClick.bind(this)
     this.state = {
       searchValue: '',
       likelyDrugName: false,
@@ -20,27 +19,22 @@ export default class SearchResults extends React.Component {
     }
   }
 
-  // getDidYouMean (suggestions) {
-  //   if (!suggestions || !suggestions.length) return null
+  getDidYouMean (suggestions) {
+    if (!suggestions || !suggestions.length) return null
 
-  //   return (
-  //     <React.Fragment>
-  //       <p>
-  //         <span className='h4'>Did you mean:</span>{' '}
-  //         { suggestions.map((item, key) =>
-  //           <React.Fragment key={`suggestion-${item.text}`}>
-  //             <a className='fake-link' onClick={this.handleSuggestionClick}>
-  //               {item.text}
-  //             </a>
-  //             { key + 1 < suggestions.length && ', '}
-  //           </React.Fragment>
-  //         )}
-  //       </p>
-  //     </React.Fragment>
-  //   )
-  // }
+    return (
+      <ul className='search__list'>
+        { suggestions.map((item, key) =>
+          <li key={key}>
+            <a href={`/drug/${item.text}`}>{item.text}</a>
+          </li>
+        )}
+      </ul>
+    )
+  }
 
   getResults (results, type) {
+    console.log(results)
     if (!results || !results.length) return null
     return (
       <ul className='search__list'>
@@ -49,18 +43,6 @@ export default class SearchResults extends React.Component {
         ))}
       </ul>
     )
-  }
-
-  handleSuggestionClick (e) {
-    e.preventDefault()
-    const value = e.target.innerHTML
-    this.setState({
-      searchValue: value,
-      likelyDrugName: value,
-      showSuggestions: false
-    }, () => {
-      this.props.searchForTerm(value, value, 'must')
-    })
   }
 
   handleInputChange (e) {
@@ -131,8 +113,7 @@ export default class SearchResults extends React.Component {
               <Grid>
                 { !likelyDrugName &&
                   <GridCol className='col-12 col-sm-12 search--suggestions'>
-
-                    { this.getResults(suggestions)}
+                    { this.getDidYouMean(suggestions)}
                   </GridCol>
                 }
                 { showResults &&
