@@ -75,8 +75,9 @@ export default class SearchPage extends React.Component {
       likelyDrugName = this.props.pageData.match
     }
 
+    const matcher = new RegExp(likelyDrugName + " ", "ig")
     // Drug name is still in search
-    if (likelyDrugName && nextSearchValue.indexOf(likelyDrugName) !== -1) {
+    if (likelyDrugName && matcher.test(nextSearchValue)) {
       queryType = 'must'
     } else {
       likelyDrugName = '',

@@ -105,13 +105,12 @@ const formatResults = (results, searchTerm) => {
             if (item.text === suggestionItem
               && item.score < suggestionItemScore) {
               formattedSuggestions.splice(index, 1)
+            } else {
+              skip = true
             }
-            // else {
-            //   // skip = true
-            // }
           })
 
-          // if (skip) return
+          if (skip) return
 
           formattedSuggestions.push({
             text: suggestionItem,
@@ -119,8 +118,7 @@ const formatResults = (results, searchTerm) => {
           })
         })
 
-        console.log(formattedSuggestions)
-        // if (formattedSuggestions.length >= config.elasticsearch.suggestResultCount) return
+        if (formattedSuggestions.length >= config.elasticsearch.suggestResultCount) return
       })
   })
 
