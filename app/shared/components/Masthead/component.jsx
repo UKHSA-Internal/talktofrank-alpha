@@ -27,7 +27,7 @@ export default class Masthead extends React.PureComponent {
     })
 
     return (
-      <section className={classes}>
+      <section className={classes} role='banner'>
         <div className='masthead__inner constrain-narrow'>
           <Button className='float-left d-block d-md-none mt-4 navbar-toggler' aria-controls='navigation' aria-expanded={this.state.mobileMenuOpen} aria-label={this.state.mobileMenuOpen ? 'Hide navigation' : 'Reveal navigation'} clickHandler={this.handleMenuClick.bind(this)}>
             <span className='sr-only'>Menu</span>

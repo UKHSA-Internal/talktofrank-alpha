@@ -68,6 +68,7 @@ const PageHome = props => {
         </section>
         <Grid>
           <GridCol className='col-12'>
+            <Heading text='News articles' className='sr-only'/>
             <CardDeck teasers={teasers} className='spacing--large card-deck--compact'/>
           </GridCol>
           <GridCol className='col-12'>
