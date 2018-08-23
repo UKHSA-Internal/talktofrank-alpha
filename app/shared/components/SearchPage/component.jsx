@@ -3,6 +3,8 @@ import { Link } from 'react-router'
 import Masthead from '../Masthead/component.jsx'
 import Grid from '../Grid/component.jsx'
 import GridCol from '../GridCol/component.jsx'
+import Main from '../Main/component.jsx'
+import Heading from '../Heading/component.jsx'
 const util = require('util')
 
 export default class SearchPage extends React.Component {
@@ -23,10 +25,10 @@ export default class SearchPage extends React.Component {
     return (
       <React.Fragment>
         <p>
-          <span className="h4">Did you mean:</span>{' '}
+          <span className='h4'>Did you mean:</span>{' '}
           { suggestions.map((item, key) =>
             <React.Fragment key={`suggestion-${item.text}`}>
-              <a onClick={this.handleSuggestionClick}>
+              <a className='fake-link' onClick={this.handleSuggestionClick}>
                 {item.text}
               </a>
               { key + 1 < suggestions.length && ', '}
@@ -40,7 +42,7 @@ export default class SearchPage extends React.Component {
   getResults (results, type) {
     if (!results || !results.length) return null
     return (
-      <ul className="search__list">
+      <ul className='search__list'>
         { results.map(item => (
           type === 'phrase' ? <PhraseMatchItem{ ...item } /> : <ResultItem { ...item } />
         ))}
@@ -100,18 +102,27 @@ export default class SearchPage extends React.Component {
     return (
       <React.Fragment>
         <Masthead/>
-        <div className='main-wrapper'>
-          <h1>Search</h1>
+        <Main>
+          <Heading type='h1' className='h1' text='Search'/>
           <Grid>
-            <GridCol className='col-8 col-md-8 col-sm-12 search'>
-              <input
-                type="text"
-                value={searchValue}
-                onChange={this.handleInputChange}
-                placeholder="Search for drugs, advice & information...."
-                style={{width: '100%'}}
-                className="search__input"
-              />
+            <GridCol className='col-12 col-md-8 search'>
+
+              <div className='input-group'>
+                <label htmlFor='search-site' className='form-label h3'>Search for drugs, advice & information...</label>
+                <div className='input-group--raised d-flex'>
+                  <input
+                    className='form-control form-control--search'
+                    id='search-site'
+                    type='text'
+                    autoComplete='off'
+                    autoCorrect='off'
+                    autoCapitalize='off'
+                    spellCheck='false'
+                    value={searchValue}
+                    onChange={this.handleInputChange}
+                    />
+                </div>
+              </div>
               { loading &&
                 <p>Searching...</p>
               }
@@ -131,7 +142,7 @@ export default class SearchPage extends React.Component {
               </Grid>
             </GridCol>
           </Grid>
-        </div>
+        </Main>
       </React.Fragment>
     )
   }
@@ -161,7 +172,7 @@ const PhraseMatchItem = ({text, drugName, topic, link}) => {
 const ResultItem = ({name, drug, description, link}) => {
   return (
     <li key={`resultitem-${link}`}>
-      <p className="h4">
+      <p className='h4'>
         <a href={`/drug/${link}`}>{name}</a>
         { name !== drug && ` (${drug})` }
       </p>
