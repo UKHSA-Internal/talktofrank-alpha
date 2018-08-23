@@ -39,6 +39,13 @@ const routes = (
               console.log(err);
             })
           }} />
+          <Route path='search-results' getComponent={(location, callback) => {
+            import('../shared/containers/SearchResultsContainer/component.jsx').then((component) => {
+              callback(null, component);
+            }).catch(err => {
+              console.log(err);
+            })
+          }} />
           <Route path=':drugName' getComponent={(location, callback) => {
             import('../shared/containers/PageContainer/component.jsx').then((component) => {
               callback(null, component);
