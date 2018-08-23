@@ -1,9 +1,22 @@
 
 .footer {
-  color: $black;
+  color: $white;
+  background-color: $black;
 
+  .nav-link,
   a {
-    color: $black;
+    color: $white;
     text-decoration: underline;
+  }
+
+  @include media-breakpoint-up(sm) {
+    color: $black;
+    background-color: $white;
+
+    .nav-link,
+    a {
+      color: $black;
+      text-decoration: underline;
+    }
   }
 }
