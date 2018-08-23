@@ -210,3 +210,17 @@ strong,
 b {
   font-family: $font-family-heavy;
 }
+
+.list-link {
+  display: block;
+
+  .list-item--dotted & {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px dotted $gray-800;
+  }
+
+  &::hover p {
+    text-decoration: none;
+  }
+}

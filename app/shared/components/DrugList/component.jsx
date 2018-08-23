@@ -38,8 +38,8 @@ const DrugList = props => {
                       }
 
                       return (
-                      <li key={'inner' + index} className='underlined underlined--dotted'>
-                        <a href={v.slug}><h3 className='h4 grey'>{name}</h3>
+                      <li key={'inner' + index} className='list-item list-item--dotted'>
+                        <a href={v.slug} className='list-link'><h3 className='h4 mt-1 mb-0 grey'>{name}</h3>
                         {synonyms && <p className='grey'>Also called: {synonyms}</p>}
                         <p><span className='muted'>{v.description}</span></p>
                         </a>
