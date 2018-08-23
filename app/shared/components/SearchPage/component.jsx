@@ -13,7 +13,8 @@ export default class SearchPage extends React.Component {
     this.addToSuggestionsIfNotSearchTerm = this.addToSuggestionsIfNotSearchTerm.bind(this)
     this.state = {
       searchValue: '',
-      shouldOrMustQuery: 'should'
+      likelyDrugName: false,
+      showSuggestions: false
     }
   }
 
@@ -53,7 +54,8 @@ export default class SearchPage extends React.Component {
     const value = e.target.innerHTML
     this.setState({
       searchValue: value,
-      shouldOrMustQuery: 'must'
+      likelyDrugName: value,
+      showSuggestions: false
     }, () => {
       this.props.searchForTerm(value, 'must')
     })
@@ -65,17 +67,47 @@ export default class SearchPage extends React.Component {
 
   handleInputChange (e) {
     e.preventDefault()
+
+    let { likelyDrugName, showSuggestions} = this.state
+    const { match } = this.props.pageData
+    const { searchValue } = this.state
+    const nextSearchValue = e.target.value
+    let queryType = 'should'
+
+    if (this.props.pageData.match) {
+      console.log('setting page match ', this.props.pageData.match)
+      likelyDrugName = this.props.pageData.match
+    }
+
+    // Drug name is still in search
+    if (likelyDrugName && nextSearchValue.indexOf(likelyDrugName) !== -1) {
+      queryType = 'must'
+    } else {
+      likelyDrugName = '',
+      showSuggestions = true
+    }
+
+    console.log('queryType', queryType)
+    console.log('likelyDrugName', likelyDrugName)
+    console.log('searchValue', searchValue)
+    console.log('nextSearchValue', nextSearchValue)
+    console.log('drugName exists in value', nextSearchValue.indexOf(likelyDrugName))
+
     this.setState({
-      searchValue: e.target.value
+      searchValue: nextSearchValue,
+      likelyDrugName,
+      showSuggestions
+    }, () => {
+      if (nextSearchValue.length >= 2) {
+        this.props.searchForTerm(nextSearchValue, queryType)
+      }
     })
-    if (e.target.value.length < 2) return null
-    this.props.searchForTerm(e.target.value, this.state.shouldOrMustQuery)
   }
 
   render () {
     const { loading } = this.props
     const { results, suggestions, phraseMatches } = this.props.pageData
-    const { searchValue, shouldOrMustQuery } = this.state
+    const { searchValue, likelyDrugName } = this.state
     const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
     return (
       <React.Fragment>
@@ -96,7 +128,7 @@ export default class SearchPage extends React.Component {
                 <p>Searching...</p>
               }
               <Grid>
-                { shouldOrMustQuery === 'should' &&
+                { !likelyDrugName &&
                   <GridCol className='col-12 col-sm-12 search--suggestions'>
                     {this.getDidYouMean(suggestions)}
                   </GridCol>
@@ -116,7 +148,6 @@ export default class SearchPage extends React.Component {
     )
   }
 }
-
 
 const getHeading = (field, drugName) => {
   const headings = {

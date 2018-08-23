@@ -41,20 +41,21 @@ router.get('/should/:term', jsonParser, (req, res, next) => {
   }
 })
 
-router.get('/must/:term', jsonParser, (req, res, next) => {
+router.get('/must/:phrase/:drug', jsonParser, (req, res, next) => {
   try {
-    if (!req.params.term) {
+    if (!req.params.phrase || !req.params.drug) {
       const error = new Error()
       error.status = 404
       return next(error)
     }
     const search = res.search
-    const searchTerm = req.params.term.toLowerCase()
+    const drugSearchTerm = req.params.drug.toLowerCase()
+    const phraseSearchTerm = req.params.phrase.toLowerCase()
 
     search.elasticsearch.client.search({
       index: `contentful_mltlrs3kods6_en-us`,
-      body: buildMustQuery(searchTerm)
-    }).then(results => res.status(200).json(formatResults(results, searchTerm)))
+      body: buildMustQuery(drugSearchTerm, phraseSearchTerm)
+    }).then(results => res.status(200).json(formatResults(results, drugSearchTerm)))
       .catch(err => {
       /* eslint-disable */
       console.error(err);
@@ -85,8 +86,8 @@ const formatResults = (results, searchTerm) => {
     results.suggest[suggestionGroup].map(suggestionGroupResults => {
       suggestionGroupResults.options
         .filter(suggestionGroupResultsItem => {
-          if (suggestionGroupResultsItem.text.toLowerCase() === searchTerm) {
-            match = true
+          if (searchTerm.indexOf(suggestionGroupResultsItem.text.toLowerCase()) !== -1) {
+            match = suggestionGroupResultsItem.text.toLowerCase()
             return false
           } else {
             return true
@@ -124,13 +125,26 @@ const formatResults = (results, searchTerm) => {
 
   hits.map(result => {
 
-    const description = result.highlight.description
-    && result.highlight.description.localised
-      ? result.highlight.description.localised
+    const description = result.highlight
+    && result.highlight.description
+      ? result.highlight.description
       : result._source.description
 
     if (formattedResults.length < config.elasticsearch.drugResultCount) {
-      if (result.highlight.synonymsList) {
+      if (result.highlight
+        && result.highlight['synonymsList.completion']) {
+        result.highlight['synonymsList.completion'].map(synonymsListItem => {
+          addFormattedResult(
+            synonymsListItem,
+            result._source.title,
+            result._source.slug,
+            description,
+            result._score,
+            formattedResults
+          )
+        })
+      }
+      else if (result.highlight && result.highlight.synonymsList) {
         result.highlight.synonymsList.map(synonymsListItem => {
           addFormattedResult(
             synonymsListItem,
@@ -157,8 +171,9 @@ const formatResults = (results, searchTerm) => {
     if (result.highlight) {
       Object.keys(result.highlight).map(fieldName => {
         if (fieldName === 'title'
-          || fieldName === 'description.localised'
+          || fieldName === 'description'
           || fieldName === 'synonymsList'
+          || fieldName === 'synonymsList.completion'
           || formattedPhraseMatches.length >= config.elasticsearch.phraseResultCount) {
           return null
         }
@@ -258,7 +273,7 @@ const buildShouldQuery = (searchTerm) => {
   }
 }
 
-const buildMustQuery = (searchTerm) => {
+const buildMustQuery = (drugSearchTerm, phraseSearchTerm) => {
 
   const mustQuery = [{
     // Phrase matches
@@ -267,12 +282,12 @@ const buildMustQuery = (searchTerm) => {
       'should': [{
         'match' : {
           'title': {
-            'query': searchTerm
+            'query': drugSearchTerm
           }
         }}, {
         'match' : {
           'synonymsList.completion': {
-            'query': searchTerm
+            'query': drugSearchTerm
           }
         }}
       ]
@@ -282,7 +297,7 @@ const buildMustQuery = (searchTerm) => {
   const shouldQuery = [{
     // Phrase matches
     'multi_match': {
-      'query': searchTerm,
+      'query': phraseSearchTerm,
       'fields': [
         'description',
         'appearance_whatDoesItTastesmellLike',
@@ -317,7 +332,7 @@ const buildMustQuery = (searchTerm) => {
       }
     },
     'highlight': hightlightsQuery(),
-    'suggest': suggestQuery(searchTerm)
+    'suggest': suggestQuery(drugSearchTerm)
   }
 }
 
@@ -335,6 +350,10 @@ const hightlightsQuery = () => ({
     'synonymsList': {
       'pre_tags': [''],
       'post_tags': ['']
+    },
+    "synonymsList.completion": {
+      "pre_tags": [""],
+      "post_tags": [""]
     },
     'description': {},
     'appearance_whatDoesItTastesmellLike': {},
@@ -364,11 +383,6 @@ const suggestQuery = (searchTerm) => ({
       'field': 'title.completion'
     }
   },
-  'synonymcompletion': {
-    'completion': {
-      'field': 'synonymsList.completion'
-    }
-  },
   'title': {
     'term': {
       'field': 'title'
@@ -387,6 +401,11 @@ const suggestQuery = (searchTerm) => ({
   'synonymPartial': {
     'phrase': {
       'field': 'synonymsList.partial'
+    }
+  },
+  'synonymcompletion': {
+    'completion': {
+      'field': 'synonymsList.completion'
     }
   }
 })
