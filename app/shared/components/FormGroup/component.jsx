@@ -11,7 +11,7 @@ const FormGroup = props => {
     <div className={classes}>
       <label htmlFor={props.id} className={'form-label h3 ' + (props.labelHidden ? 'sr-only' : null)}>{props.label}</label>
       <div className='input-group--raised d-flex'>
-        <input className={controlClasses} id={props.id} name={props.name} type={props.type || 'text'} autocomplete='off' autocorrect='off' autocapitalize='off' spellcheck='false'/>
+        <input className={controlClasses} id={props.id} name={props.name} type={props.type || 'text'} autoComplete='off' autoCorrect='off' autoCapitalize='off' spellCheck='false'/>
           {props.button && <div className='input-group-append'>
           <Button className='btn--primary icon-magnifying'><span className='sr-only'>Submit search</span><Svg url='/ui/svg/magnifying.svg' alt='Submit search'/></Button>
         </div>}
