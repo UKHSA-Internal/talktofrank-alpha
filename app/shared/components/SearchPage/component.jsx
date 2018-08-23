@@ -10,7 +10,6 @@ export default class SearchPage extends React.Component {
     super(props)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSuggestionClick = this.handleSuggestionClick.bind(this)
-    this.addToSuggestionsIfNotSearchTerm = this.addToSuggestionsIfNotSearchTerm.bind(this)
     this.state = {
       searchValue: '',
       likelyDrugName: false,
@@ -57,25 +56,20 @@ export default class SearchPage extends React.Component {
       likelyDrugName: value,
       showSuggestions: false
     }, () => {
-      this.props.searchForTerm(value, 'must')
+      this.props.searchForTerm(value, value, 'must')
     })
-  }
-
-  addToSuggestionsIfNotSearchTerm (item) {
-    return item.text.toLowerCase() !== this.state.searchValue.toLowerCase()
   }
 
   handleInputChange (e) {
     e.preventDefault()
 
     let { likelyDrugName, showSuggestions} = this.state
-    const { match } = this.props.pageData
     const { searchValue } = this.state
     const nextSearchValue = e.target.value
     let queryType = 'should'
 
+    // If the server finds a drug name match
     if (this.props.pageData.match) {
-      console.log('setting page match ', this.props.pageData.match)
       likelyDrugName = this.props.pageData.match
     }
 
@@ -87,19 +81,13 @@ export default class SearchPage extends React.Component {
       showSuggestions = true
     }
 
-    console.log('queryType', queryType)
-    console.log('likelyDrugName', likelyDrugName)
-    console.log('searchValue', searchValue)
-    console.log('nextSearchValue', nextSearchValue)
-    console.log('drugName exists in value', nextSearchValue.indexOf(likelyDrugName))
-
     this.setState({
       searchValue: nextSearchValue,
       likelyDrugName,
       showSuggestions
     }, () => {
       if (nextSearchValue.length >= 2) {
-        this.props.searchForTerm(nextSearchValue, queryType)
+        this.props.searchForTerm(nextSearchValue, likelyDrugName, queryType)
       }
     })
   }

@@ -51,7 +51,6 @@ router.get('/must/:phrase/:drug', jsonParser, (req, res, next) => {
     const search = res.search
     const drugSearchTerm = req.params.drug.toLowerCase()
     const phraseSearchTerm = req.params.phrase.toLowerCase()
-
     search.elasticsearch.client.search({
       index: `contentful_mltlrs3kods6_en-us`,
       body: buildMustQuery(drugSearchTerm, phraseSearchTerm)
