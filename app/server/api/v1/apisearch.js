@@ -9,6 +9,38 @@ const bodyParser = require('body-parser')
 
 var jsonParser = bodyParser.json()
 
+router.get('/autocomplete/:term', jsonParser, (req, res, next) => {
+  try {
+    if (!req.params.term) {
+      const error = new Error()
+      error.status = 404
+      return next(error)
+    }
+    const search = res.search
+    const searchTerm = req.params.term.toLowerCase()
+
+    search.elasticsearch.client.search({
+      index: `contentful_mltlrs3kods6_en-us`,
+      body: buildShouldQuery(searchTerm)
+    }).then(results => res.status(200).json(formatAutocompleteResults(results, searchTerm)))
+      .catch(err => {
+        /* eslint-disable */
+        console.error(err);
+        /* eslint-enable */
+        res.status(500).json({
+          'message': 'Internal error'
+        })
+      })
+  } catch (err) {
+    /* eslint-disable */
+    console.error(err)
+    /* eslint-enable */
+    res.status(500).json({
+      'message': 'Internal error'
+    })
+  }
+})
+
 router.get('/should/:term', jsonParser, (req, res, next) => {
   try {
     if (!req.params.term) {
@@ -73,6 +105,33 @@ router.get('/must/:phrase/:drug', jsonParser, (req, res, next) => {
   }
 })
 
+const formatAutocompleteResults = (results, drugSearchTerm) => {
+  const hits = results.hits.hits
+
+  let formattedResults = formatResultHits(hits)
+
+  // Show suggestions
+  if (!formattedResults.length) {
+    Object.keys(results.suggest).map(suggestionGroup => {
+      results.suggest[suggestionGroup].map(suggestionGroupResults => {
+        formattedResults = formattedResults.concat(formatResultHits(suggestionGroupResults.options))
+      })
+    })
+  }
+
+  let serverResponse = {
+    'results': formattedResults,
+    'searchTerm': drugSearchTerm,
+    'match': false
+  }
+
+  if (config.elasticsearch.showESResult) {
+    serverResponse = Object.assign({}, serverResponse, {'esResults': results})
+  }
+
+  return serverResponse
+}
+
 const formatResults = (results, searchTerm) => {
   let formattedSuggestions = []
   let formattedResults = []
@@ -135,46 +194,11 @@ const formatResults = (results, searchTerm) => {
     })
   })
 
+  // Fetch title & synonym matches
+  formattedResults = formatResultHits(hits)
+
+  // Fetch phrase matches
   hits.map(result => {
-    const description = result.highlight && result.highlight.description
-      ? result.highlight.description
-      : result._source.description
-
-    if (formattedResults.length < config.elasticsearch.drugResultCount) {
-      if (result.highlight && result.highlight['synonymsList.completion']) {
-        result.highlight['synonymsList.completion'].map(synonymsListItem => {
-          addFormattedResult(
-            synonymsListItem,
-            result._source.title,
-            result._source.slug,
-            description,
-            result._score,
-            formattedResults
-          )
-        })
-      } else if (result.highlight && result.highlight.synonymsList) {
-        result.highlight.synonymsList.map(synonymsListItem => {
-          addFormattedResult(
-            synonymsListItem,
-            result._source.title,
-            result._source.slug,
-            description,
-            result._score,
-            formattedResults
-          )
-        })
-      } else {
-        addFormattedResult(
-          result._source.title,
-          result._source.title,
-          result._source.slug,
-          description,
-          result._score,
-          formattedResults
-        )
-      }
-    }
-
     if (result.highlight) {
       Object.keys(result.highlight).map(fieldName => {
         if (fieldName === 'title' ||
@@ -214,6 +238,52 @@ const formatResults = (results, searchTerm) => {
   return serverResponse
 }
 
+const formatResultHits = (hits) => {
+  let formattedResults = []
+
+  hits.map(result => {
+    const description = result.highlight && result.highlight.description
+      ? result.highlight.description
+      : result._source ? result._source.description : ''
+
+    if (result.highlight && result.highlight['synonymsList.completion']) {
+      result.highlight['synonymsList.completion'].map(synonymsListItem => {
+        addFormattedResult(
+          synonymsListItem,
+          result._source.title,
+          result._source.slug,
+          description,
+          result._score,
+          formattedResults
+        )
+      })
+    } else if (result.highlight && result.highlight.synonymsList) {
+      result.highlight.synonymsList.map(synonymsListItem => {
+        addFormattedResult(
+          synonymsListItem,
+          result._source.title,
+          result._source.slug,
+          description,
+          result._score,
+          formattedResults
+        )
+      })
+    } else {
+      if (!result._source) return
+      addFormattedResult(
+        result.text ? result.text : result._source.title,
+        result._source.title,
+        result._source.slug,
+        description,
+        result._score,
+        formattedResults
+      )
+    }
+  })
+
+  return formattedResults
+}
+
 const addFormattedResult = (name, drug, slug, description, score, arr) => {
   return arr.push({
     'name': name,
@@ -243,13 +313,13 @@ const buildShouldQuery = (searchTerm) => {
         },
         'boost': 15
       }}, {
-    // Fuzzy matches
+        // Fuzzy matches
         'multi_match': {
           'fields': [ 'title^2', 'synonymsList' ],
           'query': searchTerm,
           'fuzziness': 'auto'
         }}, {
-    // Phrase matches
+          // Phrase matches
           'multi_match': {
             'query': searchTerm,
             'fields': [

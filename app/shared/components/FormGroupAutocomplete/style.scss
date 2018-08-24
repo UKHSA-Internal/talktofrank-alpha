@@ -1,0 +1,20 @@
+.input-group-autocomplete-item {
+  padding: 10px;
+}
+
+.input-group-autocomplete--raised {
+  > div:first-child,
+  input {
+    width: 100%;
+  }
+
+  input {
+    height: 100%;
+  }
+
+  .input-group-autocomplete-item {
+    a {
+      color: #1c1c1c;
+    }
+  }
+}

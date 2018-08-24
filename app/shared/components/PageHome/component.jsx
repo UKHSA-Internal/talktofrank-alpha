@@ -5,6 +5,7 @@ import GridCol from '../GridCol/component.jsx'
 import Main from '../Main/component.jsx'
 import Heading from '../Heading/component.jsx'
 import FormGroup from '../FormGroup/component.jsx'
+import FormGroupAutocomplete from '../FormGroupAutocomplete/component.jsx'
 import Form from '../Form/component.jsx'
 import Footer from '../Footer/component.jsx'
 import CardDeck from '../CardDeck/component.jsx'
@@ -63,7 +64,7 @@ const PageHome = props => {
         </section>
         <section className='panel panel--padding-large panel--pink'>
           <Form>
-            <FormGroup button='true' modifiers='form-control--search' id='search-a-z' label='Ask anything about any drug:'/>
+            <FormGroupAutocomplete button='true' modifiers='form-control--search' id='search-a-z' label='Ask anything about any drug:'/>
           </Form>
         </section>
         <Grid>
