@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import { fetchPage, fetchDrugList, receivePageError } from './actions'
+import { fetchPage, fetchDrugList, fetchSearchTerm, receivePageError } from './actions'
 
 import NoMatchContainer from './containers/NoMatchContainer/component.jsx'
 import ServerError from './components/ServerError/component.jsx'
@@ -46,6 +46,18 @@ let getRoutes = store => {
       })
   }
 
+  function getSearchPage (nextState, replace, callback) {
+    const term = nextState.params.term
+    store.dispatch(fetchSearchTerm(term, '', 'should'))
+      .then(() => {
+        callback()
+      }).catch(err => {
+      console.log(err)
+      // error pushed to state
+      callback()
+    })
+  }
+
   function getDrugList (nextState, replace, callback) {
     store.dispatch(fetchDrugList())
       .then(() => {
@@ -69,6 +81,7 @@ let getRoutes = store => {
       <Route path='drug'>
         <IndexRoute component={withFallback(DrugListContainer)} onEnter={getDrugList} />
         <Route path='search' component={withFallback(SearchPageContainer)} />
+        <Route path='search/:term' component={withFallback(SearchPageContainer)} onEnter={getSearchPage} />
         <Route path=':drugName' component={withFallback(PageContainer)} onEnter={getPage} />
       </Route>
       <Route path='*' component={withFallback(NoMatchContainer)} onEnter={getPage} slug='no-match' />

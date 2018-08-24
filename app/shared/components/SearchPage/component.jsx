@@ -10,8 +10,9 @@ export default class SearchPage extends React.Component {
     super(props)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSuggestionClick = this.handleSuggestionClick.bind(this)
+    this.handleMisspellingClick = this.handleMisspellingClick.bind(this)
     this.state = {
-      searchValue: '',
+      searchValue: this.props.pageData.searchTerm,
       likelyDrugName: false,
       showSuggestions: false
     }
@@ -40,12 +41,51 @@ export default class SearchPage extends React.Component {
   getResults (results, type) {
     if (!results || !results.length) return null
     return (
-      <ul className="search__list">
+      <ul className="search__list list-unstyled">
         { results.map(item => (
-          type === 'phrase' ? <PhraseMatchItem{ ...item } /> : <ResultItem { ...item } />
+          type === 'phrase' ? <PhraseMatchItem{ ...item } /> : this.getResultItem(item)
         ))}
       </ul>
     )
+  }
+
+  getResultItem(item) {
+    const {name, drug, description, link} = item
+    return (
+      <li key={`resultitem-${drug}-${name}`} className='list-item list-item--dotted'>
+        <h3 className="h4 mt-1 mb-0 grey">
+          <span>{this.getResultItemLink(link, name, drug)}{' '}
+            { name !== drug && <span className="muted smaller">({drug})</span>}
+          </span>
+        </h3>
+        <p dangerouslySetInnerHTML={{__html: description}}/>
+      </li>
+    )
+  }
+
+  getResultItemLink(link, name, drug) {
+    if (this.state.searchValue.toLowerCase().indexOf(name.toLowerCase()) !== -1
+    && this.state.searchValue.toLowerCase() !== name.toLowerCase) {
+      return (
+        <a href="#" onClick={(e) => { this.handleMisspellingClick(e, name, drug)}}>{name}</a>
+      )
+    } else {
+      return (
+        <a href={`/drug/${link}`}>{name}</a>
+      )
+    }
+  }
+
+  handleMisspellingClick (e, name, drug) {
+    e.preventDefault()
+    const searchValue = this.state.searchValue.toLowerCase().replace(name.toLowerCase(), drug.toLowerCase())
+    this.setState({
+      searchValue: searchValue,
+      likelyDrugName: drug,
+      showSuggestions: false
+    }, () => {
+      this.props.searchForTerm(searchValue, drug, 'must')
+    })
   }
 
   handleSuggestionClick (e) {
@@ -58,6 +98,12 @@ export default class SearchPage extends React.Component {
     }, () => {
       this.props.searchForTerm(value, value, 'must')
     })
+  }
+
+  highlightMisspelling(searchValue) {
+    const { likelyMisspellings } = this.props.pageData
+    const regexp = new RegExp('(' + likelyMisspellings.join('|') + ')', 'ig');
+    return searchValue.replace(regexp, '<span class="search__spelling">$&</span>')
   }
 
   handleInputChange (e) {
@@ -95,16 +141,17 @@ export default class SearchPage extends React.Component {
 
   render () {
     const { loading } = this.props
-    const { results, suggestions, phraseMatches } = this.props.pageData
+    const { results, suggestions, phraseMatches, match } = this.props.pageData
     const { searchValue, likelyDrugName } = this.state
     const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
+    console.log(this.props.pageData)
     return (
       <React.Fragment>
         <Masthead/>
         <div className='main-wrapper'>
           <h1>Search</h1>
           <Grid>
-            <GridCol className='col-8 col-md-8 col-sm-12 search'>
+            <GridCol className='col-md-8 col-sm-12 search'>
               <input
                 type="text"
                 value={searchValue}
@@ -116,20 +163,23 @@ export default class SearchPage extends React.Component {
               { loading &&
                 <p>Searching...</p>
               }
-              <Grid>
-                { !likelyDrugName &&
-                  <GridCol className='col-12 col-sm-12 search--suggestions'>
-                    {this.getDidYouMean(suggestions)}
-                  </GridCol>
-                }
-                { showResults &&
-                  <GridCol className='col-12 col-sm-12'>
-                    { this.getResults(results)}
-                    <hr />
-                    { this.getResults(phraseMatches, 'phrase')}
-                  </GridCol>
-                }
-              </Grid>
+              { showResults &&
+                <div>
+                  { match &&
+                    <React.Fragment>
+                      <h3>Results for: {' '}{searchValue}</h3>
+                      {this.getResults(phraseMatches, 'phrase')}
+                    </React.Fragment>
+                  }
+                  { !match &&
+                  <React.Fragment>
+                    <p className="h3" dangerouslySetInnerHTML={{ __html: `Your searched for '${this.highlightMisspelling(searchValue)}'` }} />
+                    <p className="h4">Did you mean:</p>
+                    { this.getResults(results) }
+                  </React.Fragment>
+                  }
+                </div>
+              }
             </GridCol>
           </Grid>
         </div>
@@ -150,15 +200,32 @@ const getHeading = (field, drugName) => {
   return util.format(headings[field], drugName)
 }
 
+const getHeadingLink = (field, drugName) => {
+  const headings = {
+    'risks': 'risks-of-%s',
+    'effects': 'how-does-%s-feel',
+    'appearance': 'how-to-recognise-%s',
+    'law': 'legal-status-of-%s',
+    'worried': 'worried-about-%s',
+    'description.localised': '%s'
+  }
+  return util.format(headings[field], drugName.toLowerCase())
+}
+
 const PhraseMatchItem = ({text, drugName, topic, link}) => {
   return (
-    <li key={`phraseresultitem-${link}`}>
-      <p><strong>{ getHeading(topic, drugName) }</strong></p>
+    <li key={`phraseresultitem-${link}`} className='list-item list-item--dotted'>
+      <p className='grey'>
+        <a className='underlined' href={`/drug/${drugName.toLowerCase()}#${getHeadingLink(topic, drugName)}`}>
+          { getHeading(topic, drugName) }
+        </a>
+      </p>
       <p dangerouslySetInnerHTML={{__html: text}} />
     </li>
   )
 }
 
+/*
 const ResultItem = ({name, drug, description, link}) => {
   return (
     <li key={`resultitem-${link}`}>
@@ -170,4 +237,4 @@ const ResultItem = ({name, drug, description, link}) => {
     </li>
   )
 }
-
+*/

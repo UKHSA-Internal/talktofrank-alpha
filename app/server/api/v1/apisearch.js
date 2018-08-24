@@ -78,15 +78,28 @@ const formatResults = (results, searchTerm) => {
   let formattedSuggestions = []
   let formattedResults = []
   let formattedPhraseMatches = []
+  let likelyMisspellings = []
   let match = false
   const hits = results.hits.hits
 
   Object.keys(results.suggest).map(suggestionGroup => {
     results.suggest[suggestionGroup].map(suggestionGroupResults => {
+
+      // Return a list of words in the search that have been potentially
+      // misspelled
+      const suggestionInputTerm = suggestionGroupResults.text.toLowerCase()
+      if (suggestionGroupResults.options.length
+        && likelyMisspellings.indexOf(suggestionInputTerm) === -1
+        && suggestionInputTerm !== 'what'
+        && suggestionInputTerm !== 'how'
+        && suggestionInputTerm !== 'when') {
+        likelyMisspellings[likelyMisspellings.length] = suggestionInputTerm
+      }
+
       suggestionGroupResults.options
         .filter(suggestionGroupResultsItem => {
           if (searchTerm.indexOf(suggestionGroupResultsItem.text.toLowerCase()) !== -1) {
-            match = suggestionGroupResultsItem.text.toLowerCase()
+//             match = suggestionGroupResultsItem.text.toLowerCase()
             return false
           } else {
             return true
@@ -126,8 +139,7 @@ const formatResults = (results, searchTerm) => {
 
   hits.map(result => {
 
-    const description = result.highlight
-    && result.highlight.description
+    const description = result.highlight && result.highlight.description
       ? result.highlight.description
       : result._source.description
 
@@ -174,8 +186,7 @@ const formatResults = (results, searchTerm) => {
         if (fieldName === 'title'
           || fieldName === 'description'
           || fieldName === 'synonymsList'
-          || fieldName === 'synonymsList.completion'
-          || formattedPhraseMatches.length >= config.elasticsearch.phraseResultCount) {
+          || fieldName === 'synonymsList.completion') {
           return null
         }
         formattedPhraseMatches.push({
@@ -187,16 +198,28 @@ const formatResults = (results, searchTerm) => {
         });
       })
     }
-  })
 
-  return {
+    // check if any of the hits is in the search term
+    if (searchTerm.toLowerCase().indexOf(result._source.title.toLowerCase()) !== -1) {
+      match = true
+    }
+
+  })
+  
+  let serverResponse = {
     'results': formattedResults,
     'phraseMatches': formattedPhraseMatches,
     'suggestions': formattedSuggestions,
-    'es_results': results,
-    'match': match
-
+    'match': match,
+    'searchTerm': searchTerm,
+    'likelyMisspellings': likelyMisspellings
   }
+
+  if (config.elasticsearch.showESResult) {
+    serverResponse = Object.assign({}, serverResponse, {'esResults': results})
+  }
+
+  return serverResponse
 }
 
 
@@ -227,6 +250,7 @@ const buildShouldQuery = (searchTerm) => {
           'synonymsList': searchTerm
         }
       },
+      'boost': 15
     }}, {
     // Fuzzy matches
     'multi_match': {

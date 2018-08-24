@@ -8,6 +8,10 @@
     padding: 1rem;
   }
 
+  .search__spelling {
+    border-bottom: 1px dotted red;
+  }
+
   .search__list {
     padding: 0;
     list-style: none;
@@ -19,6 +23,14 @@
 
       &.search__list-suggestion-item {
         padding: 0
+      }
+
+      .underline {
+        text-decoration: underline;
+      }
+
+      a {
+        color: #1C1C1C;
       }
 
       p {
