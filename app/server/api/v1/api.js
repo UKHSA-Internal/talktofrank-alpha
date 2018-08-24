@@ -1,5 +1,10 @@
 import { config } from 'config'
 import axios from 'axios'
+/**
+ * Express routes
+ */
+import searchRoutes from './apisearch.js'
+
 const express = require('express')
 const yaml = require('js-yaml')
 const fs = require('fs')
@@ -9,11 +14,6 @@ const marked = require('marked')
 const router = express.Router()
 const sortBy = require('lodash.sortby')
 const groupBy = require('lodash.groupby')
-
-/**
- * Express routes
- */
-import searchRoutes from './apisearch.js'
 
 /**
  * Axios global config

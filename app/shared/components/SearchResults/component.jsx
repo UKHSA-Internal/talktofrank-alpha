@@ -47,8 +47,7 @@ export default class SearchResults extends React.Component {
 
   handleInputChange (e) {
     e.preventDefault()
-
-    let { likelyDrugName, showSuggestions} = this.state
+    let { likelyDrugName, showSuggestions } = this.state
     const { searchValue } = this.state
     const nextSearchValue = e.target.value
     let queryType = 'should'
@@ -62,7 +61,7 @@ export default class SearchResults extends React.Component {
     if (likelyDrugName && nextSearchValue.indexOf(likelyDrugName) !== -1) {
       queryType = 'must'
     } else {
-      likelyDrugName = '',
+      likelyDrugName = ''
       showSuggestions = true
     }
 
@@ -166,4 +165,3 @@ const ResultItem = ({name, drug, description, link}) => {
     </li>
   )
 }
-

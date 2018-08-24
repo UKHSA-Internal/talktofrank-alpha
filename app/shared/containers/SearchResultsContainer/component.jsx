@@ -11,7 +11,7 @@ const mapDispatchToProps = (dispatch) => {
   return ({
     searchForTerm: (searchTerm, drug, mustOrShould) => {
       dispatch(fetchSearchTerm(searchTerm, drug, mustOrShould))
-    },
+    }
   })
 }
 

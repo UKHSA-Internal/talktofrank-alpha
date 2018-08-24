@@ -24,16 +24,16 @@ router.get('/should/:term', jsonParser, (req, res, next) => {
       body: buildShouldQuery(searchTerm)
     }).then(results => res.status(200).json(formatResults(results, searchTerm)))
       .catch(err => {
-      /* eslint-disable */
-      console.error(err);
-      /* eslint-enable */
-      res.status(500).json({
-        'message': 'Internal error'
+        /* eslint-disable */
+        console.error(err);
+        /* eslint-enable */
+        res.status(500).json({
+          'message': 'Internal error'
+        })
       })
-    })
   } catch (err) {
     /* eslint-disable */
-    console.error(err);
+    console.error(err)
     /* eslint-enable */
     res.status(500).json({
       'message': 'Internal error'
@@ -56,16 +56,16 @@ router.get('/must/:phrase/:drug', jsonParser, (req, res, next) => {
       body: buildMustQuery(drugSearchTerm, phraseSearchTerm)
     }).then(results => res.status(200).json(formatResults(results, drugSearchTerm)))
       .catch(err => {
-      /* eslint-disable */
-      console.error(err);
-      /* eslint-enable */
-      res.status(500).json({
-        'message': 'Internal error'
+        /* eslint-disable */
+        console.error(err)
+        /* eslint-enable */
+        res.status(500).json({
+          'message': 'Internal error'
+        })
       })
-    })
   } catch (err) {
     /* eslint-disable */
-    console.error(err);
+    console.error(err)
     /* eslint-enable */
     res.status(500).json({
       'message': 'Internal error'
@@ -74,7 +74,6 @@ router.get('/must/:phrase/:drug', jsonParser, (req, res, next) => {
 })
 
 const formatResults = (results, searchTerm) => {
-
   let formattedSuggestions = []
   let formattedResults = []
   let formattedPhraseMatches = []
@@ -84,15 +83,14 @@ const formatResults = (results, searchTerm) => {
 
   Object.keys(results.suggest).map(suggestionGroup => {
     results.suggest[suggestionGroup].map(suggestionGroupResults => {
-
       // Return a list of words in the search that have been potentially
       // misspelled
       const suggestionInputTerm = suggestionGroupResults.text.toLowerCase()
-      if (suggestionGroupResults.options.length
-        && likelyMisspellings.indexOf(suggestionInputTerm) === -1
-        && suggestionInputTerm !== 'what'
-        && suggestionInputTerm !== 'how'
-        && suggestionInputTerm !== 'when') {
+      if (suggestionGroupResults.options.length &&
+        likelyMisspellings.indexOf(suggestionInputTerm) === -1 &&
+        suggestionInputTerm !== 'what' &&
+        suggestionInputTerm !== 'how' &&
+        suggestionInputTerm !== 'when') {
         likelyMisspellings[likelyMisspellings.length] = suggestionInputTerm
       }
 
@@ -115,10 +113,10 @@ const formatResults = (results, searchTerm) => {
           // Check if the suggestion is already added & if score is higher
           // remove existing and add new
           formattedSuggestions.map((item, index) => {
-            if (item.text === suggestionItem
-              && item.score < suggestionItemScore) {
+            if (item.text === suggestionItem &&
+              item.score < suggestionItemScore) {
               formattedSuggestions.splice(index, 1)
-            } else if(item.text === suggestionItem) {
+            } else if (item.text === suggestionItem) {
               skip = true
             }
           })
@@ -133,19 +131,17 @@ const formatResults = (results, searchTerm) => {
           })
         })
 
-        if (formattedSuggestions.length >= config.elasticsearch.suggestResultCount) return
-      })
+//         if (formattedSuggestions.length >= config.elasticsearch.suggestResultCount) return
+    })
   })
 
   hits.map(result => {
-
     const description = result.highlight && result.highlight.description
       ? result.highlight.description
       : result._source.description
 
     if (formattedResults.length < config.elasticsearch.drugResultCount) {
-      if (result.highlight
-        && result.highlight['synonymsList.completion']) {
+      if (result.highlight && result.highlight['synonymsList.completion']) {
         result.highlight['synonymsList.completion'].map(synonymsListItem => {
           addFormattedResult(
             synonymsListItem,
@@ -156,8 +152,7 @@ const formatResults = (results, searchTerm) => {
             formattedResults
           )
         })
-      }
-      else if (result.highlight && result.highlight.synonymsList) {
+      } else if (result.highlight && result.highlight.synonymsList) {
         result.highlight.synonymsList.map(synonymsListItem => {
           addFormattedResult(
             synonymsListItem,
@@ -168,8 +163,7 @@ const formatResults = (results, searchTerm) => {
             formattedResults
           )
         })
-      }
-      else {
+      } else {
         addFormattedResult(
           result._source.title,
           result._source.title,
@@ -183,10 +177,10 @@ const formatResults = (results, searchTerm) => {
 
     if (result.highlight) {
       Object.keys(result.highlight).map(fieldName => {
-        if (fieldName === 'title'
-          || fieldName === 'description'
-          || fieldName === 'synonymsList'
-          || fieldName === 'synonymsList.completion') {
+        if (fieldName === 'title' ||
+          fieldName === 'description' ||
+          fieldName === 'synonymsList' ||
+          fieldName === 'synonymsList.completion') {
           return null
         }
         formattedPhraseMatches.push({
@@ -195,7 +189,7 @@ const formatResults = (results, searchTerm) => {
           'link': result._source.slug,
           'score': result._score,
           'topic': fieldName.split('_')[0]
-        });
+        })
       })
     }
 
@@ -203,9 +197,7 @@ const formatResults = (results, searchTerm) => {
     if (searchTerm.toLowerCase().indexOf(result._source.title.toLowerCase()) !== -1) {
       match = true
     }
-
   })
-  
   let serverResponse = {
     'results': formattedResults,
     'phraseMatches': formattedPhraseMatches,
@@ -221,7 +213,6 @@ const formatResults = (results, searchTerm) => {
 
   return serverResponse
 }
-
 
 const addFormattedResult = (name, drug, slug, description, score, arr) => {
   return arr.push({
@@ -244,48 +235,48 @@ const buildShouldQuery = (searchTerm) => {
       },
       'boost': 30
     }}, {
-    'constant_score': {
-      'filter': {
-        'term': {
-          'synonymsList': searchTerm
-        }
-      },
-      'boost': 15
-    }}, {
+      'constant_score': {
+        'filter': {
+          'term': {
+            'synonymsList': searchTerm
+          }
+        },
+        'boost': 15
+      }}, {
     // Fuzzy matches
-    'multi_match': {
-      'fields': [ 'title^2', 'synonymsList' ],
-      'query': searchTerm,
-      'fuzziness': 'auto'
-    }}, {
+        'multi_match': {
+          'fields': [ 'title^2', 'synonymsList' ],
+          'query': searchTerm,
+          'fuzziness': 'auto'
+        }}, {
     // Phrase matches
-    'multi_match': {
-      'query': searchTerm,
-      'fields': [
-        'description',
-        'appearance_whatDoesItTastesmellLike',
-        'appearance_howDoPeopleTakeIt',
-        'effects_howDoesItMakeYouFeel',
-        'effects_howDoesItMakePeopleBehave',
-        'effects_whatAreThePhysicalEffects',
-        'effects_whatIsTheComedownLike',
-        'effects_howLongDoesItStayInYourBody',
-        'risks_whatAreTheRisks',
-        'risks_canYouGetAddicted',
-        'risks_isItDangerousToMixWithOtherDrugs',
-        'risks_whatIsCutWith',
-        'effects_howDoesItEffectSocietyAndTheEnvironment',
-        'law_whatIsTheDrugClassification',
-        'law_whatIfYouAreCaughtWithIt',
-        'worried_iFeelPressuredIntoTakingItWhatCanIDo',
-        'worried_howCanIHelpMyFriendWithTheirUse',
-        'worried_iveSpentAllMyMoneyOnItWhatCanIDo'
-      ],
-      'type': 'phrase',
-      'analyzer': 'question_analyzer',
-      'slop': 100
-    }
-  }];
+          'multi_match': {
+            'query': searchTerm,
+            'fields': [
+              'description',
+              'appearance_whatDoesItTastesmellLike',
+              'appearance_howDoPeopleTakeIt',
+              'effects_howDoesItMakeYouFeel',
+              'effects_howDoesItMakePeopleBehave',
+              'effects_whatAreThePhysicalEffects',
+              'effects_whatIsTheComedownLike',
+              'effects_howLongDoesItStayInYourBody',
+              'risks_whatAreTheRisks',
+              'risks_canYouGetAddicted',
+              'risks_isItDangerousToMixWithOtherDrugs',
+              'risks_whatIsCutWith',
+              'effects_howDoesItEffectSocietyAndTheEnvironment',
+              'law_whatIsTheDrugClassification',
+              'law_whatIfYouAreCaughtWithIt',
+              'worried_iFeelPressuredIntoTakingItWhatCanIDo',
+              'worried_howCanIHelpMyFriendWithTheirUse',
+              'worried_iveSpentAllMyMoneyOnItWhatCanIDo'
+            ],
+            'type': 'phrase',
+            'analyzer': 'question_analyzer',
+            'slop': 100
+          }
+        }]
 
   return {
     'query': {
@@ -299,25 +290,24 @@ const buildShouldQuery = (searchTerm) => {
 }
 
 const buildMustQuery = (drugSearchTerm, phraseSearchTerm) => {
-
   const mustQuery = [{
     // Phrase matches
     'bool': {
       'minimum_should_match': 1,
       'should': [{
-        'match' : {
+        'match': {
           'title': {
             'query': drugSearchTerm
           }
         }}, {
-        'match' : {
-          'synonymsList.completion': {
-            'query': drugSearchTerm
-          }
-        }}
+          'match': {
+            'synonymsList.completion': {
+              'query': drugSearchTerm
+            }
+          }}
       ]
     }
-  }];
+  }]
 
   const shouldQuery = [{
     // Phrase matches
@@ -347,7 +337,7 @@ const buildMustQuery = (drugSearchTerm, phraseSearchTerm) => {
       'analyzer': 'question_analyzer',
       'slop': 100
     }
-  }];
+  }]
 
   return {
     'query': {
@@ -376,9 +366,9 @@ const hightlightsQuery = () => ({
       'pre_tags': [''],
       'post_tags': ['']
     },
-    "synonymsList.completion": {
-      "pre_tags": [""],
-      "post_tags": [""]
+    'synonymsList.completion': {
+      'pre_tags': [''],
+      'post_tags': ['']
     },
     'description': {},
     'appearance_whatDoesItTastesmellLike': {},

@@ -51,7 +51,7 @@ export default class SearchPage extends React.Component {
     )
   }
 
-  getResultItem(item) {
+  getResultItem (item) {
     const {name, drug, description, link} = item
     return (
       <li key={`resultitem-${drug}-${name}`} className='list-item list-item--dotted'>
@@ -65,11 +65,11 @@ export default class SearchPage extends React.Component {
     )
   }
 
-  getResultItemLink(link, name, drug) {
-    if (this.state.searchValue.toLowerCase().indexOf(name.toLowerCase()) !== -1
-    && this.state.searchValue.toLowerCase() !== name.toLowerCase) {
+  getResultItemLink (link, name, drug) {
+    if (this.state.searchValue.toLowerCase().indexOf(name.toLowerCase()) !== -1 &&
+      this.state.searchValue.toLowerCase() !== name.toLowerCase) {
       return (
-        <a href="#" onClick={(e) => { this.handleMisspellingClick(e, name, drug)}}>{name}</a>
+        <a href="#" onClick={(e) => { this.handleMisspellingClick(e, name, drug) }}>{name}</a>
       )
     } else {
       return (
@@ -102,16 +102,16 @@ export default class SearchPage extends React.Component {
     })
   }
 
-  highlightMisspelling(searchValue) {
+  highlightMisspelling (searchValue) {
     const { likelyMisspellings } = this.props.pageData
-    const regexp = new RegExp('(' + likelyMisspellings.join('|') + ')', 'ig');
+    const regexp = new RegExp('(' + likelyMisspellings.join('|') + ')', 'ig')
     return searchValue.replace(regexp, '<span class="search__spelling">$&</span>')
   }
 
   handleInputChange (e) {
     e.preventDefault()
 
-    let { likelyDrugName, showSuggestions} = this.state
+    let { likelyDrugName, showSuggestions } = this.state
     const { searchValue } = this.state
     const nextSearchValue = e.target.value
     let queryType = 'should'
@@ -121,12 +121,12 @@ export default class SearchPage extends React.Component {
       likelyDrugName = this.props.pageData.match
     }
 
-    const matcher = new RegExp(likelyDrugName + " ", "ig")
+    const matcher = new RegExp(likelyDrugName + ' ', 'ig')
     // Drug name is still in search
     if (likelyDrugName && matcher.test(nextSearchValue)) {
       queryType = 'must'
     } else {
-      likelyDrugName = '',
+      likelyDrugName = ''
       showSuggestions = true
     }
 
