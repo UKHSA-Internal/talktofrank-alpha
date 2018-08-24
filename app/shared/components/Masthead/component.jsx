@@ -34,7 +34,7 @@ export default class Masthead extends React.PureComponent {
           </Button>
           <Logo url='/ui/img/logo-frank.png' alt=''/>
           <nav className={navClasses} id='navigation'>
-            <ul className='navbar-nav'>
+            <ul className='navbar-nav'role='menu'>
               <LinkItem url='#' role="menuitem" label='News'/>
               <LinkItem url='#' role="menuitem" label='Help for you'/>
               <LinkItem url='#' role="menuitem" label='Help for others'/>

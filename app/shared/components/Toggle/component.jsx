@@ -45,7 +45,7 @@ export default class Toggle extends React.PureComponent {
     })
 
     return (
-      <div className={classes} id={id} ref={node => { this.node = node }}>
+      <div className={classes} id={id} aria-hidden={!this.state.visible} ref={node => { this.node = node }}>
         <a role='button' href={`#${id}`} data-target={`#${id}`} className={toggleClass} onClick={this.toggle.bind(this)} aria-expanded={this.state.visible}>
           {text}
         </a>
