@@ -70,8 +70,6 @@ const Page = props => {
               <Toggle text={`Risks of ${name}`} className='collapsible--chevron' hidden='true' history={props.location}>
                 {props.risks_whatAreTheRisks && <React.Fragment><Heading {...modifiers} text={`What are the risks of ${name}?`}/><Longform text={props.risks_whatAreTheRisks} /></React.Fragment>
                 }
-                {props.effects_howDoesItEffectSocietyAndTheEnvironment && <React.Fragment><Heading {...modifiers} text={`How does ${name} effect society and the environment`}/><Longform text={props.effects_howDoesItEffectSocietyAndTheEnvironment} /></React.Fragment>
-                }
               </Toggle>
             </section>
             <section className='section section--has-toggle'>
@@ -97,6 +95,14 @@ const Page = props => {
                 {props.law_whatIsTheDrugClassification && <React.Fragment><Heading {...modifiers} text={`What is the drug classification of ${name}?`}/><Longform text={props.law_whatIsTheDrugClassification} /></React.Fragment>
                 }
                 {props.law_whatIfYouAreCaughtWithIt && <React.Fragment><Heading {...modifiers} text={`What if you are caught with ${name}?`}/><Longform text={props.law_whatIfYouAreCaughtWithIt} /></React.Fragment>
+                }
+              </Toggle>
+            </section>
+            <section className='section section--has-toggle'>
+              <Svg url='/ui/svg/environment.svg' className='float-right spacing--tight' />
+              <Heading modifiers='h3 spacing--single sm-spacing--tight' text='Environmental risks'/>
+              <Toggle text={`Environmental risks of ${name}`} className='collapsible--chevron' hidden='true' history={props.location}>
+                {props.effects_howDoesItEffectSocietyAndTheEnvironment && <React.Fragment><Heading {...modifiers} text={`How does ${name} effect the environment`}/><Longform text={props.effects_howDoesItEffectSocietyAndTheEnvironment} /></React.Fragment>
                 }
               </Toggle>
             </section>
