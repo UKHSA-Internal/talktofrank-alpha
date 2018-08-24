@@ -146,7 +146,6 @@ export default class SearchPage extends React.Component {
     const { results, suggestions, phraseMatches, match } = this.props.pageData
     const { searchValue, likelyDrugName } = this.state
     const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
-    console.log(this.props.pageData)
     return (
       <React.Fragment>
         <Masthead/>
