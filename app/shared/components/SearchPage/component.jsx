@@ -3,6 +3,8 @@ import { Link } from 'react-router'
 import Masthead from '../Masthead/component.jsx'
 import Grid from '../Grid/component.jsx'
 import GridCol from '../GridCol/component.jsx'
+import Main from '../Main/component.jsx'
+import Heading from '../Heading/component.jsx'
 const util = require('util')
 
 export default class SearchPage extends React.Component {
@@ -10,147 +12,27 @@ export default class SearchPage extends React.Component {
     super(props)
     this.handleInputChange = this.handleInputChange.bind(this)
     this.handleSuggestionClick = this.handleSuggestionClick.bind(this)
-    this.addToSuggestionsIfNotSearchTerm = this.addToSuggestionsIfNotSearchTerm.bind(this)
+    this.handleMisspellingClick = this.handleMisspellingClick.bind(this)
     this.state = {
-      searchValue: ''
+      searchValue: this.props.pageData.searchTerm,
+      likelyDrugName: false,
+      showSuggestions: false
     }
-  }
-
-  getTitleResult (item) {
-    let value = ''
-    if (!item.highlight) return null
-
-    if (item.highlight.title) {
-      value = item.highlight.title
-    } else if (item.highlight['title.partial']) {
-      value = item.highlight['title.partial']
-    } else {
-      value = item._source.title
-    }
-    return (<p className="h3" dangerouslySetInnerHTML={{__html: value}} />)
-  }
-
-  getSynonymResult (item) {
-    let value = ''
-    if (!item.highlight) return null
-    if (item.highlight.synonyms) {
-      value = item.highlight.synonyms
-    } else if (item.highlight['synonyms.partial']) {
-      value = item.highlight['synonyms.partial']
-    } else {
-      value = item._source.synonyms
-    }
-    return (<p className="lead muted" dangerouslySetInnerHTML={{__html: value}} />)
-  }
-
-  getHighlights (item) {
-    if (!item.highlight) return null
-    const { title, ...otherHighlights } = item.highlight
-    const synonyms = otherHighlights['synonyms.comma_separated']
-
-    return (
-      <React.Fragment key={`highlight-${item._source.title}`}>
-        { title &&
-          <li key={`result-title-${item._source.slug}`} className="search__list-item">
-            <p className="h3">{item._source.title}</p>
-            <a href={`/drug/${item._source.slug}`}>read more...</a>
-          </li>
-        }
-        { synonyms &&
-          <li key={`result-title-${synonyms[0]}`} className="search__list-item">
-            <p className="h3">{this.getFullSynonym(item, synonyms)}</p>
-            <a href={`/drug/${item._source.slug}`}>read more...</a>
-          </li>
-        }
-        {
-          Object.keys(otherHighlights).map(highlightName => {
-            if (highlightName === 'synonyms.comma_separated') return null
-            return (
-              <li key={`result-title-${highlightName}`} className="search__list-item">
-                { this.resultItemText(item, otherHighlights[highlightName], highlightName) }
-              </li>
-            )
-          })
-        }
-      </React.Fragment>
-    )
-  }
-
-  getHeading (field, drugName) {
-    const headings = {
-      'risks': 'the risks of using %s',
-      'effects': 'the effects of using %s?',
-      'appearance': 'what %s looks like',
-      'law': 'what the law says about %s',
-      'worried': 'the worries of using %s?',
-      'description.localised': '%s'
-    }
-    return util.format(headings[field], drugName)
-  }
-
-  // this is a dirty work around for Alpha
-  // @TODO replace with ES field of array items
-  getFullSynonym (item, matchedValue) {
-    const synonyms = item._source.synonyms
-    const startString = item._source.synonyms.indexOf(matchedValue[0])
-    const splitString = synonyms.split(matchedValue[0])[0]
-    const startStringSynonym = splitString.lastIndexOf(',') !== -1
-      ? splitString.lastIndexOf(',') + 1
-      : startString
-    const endString = item._source.synonyms.indexOf(',', startString) !== -1
-      ? item._source.synonyms.indexOf(',', startString)
-      : item._source.synonyms.length
-    const fullSynonym = synonyms.substring(startStringSynonym, endString)
-    return util.format('%s (%s)', fullSynonym.trim(), item._source.title)
-  }
-
-  resultItem (item, name, showDrug = false) {
-    return (
-      <React.Fragment>
-        {showDrug &&
-          <p className="h3">{item._source.title}</p>
-        }
-        <a href={`/drug/${item._source.slug}`}>
-          <span dangerouslySetInnerHTML={{__html: name}}/>
-        </a>
-      </React.Fragment>
-    )
-  }
-
-  resultItemText (item, matchingText, fieldName) {
-    return (
-      <React.Fragment>
-        <p dangerouslySetInnerHTML={{__html: matchingText}}/>
-        <p>more about{' '}
-          <a href={`/drug/${item._source.slug}`}>
-            {this.getHeading(fieldName.split('_')[0], item._source.title)}
-            </a>
-        </p>
-      </React.Fragment>
-    )
   }
 
   getDidYouMean (suggestions) {
-    if (!suggestions) return null
-    let displayValues = []
-    Object.keys(suggestions).map(item => {
-      suggestions[item][0].options
-        .filter(this.addToSuggestionsIfNotSearchTerm)
-        .map(match => displayValues.push(match))
-    })
-
-    if (!displayValues.length) return null
+    if (!suggestions || !suggestions.length) return null
 
     return (
       <React.Fragment>
         <p>
-          <span className="h4">Did you mean:</span>{' '}
-          { displayValues.map((item, key) =>
-            <React.Fragment key={`suggestion-${item._source ? item._source.title : item.text}-${key}`}>
-              <a onClick={this.handleSuggestionClick}>
-                {item._source ? item._source.title : item.text}
+          <span className='h4'>Did you mean:</span>{' '}
+          { suggestions.map((item, key) =>
+            <React.Fragment key={`suggestion-${item.text}`}>
+              <a className='fake-link' onClick={this.handleSuggestionClick}>
+                {item.text}
               </a>
-              { key + 1 < displayValues.length && ', '}
+              { key + 1 < suggestions.length && ', '}
             </React.Fragment>
           )}
         </p>
@@ -158,77 +40,211 @@ export default class SearchPage extends React.Component {
     )
   }
 
-  getResults (results) {
+  getResults (results, type) {
     if (!results || !results.length) return null
     return (
-      <React.Fragment>
-        <h2>Results</h2>
-        <ul className="search__list">
-          { results.map(item => (
-              this.getHighlights(item)
-          ))}
-        </ul>
-      </React.Fragment>
+      <ul className="search__list list-unstyled">
+        { results.map(item => (
+          type === 'phrase' ? <PhraseMatchItem{ ...item } /> : this.getResultItem(item)
+        ))}
+      </ul>
     )
+  }
+
+  getResultItem (item) {
+    const {name, drug, description, link} = item
+    return (
+      <li key={`resultitem-${drug}-${name}`} className='list-item list-item--dotted'>
+        <h3 className="h4 mt-1 mb-0 grey">
+          <span>{this.getResultItemLink(link, name, drug)}{' '}
+            { name !== drug && <span className="muted smaller">({drug})</span>}
+          </span>
+        </h3>
+        <p dangerouslySetInnerHTML={{__html: description}}/>
+      </li>
+    )
+  }
+
+  getResultItemLink (link, name, drug) {
+    if (this.state.searchValue.toLowerCase().indexOf(name.toLowerCase()) !== -1 &&
+      this.state.searchValue.toLowerCase() !== name.toLowerCase) {
+      return (
+        <a href="#" onClick={(e) => { this.handleMisspellingClick(e, name, drug) }}>{name}</a>
+      )
+    } else {
+      return (
+        <a href={`/drug/${link}`}>{name}</a>
+      )
+    }
+  }
+
+  handleMisspellingClick (e, name, drug) {
+    e.preventDefault()
+    const searchValue = this.state.searchValue.toLowerCase().replace(name.toLowerCase(), drug.toLowerCase())
+    this.setState({
+      searchValue: searchValue,
+      likelyDrugName: drug,
+      showSuggestions: false
+    }, () => {
+      this.props.searchForTerm(searchValue, drug, 'must')
+    })
   }
 
   handleSuggestionClick (e) {
     e.preventDefault()
     const value = e.target.innerHTML
     this.setState({
-      searchValue: value
+      searchValue: value,
+      likelyDrugName: value,
+      showSuggestions: false
     }, () => {
-      this.props.searchForTerm(value)
+      this.props.searchForTerm(value, value, 'must')
     })
   }
 
-  addToSuggestionsIfNotSearchTerm (item) {
-    return item.text.toLowerCase() !== this.state.searchValue.toLowerCase()
+  highlightMisspelling (searchValue) {
+    const { likelyMisspellings } = this.props.pageData
+    const regexp = new RegExp('(' + likelyMisspellings.join('|') + ')', 'ig')
+    return searchValue.replace(regexp, '<span class="search__spelling">$&</span>')
   }
 
   handleInputChange (e) {
     e.preventDefault()
+
+    let { likelyDrugName, showSuggestions } = this.state
+    const { searchValue } = this.state
+    const nextSearchValue = e.target.value
+    let queryType = 'should'
+
+    // If the server finds a drug name match
+    if (this.props.pageData.match) {
+      likelyDrugName = this.props.pageData.match
+    }
+
+    const matcher = new RegExp(likelyDrugName + ' ', 'ig')
+    // Drug name is still in search
+    if (likelyDrugName && matcher.test(nextSearchValue)) {
+      queryType = 'must'
+    } else {
+      likelyDrugName = ''
+      showSuggestions = true
+    }
+
     this.setState({
-      searchValue: e.target.value
+      searchValue: nextSearchValue,
+      likelyDrugName,
+      showSuggestions
+    }, () => {
+      if (nextSearchValue.length >= 2) {
+        this.props.searchForTerm(nextSearchValue, likelyDrugName, queryType)
+      }
     })
-    if (e.target.value.length < 2) return null
-    this.props.searchForTerm(e.target.value)
   }
 
   render () {
     const { loading } = this.props
-    const { results, suggest } = this.props.pageData
-    const { searchValue } = this.state
+    const { results, suggestions, phraseMatches, match } = this.props.pageData
+    const { searchValue, likelyDrugName } = this.state
+    const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
     return (
       <React.Fragment>
         <Masthead/>
-        <div className='main-wrapper'>
-          <h1>Search</h1>
+        <Main>
+          <Heading type='h1' className='h1' text='Search'/>
           <Grid>
-            <GridCol className='col-8 col-md-8 col-sm-12 search'>
-              <input
-                type="text"
-                value={searchValue}
-                onChange={this.handleInputChange}
-                placeholder="Search for drugs, advice & information...."
-                style={{width: '100%'}}
-                className="search__input"
-              />
+            <GridCol className='col-12 col-md-8 search'>
+
+              <div className='input-group'>
+                <label htmlFor='search-site' className='form-label h3'>Search for drugs, advice & information...</label>
+                <div className='input-group--raised d-flex'>
+                  <input
+                    className='form-control form-control--search'
+                    id='search-site'
+                    type='text'
+                    autoComplete='off'
+                    autoCorrect='off'
+                    autoCapitalize='off'
+                    spellCheck='false'
+                    value={searchValue}
+                    onChange={this.handleInputChange}
+                    />
+                </div>
+              </div>
               { loading &&
                 <p>Searching...</p>
               }
-              <Grid>
-                <GridCol className='col-12 col-sm-12 search--suggestions'>
-                  { this.getDidYouMean(suggest)}
-                </GridCol>
-                <GridCol className='col-12 col-sm-12'>
-                  { this.getResults(results)}
-                </GridCol>
-              </Grid>
+              { showResults &&
+                <div>
+                  { match &&
+                    <React.Fragment>
+                      <h3>Results for: {' '}{searchValue}</h3>
+                      {this.getResults(phraseMatches, 'phrase')}
+                    </React.Fragment>
+                  }
+                  { !match &&
+                  <React.Fragment>
+                    <p className="h3" dangerouslySetInnerHTML={{ __html: `Your searched for '${this.highlightMisspelling(searchValue)}'` }} />
+                    <p className="h4">Did you mean:</p>
+                    { this.getResults(results) }
+                  </React.Fragment>
+                  }
+                </div>
+              }
             </GridCol>
           </Grid>
-        </div>
+        </Main>
       </React.Fragment>
     )
   }
 }
+
+const getHeading = (field, drugName) => {
+  const headings = {
+    'risks': 'the risks of using %s',
+    'effects': 'the effects of using %s',
+    'appearance': 'what %s looks like',
+    'law': 'what the law says about %s',
+    'worried': 'worries of using %s',
+    'description.localised': '%s'
+  }
+  return util.format(headings[field], drugName)
+}
+
+const getHeadingLink = (field, drugName) => {
+  const headings = {
+    'risks': 'risks-of-%s',
+    'effects': 'how-does-%s-feel',
+    'appearance': 'how-to-recognise-%s',
+    'law': 'legal-status-of-%s',
+    'worried': 'worried-about-%s',
+    'description.localised': '%s'
+  }
+  return util.format(headings[field], drugName.toLowerCase())
+}
+
+const PhraseMatchItem = ({text, drugName, topic, link}) => {
+  return (
+    <li key={`phraseresultitem-${link}`} className='list-item list-item--dotted'>
+      <p className='grey'>
+        <a className='underlined' href={`/drug/${drugName.toLowerCase()}#${getHeadingLink(topic, drugName)}`}>
+          { getHeading(topic, drugName) }
+        </a>
+      </p>
+      <p dangerouslySetInnerHTML={{__html: text}} />
+    </li>
+  )
+}
+
+/*
+const ResultItem = ({name, drug, description, link}) => {
+  return (
+    <li key={`resultitem-${link}`}>
+      <p className='h4'>
+        <a href={`/drug/${link}`}>{name}</a>
+        { name !== drug && ` (${drug})` }
+      </p>
+      <p dangerouslySetInnerHTML={{__html: description}}/>
+    </li>
+  )
+}
+*/
