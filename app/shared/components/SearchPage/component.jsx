@@ -66,10 +66,12 @@ export default class SearchPage extends React.Component {
   }
 
   getResultItemLink (link, name, drug) {
-    if (this.state.searchValue.toLowerCase().indexOf(name.toLowerCase()) !== -1 &&
-      this.state.searchValue.toLowerCase() !== name.toLowerCase) {
+    const singleWordSearch = this.state.searchValue.toLowerCase().indexOf(' ') === -1
+    if ((this.state.searchValue.toLowerCase().indexOf(name.toLowerCase()) !== -1 &&
+      this.state.searchValue.toLowerCase() !== name.toLowerCase) ||
+      singleWordSearch) {
       return (
-        <a href="#" onClick={(e) => { this.handleMisspellingClick(e, name, drug) }}>{name}</a>
+        <a href="#" onClick={(e) => { this.handleMisspellingClick(e, name, drug, singleWordSearch) }}>{name}</a>
       )
     } else {
       return (
@@ -78,9 +80,12 @@ export default class SearchPage extends React.Component {
     }
   }
 
-  handleMisspellingClick (e, name, drug) {
+  handleMisspellingClick (e, name, drug, singleWordSearch) {
     e.preventDefault()
-    const searchValue = this.state.searchValue.toLowerCase().replace(name.toLowerCase(), drug.toLowerCase())
+    let searchValue = drug
+    if (!singleWordSearch) {
+      searchValue = this.state.searchValue.toLowerCase().replace(name.toLowerCase(), drug.toLowerCase())
+    }
     this.setState({
       searchValue: searchValue,
       likelyDrugName: drug,
@@ -144,7 +149,7 @@ export default class SearchPage extends React.Component {
   render () {
     const { loading } = this.props
     const { results, suggestions, phraseMatches, match } = this.props.pageData
-    const { searchValue, likelyDrugName } = this.state
+    const searchValue = this.state.searchValue ? this.state.searchValue : ''
     const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
     return (
       <React.Fragment>
@@ -177,14 +182,14 @@ export default class SearchPage extends React.Component {
                 <div>
                   { match &&
                     <React.Fragment>
-                      <h3>Results for: {' '}{searchValue}</h3>
+                      <h3 className='underlined'>Results for: {' '}{searchValue}</h3>
                       {this.getResults(phraseMatches, 'phrase')}
                     </React.Fragment>
                   }
                   { !match &&
                   <React.Fragment>
                     <p className="h3" dangerouslySetInnerHTML={{ __html: `Your searched for '${this.highlightMisspelling(searchValue)}'` }} />
-                    <p className="h4">Did you mean:</p>
+                    <p className="h4 underlined">Did you mean:</p>
                     { this.getResults(results) }
                   </React.Fragment>
                   }
@@ -234,17 +239,3 @@ const PhraseMatchItem = ({text, drugName, topic, link}) => {
     </li>
   )
 }
-
-/*
-const ResultItem = ({name, drug, description, link}) => {
-  return (
-    <li key={`resultitem-${link}`}>
-      <p className='h4'>
-        <a href={`/drug/${link}`}>{name}</a>
-        { name !== drug && ` (${drug})` }
-      </p>
-      <p dangerouslySetInnerHTML={{__html: description}}/>
-    </li>
-  )
-}
-*/

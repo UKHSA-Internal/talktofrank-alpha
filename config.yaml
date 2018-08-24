@@ -5,4 +5,4 @@ elasticsearch:
  drugResultCount: 3
  suggestResultCount: 5
  phraseResultCount: 3
- showESResult: true
+ showESResult: false
