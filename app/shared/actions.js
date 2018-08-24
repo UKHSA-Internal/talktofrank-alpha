@@ -38,7 +38,6 @@ export function fetchSearchTerm (term, drug, shouldOrMustQuery) {
     if (shouldOrMustQuery === 'must') {
       lookupUrl = apiHost + `/api/v1/search/must/${term}/${drug}`
     }
-
     return axios.get(lookupUrl)
       .then(res => {
         dispatch(receivePage(res.data))
