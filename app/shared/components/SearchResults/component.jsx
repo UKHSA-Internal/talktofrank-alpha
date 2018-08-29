@@ -81,7 +81,6 @@ export default class SearchResults extends React.Component {
     const { searchValue, likelyDrugName } = this.state
     const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
 
-    console.log(results)
     return (
       <React.Fragment>
         <Masthead/>

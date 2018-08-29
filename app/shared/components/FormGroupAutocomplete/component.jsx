@@ -68,16 +68,8 @@ class FormGroup extends PureComponent {
                 searchTerm: value
               })
             }}
-            menuStyle={{
-              maxWidth: '714px',
-              position: 'absolute',
-              overflow: 'auto',
-              top: '97px',
-              left: '0px',
-              width: '97%',
-              border: '3px solid #78FF74',
-              borderTop: '0',
-              zIndex: 1
+            renderMenu={items => {
+              return <div className='input-group-autocomplete-menu' style={{...this.menuStyle }} children={items}/>
             }}
             onChange={event => {
               this.autoCompleteOnChange(event)
@@ -86,7 +78,7 @@ class FormGroup extends PureComponent {
               <div
                 key={item.name}
                 style={{ background: isHighlighted ? '#fcfcfc' : 'white' }}
-                className='input-group-autocomplete-item'
+                className='input-group-autocomplete-menu-item'
               >
                 <h3 className="h4 mt-1 mb-0 grey">
                   <span><a href={`/drug/${item.link}`}>{item.name}</a>{' '}
