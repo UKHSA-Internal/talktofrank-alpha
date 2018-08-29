@@ -70,12 +70,13 @@ class FormGroup extends PureComponent {
             }}
             menuStyle={{
               maxWidth: '714px',
-              minWidth: '714px',
               position: 'absolute',
               overflow: 'auto',
               top: '97px',
-              left: '3px',
-              width: '100%',
+              left: '0px',
+              width: '97%',
+              border: '3px solid #78FF74',
+              borderTop: '0',
               zIndex: 1
             }}
             onChange={event => {
