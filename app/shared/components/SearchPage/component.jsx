@@ -40,23 +40,23 @@ export default class SearchPage extends React.Component {
     )
   }
 
-  getResults (results, type) {
+  getResults (results, type, match = false) {
     if (!results || !results.length) return null
     return (
       <ul className="search__list list-unstyled">
         { results.map(item => (
-          type === 'phrase' ? <PhraseMatchItem{ ...item } /> : this.getResultItem(item)
+          type === 'phrase' ? <PhraseMatchItem{ ...item } /> : this.getResultItem(item, match)
         ))}
       </ul>
     )
   }
 
-  getResultItem (item) {
+  getResultItem (item, match) {
     const {name, drug, description, link} = item
     return (
       <li key={`resultitem-${drug}-${name}`} className='list-item list-item--dotted'>
         <h3 className="h4 mt-1 mb-0 grey">
-          <span>{this.getResultItemLink(link, name, drug)}{' '}
+          <span>{this.getResultItemLink(link, name, drug, match)}{' '}
             { name !== drug && <span className="muted smaller">({drug})</span>}
           </span>
         </h3>
@@ -65,11 +65,11 @@ export default class SearchPage extends React.Component {
     )
   }
 
-  getResultItemLink (link, name, drug) {
+  getResultItemLink (link, name, drug, match) {
     const singleWordSearch = this.state.searchValue.toLowerCase().indexOf(' ') === -1
-    if ((this.state.searchValue.toLowerCase().indexOf(name.toLowerCase()) !== -1 &&
+    if (((this.state.searchValue.toLowerCase().indexOf(name.toLowerCase()) !== -1 &&
       this.state.searchValue.toLowerCase() !== name.toLowerCase) ||
-      singleWordSearch) {
+      singleWordSearch) && !match) {
       return (
         <a href="#" onClick={(e) => { this.handleMisspellingClick(e, name, drug, singleWordSearch) }}>{name}</a>
       )
@@ -151,6 +151,7 @@ export default class SearchPage extends React.Component {
     const { results, suggestions, phraseMatches, match } = this.props.pageData
     const searchValue = this.state.searchValue ? this.state.searchValue : ''
     const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
+    console.log(this.props.pageData)
     return (
       <React.Fragment>
         <Masthead/>
@@ -183,7 +184,7 @@ export default class SearchPage extends React.Component {
                   { match &&
                     <React.Fragment>
                       <h3 className='underlined'>Results for: {' '}{searchValue}</h3>
-                      {this.getResults(results)}
+                      {this.getResults(results, 'hits', match)}
                       {this.getResults(phraseMatches, 'phrase')}
                     </React.Fragment>
                   }

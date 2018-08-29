@@ -34,7 +34,6 @@ export default class SearchResults extends React.Component {
   }
 
   getResults (results, type) {
-    console.log(results)
     if (!results || !results.length) return null
     return (
       <ul className='search__list'>
