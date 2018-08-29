@@ -69,7 +69,7 @@ class FormGroup extends PureComponent {
               })
             }}
             renderMenu={items => {
-              return <div className='input-group-autocomplete-menu' style={{...this.menuStyle }} children={items}/>
+              return <div className='input-group-autocomplete-menu' style={{ ...this.menuStyle }} children={items}/>
             }}
             onChange={event => {
               this.autoCompleteOnChange(event)

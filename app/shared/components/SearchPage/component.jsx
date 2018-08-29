@@ -132,8 +132,8 @@ export default class SearchPage extends React.Component {
     let searchTermInSuggestions = []
     if (likelyMisspellings) {
       searchTermInSuggestions = searchTermArray.filter(n => {
-        return likelyMisspellings.indexOf(n) > -1;
-      });
+        return likelyMisspellings.indexOf(n) > -1
+      })
     }
 
     // Drug name is still in search
@@ -154,13 +154,6 @@ export default class SearchPage extends React.Component {
         this.props.searchForTerm(nextSearchValue, likelyDrugName, queryType)
       }
     })
-  }
-
-  componentDidUpdate(prevProps) {
-    // Typical usage (don't forget to compare props):
-    if (this.props.likelyMisspellings !== prevProps.likelyMisspellings) {
-      this.props.searchForTerm(nextSearchValue, likelyDrugName, queryType)
-    }
   }
 
   render () {
