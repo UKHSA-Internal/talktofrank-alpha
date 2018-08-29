@@ -17,9 +17,7 @@ class FormGroup extends PureComponent {
     }
   }
   handleKeyPress (e) {
-    console.log('here')
     if (e.key === 'Enter' && this.state.searchTerm !== '') {
-      console.log('UERE')
       e.preventDefault()
       const searchTerm = this.state.searchTerm
       window.location = `/drug/search/${searchTerm}`
@@ -39,7 +37,6 @@ class FormGroup extends PureComponent {
 
   autoCompleteOnChange (e) {
     const value = e.target.value
-    console.log(value)
     this.setState({
       searchTerm: e.target.value
     }, () => {
