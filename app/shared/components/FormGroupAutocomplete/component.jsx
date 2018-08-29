@@ -72,10 +72,13 @@ class FormGroup extends PureComponent {
               })
             }}
             menuStyle={{
-              maxWidth: '720px',
-              position: 'fixed',
+              maxWidth: '714px',
+              minWidth: '714px',
+              position: 'absolute',
               overflow: 'auto',
-              maxHeight: '50%',
+              top: '97px',
+              left: '3px',
+              width: '100%',
               zIndex: 1
             }}
             onChange={event => {

@@ -183,6 +183,7 @@ export default class SearchPage extends React.Component {
                   { match &&
                     <React.Fragment>
                       <h3 className='underlined'>Results for: {' '}{searchValue}</h3>
+                      {this.getResults(results)}
                       {this.getResults(phraseMatches, 'phrase')}
                     </React.Fragment>
                   }
