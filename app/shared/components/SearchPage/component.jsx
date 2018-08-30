@@ -42,6 +42,15 @@ export default class SearchPage extends React.Component {
 
   getResults (results, type, match = false) {
     if (!results || !results.length) return null
+
+    if (match) {
+      return (
+        <ul className="search__list list-unstyled">
+          {this.getResultItem(results[0], match)}
+        </ul>
+      )
+    }
+
     return (
       <ul className="search__list list-unstyled">
         { results.map(item => (
@@ -115,21 +124,22 @@ export default class SearchPage extends React.Component {
 
   handleInputChange (e) {
     e.preventDefault()
-
     let { likelyDrugName, showSuggestions } = this.state
-    const { searchValue } = this.state
-    const nextSearchValue = e.target.value
+    let { likelyMisspellings } = this.props.pageData
+    const nextSearchValue = e.target.value.toLowerCase()
     let queryType = 'should'
-
-    // If the server finds a drug name match
-    if (this.props.pageData.match) {
-      likelyDrugName = this.props.pageData.match
+    const searchTermArray = nextSearchValue.split(/[ ,]+/)
+    let searchTermInSuggestions = []
+    if (likelyMisspellings) {
+      searchTermInSuggestions = searchTermArray.filter(n => {
+        return likelyMisspellings.indexOf(n) > -1
+      })
     }
 
-    const matcher = new RegExp(likelyDrugName + ' ', 'ig')
     // Drug name is still in search
-    if (likelyDrugName && matcher.test(nextSearchValue)) {
+    if (searchTermInSuggestions.length) {
       queryType = 'must'
+      likelyDrugName = nextSearchValue
     } else {
       likelyDrugName = ''
       showSuggestions = true
@@ -151,7 +161,6 @@ export default class SearchPage extends React.Component {
     const { results, suggestions, phraseMatches, match } = this.props.pageData
     const searchValue = this.state.searchValue ? this.state.searchValue : ''
     const showResults = Boolean((results && results.length) || (phraseMatches && phraseMatches.length))
-    console.log(this.props.pageData)
     return (
       <React.Fragment>
         <Masthead/>
@@ -159,7 +168,6 @@ export default class SearchPage extends React.Component {
           <Heading type='h1' className='h1' text='Search'/>
           <Grid>
             <GridCol className='col-12 col-md-8 search'>
-
               <div className='input-group'>
                 <label htmlFor='search-site' className='form-label h3'>Search for drugs, advice & information...</label>
                 <div className='input-group--raised d-flex'>

@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import Logo from '../Logo/component.jsx'
 import Button from '../Button/component.jsx'
-import FormGroup from '../FormGroup/component.jsx'
+import FormGroupAutocomplete from '../FormGroupAutocomplete/component.jsx'
 import Form from '../Form/component.jsx'
 import LinkItem from '../LinkItem/component.jsx'
 
@@ -42,7 +42,15 @@ export default class Masthead extends React.PureComponent {
               <LinkItem url='#' role="menuitem" label='Contact Frank'/>
             </ul>
             <Form className='ml-auto'>
-              <FormGroup button='true' modifiers='form-control--search' id='search-masthead' label='Search site' labelHidden='true'/>
+              <FormGroupAutocomplete
+                button='true'
+                modifiers='form-control--search'
+                className='input-group-autocomplete--inverse'
+                id='search-masthead'
+                label='Search site'
+                labelHidden='true'
+                showContent={false}
+              />
             </Form>
           </nav>
         </div>
