@@ -26,10 +26,12 @@
     .input-group-autocomplete-menu-item--hover {
       padding: 10px;
       background-color: white;
+
       a {
         color: #1c1c1c;
       }
     }
+
     .input-group-autocomplete-menu-item--hover {
       background-color: #fffafa;
     }
@@ -39,21 +41,25 @@
     input {
       min-width: 320px;
     }
+
     .input-group-autocomplete-menu {
       top: 43px;
       background-color: #444444;
       width: 100%;
       border: none;
+
       .input-group-autocomplete-menu-item,
       .input-group-autocomplete-menu-item--hover {
         background-color: #444444;
         border-bottom: 1px solid black;
         color: white;
+
         a {
           color: white;
         }
       }
     }
+
     .input-group-append {
       position: absolute;
       right: 0px;

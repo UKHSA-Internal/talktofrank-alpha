@@ -80,7 +80,7 @@ class FormGroup extends PureComponent {
                 key={`${item.drug} - ${item.name}`}
                 className={ isHighlighted ? 'input-group-autocomplete-menu-item--hover' : 'input-group-autocomplete-menu-item ' }
               >
-                <p className={'mt-1 mb-0 grey ' + (titleClass ? titleClass : null)}>
+                <p className={'mt-1 mb-0 grey ' + titleClass}>
                   <span><a href={`/drug/${item.link}`}>{item.name}</a>{' '}
                   { item.name !== item.drug && <span className="muted smaller">({item.drug})</span>}
                   </span>
