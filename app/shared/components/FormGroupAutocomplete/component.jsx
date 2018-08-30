@@ -47,8 +47,9 @@ class FormGroup extends PureComponent {
   render () {
     let classes = classNames('input-group', this.props.className)
     let controlClasses = classNames('form-control', this.props.modifiers)
-    const { searchTerm } = this.state
-    const { id, labelHidden, label, button } = this.props
+    const { searchTerm, autoCompleteData } = this.state
+    const { id, labelHidden, label, button, showContent, titleClass } = this.props
+
     return (
       <div className={classes}>
         <label htmlFor={id}
@@ -61,7 +62,7 @@ class FormGroup extends PureComponent {
               onKeyDown: this.handleKeyPress
             }}
             value={searchTerm}
-            items={this.state.autoCompleteData}
+            items={autoCompleteData}
             getItemValue={(item) => item.name}
             onSelect={value => {
               this.setState({
@@ -69,23 +70,22 @@ class FormGroup extends PureComponent {
               })
             }}
             renderMenu={items => {
-              return <div className='input-group-autocomplete-menu' style={{ ...this.menuStyle }} children={items}/>
+              return <div className='input-group-autocomplete-menu' children={items}/>
             }}
             onChange={event => {
               this.autoCompleteOnChange(event)
             }}
             renderItem={(item, isHighlighted) => (
               <div
-                key={item.name}
-                style={{ background: isHighlighted ? '#fcfcfc' : 'white' }}
-                className='input-group-autocomplete-menu-item'
+                key={`${item.drug} - ${item.name}`}
+                className={ isHighlighted ? 'input-group-autocomplete-menu-item--hover' : 'input-group-autocomplete-menu-item ' }
               >
-                <h3 className="h4 mt-1 mb-0 grey">
+                <p className={'mt-1 mb-0 grey ' + (titleClass ? titleClass : null)}>
                   <span><a href={`/drug/${item.link}`}>{item.name}</a>{' '}
                   { item.name !== item.drug && <span className="muted smaller">({item.drug})</span>}
                   </span>
-                </h3>
-                <p dangerouslySetInnerHTML={{__html: item.description}}/>
+                </p>
+                {showContent && <p dangerouslySetInnerHTML={{__html: item.description}}/>}
               </div>
             )}
             required
