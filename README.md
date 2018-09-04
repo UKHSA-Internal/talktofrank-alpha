@@ -59,6 +59,25 @@ Migration and API query tools available using [contentful-cli](https://github.co
 | `content-type get --space-id xxx --id [content type id]`| Get a list of content type fields |
 
 
+### Workbox (service worker)
+
+**Note: service workers require an HTTPS connection**
+
+[Workbox](https://developers.google.com/web/tools/workbox/modules/) is used to handle service-worker logic.  Configuration is 
+found in ```/workbox-config.js```
+
+* service worker files are found in ```/static/ui/js``` & ```/static/offline```
+* all requests for png, ico, css and png & offline.html files are precached
+* a **'Network first'** policy is used so that 
+  * requests made while online will always go to the server first
+  * offline requests will correctly load the cached files so that offline.html can be loaded correctly
+  
+To refresh the list of assets to precache:
+
+```
+workbox injectManifest ./workbox-config.js 
+```
+
 ## Releasing
 
 - Determine the new semantic version of the release.

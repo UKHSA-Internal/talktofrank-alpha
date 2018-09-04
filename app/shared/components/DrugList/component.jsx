@@ -18,9 +18,8 @@ const DrugList = props => {
       <Masthead />
       <Main>
         <Heading type='h1' text='Drugs A-Z'/>
-        <Heading type='p' modifiers='lead' text='Search for any drug, you can use street names, slang names or the proper name'/>
         <Form>
-          <FormGroup button='true' className='input-group--raised' modifiers='form-control--search' id='search-a-z' label='Search for any drug, you can use street names, slang names or the proper name'/>
+          <FormGroup button='true' modifiers='form-control--search' id='search-a-z' label='Search for any drug, you can use street names, slang names or the proper name'/>
         </Form>
         <Grid>
           <GridCol className='col-12 col-sm-8'>
@@ -39,8 +38,8 @@ const DrugList = props => {
                       }
 
                       return (
-                      <li key={'inner' + index} className='underlined underlined--dotted'>
-                        <a href={v.slug}><h3 className='h4 grey'>{name}</h3>
+                      <li key={'inner' + index} className='list-item list-item--dotted'>
+                        <a href={v.slug} className='list-link'><h3 className='h4 mt-1 mb-0 grey'>{name}</h3>
                         {synonyms && <p className='grey'>Also called: {synonyms}</p>}
                         <p><span className='muted'>{v.description}</span></p>
                         </a>

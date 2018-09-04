@@ -184,7 +184,18 @@ mark,
   @include media-breakpoint-up(lg) {
     font-size: 12rem;
   }
+}
 
+.display-3 {
+  font-size: 3rem;
+
+  @include media-breakpoint-up(md) {
+    font-size: 4rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 6rem;
+  }
 }
 
 .smaller {
@@ -195,4 +206,25 @@ mark,
   font-family: $font-family-sans-serif;
 }
 
+strong,
+b {
+  font-family: $font-family-heavy;
+}
 
+.list-link {
+  display: block;
+
+  .list-item--dotted & {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px dotted $gray-800;
+  }
+
+  &::hover p {
+    text-decoration: none;
+  }
+}
+
+.fake-link {
+  cursor: pointer;
+}

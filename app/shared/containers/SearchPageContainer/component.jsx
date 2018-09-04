@@ -9,8 +9,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return ({
-    searchForTerm: (term) => {
-      dispatch(fetchSearchTerm(term))
+    searchForTerm: (searchTerm, drug, mustOrShould) => {
+      dispatch(fetchSearchTerm(searchTerm, drug, mustOrShould))
     }
   })
 }

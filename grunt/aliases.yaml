@@ -26,5 +26,5 @@ validate:
   - sasslint
 
 post-build-validate:
-  - pa11y
+  - pa11y:stage
   - lighthouse

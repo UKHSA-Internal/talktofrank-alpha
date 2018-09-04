@@ -1,0 +1,14 @@
+/* =============================================================================
+   Backgrounds
+   ===========================================================================*/
+
+.has-bg {
+  background-repeat: no-repeat;
+
+  &.bg-pills {
+    @include media-breakpoint-up(md) {
+      background-position: 100% top;
+      background-image: url('/ui/img/bg-pills.jpg');
+    }
+  }
+}

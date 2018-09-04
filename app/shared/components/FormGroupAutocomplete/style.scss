@@ -1,0 +1,78 @@
+.input-group-autocomplete--raised {
+  > div:first-child {
+    position: relative;
+  }
+
+  > div:first-child,
+  input {
+    width: 100%;
+  }
+
+  input {
+    height: 43px;
+  }
+
+  .input-group-autocomplete-menu {
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    overflow: auto;
+    top: 40px;
+    left: 0px;
+    border: 3px solid $green;
+    border-top: 0;
+    z-index: 5;
+
+    .input-group-autocomplete-menu-item,
+    .input-group-autocomplete-menu-item__hover {
+      padding: 10px;
+      background-color: white;
+
+      a {
+        color: #1c1c1c;
+      }
+    }
+
+    .input-group-autocomplete-menu-item__hover {
+      background-color: #fffafa;
+    }
+  }
+
+  .input-group-autocomplete--inverse & {
+    input {
+      min-width: 320px;
+      font-size: 1.4rem;
+    }
+
+    .input-group-autocomplete-menu {
+      top: 43px;
+      background-color: #444444;
+      width: 100%;
+      border: none;
+
+      .input-group-autocomplete-menu-item,
+      .input-group-autocomplete-menu-item__hover {
+        background-color: #444444;
+        border-bottom: 1px solid black;
+        font-size: 1.4rem;
+
+        a {
+          color: #b3b3b3;
+
+          .input-group-autocomplete-menu-item__highlight {
+            color: white;
+          }
+        }
+      }
+
+      .input-group-autocomplete-menu-item__hover {
+        background-color: #606060;
+      }
+    }
+
+    .input-group-append {
+      position: absolute;
+      right: 0px;
+    }
+  }
+}

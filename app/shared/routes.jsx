@@ -1,14 +1,16 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import { fetchPage, fetchDrugList, receivePageError } from './actions'
+import { fetchPage, fetchDrugList, fetchSearchTerm, receivePageError } from './actions'
 
 import NoMatchContainer from './containers/NoMatchContainer/component.jsx'
 import ServerError from './components/ServerError/component.jsx'
 import PageContainer from './containers/PageContainer/component'
+import PageStaticContainer from './containers/PageStaticContainer/component'
 import SearchPageContainer from './containers/SearchPageContainer/component'
+import SearchResultsContainer from './containers/SearchResultsContainer/component'
 import TypographyContainer from './containers/TypographyContainer/component' // @todo @refactor @joel - remove this in due time - replace with generic static page handler
 import DrugListContainer from './containers/DrugListContainer/component'
-import PageHome from './components/PageHome/component'
+import HomepageContainer from './containers/HomepageContainer/component'
 
 import { config } from 'config'
 
@@ -45,6 +47,18 @@ let getRoutes = store => {
       })
   }
 
+  function getSearchPage (nextState, replace, callback) {
+    const term = nextState.params.term
+    store.dispatch(fetchSearchTerm(term, '', 'should'))
+      .then(() => {
+        callback()
+      }).catch(err => {
+        console.log(err)
+        // error pushed to state
+        callback()
+      })
+  }
+
   function getDrugList (nextState, replace, callback) {
     store.dispatch(fetchDrugList())
       .then(() => {
@@ -63,11 +77,13 @@ let getRoutes = store => {
 
   return (
     <Route path='/'>
-      <IndexRoute component={withFallback(PageHome)} onEnter={getPage} slug='index'/>
+      <IndexRoute component={withFallback(HomepageContainer)} onEnter={getPage} slug='index'/>
       <Route path='typography' component={withFallback(TypographyContainer)} onEnter={getPage} slug='typography' />
       <Route path='drug'>
         <IndexRoute component={withFallback(DrugListContainer)} onEnter={getDrugList} />
         <Route path='search' component={withFallback(SearchPageContainer)} />
+        <Route path='search/:term' component={withFallback(SearchPageContainer)} onEnter={getSearchPage} />
+        <Route path='search-results' component={withFallback(SearchPageContainer)} />
         <Route path=':drugName' component={withFallback(PageContainer)} onEnter={getPage} />
       </Route>
       <Route path='*' component={withFallback(NoMatchContainer)} onEnter={getPage} slug='no-match' />
