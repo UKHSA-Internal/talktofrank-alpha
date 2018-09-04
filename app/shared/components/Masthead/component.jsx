@@ -50,7 +50,7 @@ export default class Masthead extends React.PureComponent {
                 label='Search for any drug'
                 labelHidden='true'
                 showContent={false}
-                placeholder='Enterdrug name (e.g. Mandy)'
+                placeholder='Enter drug name (e.g. Mandy)'
               />
             </Form>
           </nav>
