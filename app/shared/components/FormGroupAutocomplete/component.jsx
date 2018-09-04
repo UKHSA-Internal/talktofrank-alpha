@@ -100,7 +100,6 @@ class FormGroup extends PureComponent {
               id: id,
               onKeyDown: this.handleKeyPress,
               placeholder: this.props.placeholder,
-              role: false,
               type: 'search',
               role: 'combobox',
               'aria-autocomplete': 'both'
