@@ -9,6 +9,38 @@ const bodyParser = require('body-parser')
 
 var jsonParser = bodyParser.json()
 
+router.get('/page/:term', jsonParser, (req, res, next) => {
+  try {
+    if (!req.params.term) {
+      const error = new Error()
+      error.status = 404
+      return next(error)
+    }
+    const search = res.search
+    const searchTerm = req.params.term.toLowerCase()
+
+    search.elasticsearch.client.search({
+      index: `contentful_mltlrs3kods6_en-us`,
+      body: buildFullMatchQuery(searchTerm)
+    }).then(results => res.status(200).json(formatResults(results, searchTerm, true)))
+      .catch(err => {
+        /* eslint-disable */
+        console.error(err);
+        /* eslint-enable */
+        res.status(500).json({
+          'message': 'Internal error'
+        })
+      })
+  } catch (err) {
+    /* eslint-disable */
+    console.error(err)
+    /* eslint-enable */
+    res.status(500).json({
+      'message': 'Internal error'
+    })
+  }
+})
+
 router.get('/autocomplete/:term', jsonParser, (req, res, next) => {
   try {
     if (!req.params.term) {
@@ -21,8 +53,8 @@ router.get('/autocomplete/:term', jsonParser, (req, res, next) => {
 
     search.elasticsearch.client.search({
       index: `contentful_mltlrs3kods6_en-us`,
-      body: buildShouldQuery(searchTerm)
-    }).then(results => res.status(200).json(formatAutocompleteResults(results, searchTerm)))
+      body: buildPrefixQuery(searchTerm)
+    }).then(results => res.status(200).json(formatAutocompleteResults(results, searchTerm, true)))
       .catch(err => {
         /* eslint-disable */
         console.error(err);
@@ -105,13 +137,17 @@ router.get('/must/:phrase/:drug', jsonParser, (req, res, next) => {
   }
 })
 
-const formatAutocompleteResults = (results, drugSearchTerm) => {
+const isQueryAQuestion = (searchTerm) => {
+  return Boolean(searchTerm.match(/(what|why|when|how|who)/ig)) || searchTerm.match(/\S+/g).length > 2
+}
+
+const formatAutocompleteResults = (results, drugSearchTerm, sort) => {
   const hits = results.hits.hits
 
   let formattedResults = formatResultHits(hits)
 
   // Show suggestions
-  if (!formattedResults.length) {
+  if (!formattedResults.length && results.suggest) {
     Object.keys(results.suggest).map(suggestionGroup => {
       results.suggest[suggestionGroup].map(suggestionGroupResults => {
         formattedResults = formattedResults.concat(formatResultHits(suggestionGroupResults.options))
@@ -119,10 +155,14 @@ const formatAutocompleteResults = (results, drugSearchTerm) => {
     })
   }
 
+  // @todo: refactor - would need to add new ES mapping for alpabetical sorting, move there
+  if (sort) formattedResults.sort((a, b) => a.name > b.name)
+
   let serverResponse = {
     'results': formattedResults,
     'searchTerm': drugSearchTerm,
-    'match': false
+    'match': matchInHits(hits, drugSearchTerm),
+    'isQueryAQuestion': isQueryAQuestion(drugSearchTerm)
   }
 
   if (config.elasticsearch.showESResult) {
@@ -130,6 +170,17 @@ const formatAutocompleteResults = (results, drugSearchTerm) => {
   }
 
   return serverResponse
+}
+
+const matchInHits = (hits, searchTerm) => {
+  let match = false
+  hits.map(result => {
+    // check if any of the hits is in the search term
+    if (searchTerm.toLowerCase().indexOf(result._source.title.toLowerCase()) !== -1) {
+      match = true
+    }
+  })
+  return match
 }
 
 const formatResults = (results, searchTerm) => {
@@ -140,60 +191,61 @@ const formatResults = (results, searchTerm) => {
   let match = false
   const hits = results.hits.hits
 
-  Object.keys(results.suggest).map(suggestionGroup => {
-    results.suggest[suggestionGroup].map(suggestionGroupResults => {
-      // Return a list of words in the search that have been potentially
-      // misspelled
-      const suggestionInputTerm = suggestionGroupResults.text.toLowerCase()
-      if (suggestionGroupResults.options.length &&
-        likelyMisspellings.indexOf(suggestionInputTerm) === -1 &&
-        suggestionInputTerm !== 'what' &&
-        suggestionInputTerm !== 'how' &&
-        suggestionInputTerm !== 'when') {
-        likelyMisspellings[likelyMisspellings.length] = suggestionInputTerm
-      }
+  if (results.suggest) {
+    Object.keys(results.suggest).map(suggestionGroup => {
+      results.suggest[suggestionGroup].map(suggestionGroupResults => {
+        // Return a list of words in the search that have been potentially
+        // misspelled
+        const suggestionInputTerm = suggestionGroupResults.text.toLowerCase()
+        if (suggestionGroupResults.options.length &&
+          likelyMisspellings.indexOf(suggestionInputTerm) === -1 &&
+          suggestionInputTerm !== 'what' &&
+          suggestionInputTerm !== 'how' &&
+          suggestionInputTerm !== 'when') {
+          likelyMisspellings[likelyMisspellings.length] = suggestionInputTerm
+        }
 
-      suggestionGroupResults.options
-        .filter(suggestionGroupResultsItem => {
-          if (searchTerm.indexOf(suggestionGroupResultsItem.text.toLowerCase()) !== -1) {
-//             match = suggestionGroupResultsItem.text.toLowerCase()
-            return false
-          } else {
-            return true
-          }
-        })
-        .map(suggestionGroupResultsItem => {
-          let skip = false
-          const suggestionItem = suggestionGroupResultsItem.text.toLowerCase()
-          const suggestionItemScore = suggestionGroupResultsItem.score
-            ? suggestionGroupResultsItem.score
-            : suggestionGroupResultsItem._score
-
-          // Check if the suggestion is already added & if score is higher
-          // remove existing and add new
-          formattedSuggestions.map((item, index) => {
-            if (item.text === suggestionItem &&
-              item.score < suggestionItemScore) {
-              formattedSuggestions.splice(index, 1)
-            } else if (item.text === suggestionItem) {
-              skip = true
+        suggestionGroupResults.options
+          .filter(suggestionGroupResultsItem => {
+            if (searchTerm.indexOf(suggestionGroupResultsItem.text.toLowerCase()) !== -1) {
+  //             match = suggestionGroupResultsItem.text.toLowerCase()
+              return false
+            } else {
+              return true
             }
           })
+          .map(suggestionGroupResultsItem => {
+            let skip = false
+            const suggestionItem = suggestionGroupResultsItem.text.toLowerCase()
+            const suggestionItemScore = suggestionGroupResultsItem.score
+              ? suggestionGroupResultsItem.score
+              : suggestionGroupResultsItem._score
 
-          if (skip) {
-            return
-          }
+            // Check if the suggestion is already added & if score is higher
+            // remove existing and add new
+            formattedSuggestions.map((item, index) => {
+              if (item.text === suggestionItem &&
+                item.score < suggestionItemScore) {
+                formattedSuggestions.splice(index, 1)
+              } else if (item.text === suggestionItem) {
+                skip = true
+              }
+            })
 
-          formattedSuggestions.push({
-            text: suggestionItem,
-            score: suggestionItemScore
+            if (skip) {
+              return
+            }
+
+            formattedSuggestions.push({
+              text: suggestionItem,
+              score: suggestionItemScore
+            })
           })
-        })
 
-//         if (formattedSuggestions.length >= config.elasticsearch.suggestResultCount) return
+  //         if (formattedSuggestions.length >= config.elasticsearch.suggestResultCount) return
+      })
     })
-  })
-
+  }
   // Fetch title & synonym matches
   formattedResults = formatResultHits(hits)
 
@@ -228,7 +280,8 @@ const formatResults = (results, searchTerm) => {
     'suggestions': formattedSuggestions,
     'match': match,
     'searchTerm': searchTerm,
-    'likelyMisspellings': likelyMisspellings
+    'likelyMisspellings': likelyMisspellings,
+    'isQueryAQuestion': isQueryAQuestion(searchTerm)
   }
 
   if (config.elasticsearch.showESResult) {
@@ -248,6 +301,17 @@ const formatResultHits = (hits) => {
 
     if (result.highlight && result.highlight['synonymsList.completion']) {
       result.highlight['synonymsList.completion'].map(synonymsListItem => {
+        addFormattedResult(
+          synonymsListItem,
+          result._source.title,
+          result._source.slug,
+          description,
+          result._score,
+          formattedResults
+        )
+      })
+    } else if (result.highlight && result.highlight['synonymsList.partial']) {
+      result.highlight['synonymsList.partial'].map(synonymsListItem => {
         addFormattedResult(
           synonymsListItem,
           result._source.title,
@@ -294,6 +358,74 @@ const addFormattedResult = (name, drug, slug, description, score, arr) => {
   })
 }
 
+/**
+ * Search page
+ * @param searchTerm
+ * @returns {{query: {multi_match: {query: *, type: string, fields: string[]}}, highlight: {order: string, number_of_fragments: number, pre_tags: string[], post_tags: string[], fragment_size: number, fields: {title: {fragment_size: number}, "synonymsList.completion": {pre_tags: string[], post_tags: string[]}}}}}
+ */
+const buildFullMatchQuery = (searchTerm) => {
+  return {
+    'query': {
+      'multi_match': {
+        'query': searchTerm,
+        'type': 'best_fields',
+        'fuzziness': 'auto',
+        'prefix_length': 1,
+        'fields': ['title.*', 'synonymsList.*']
+      }
+    },
+    'highlight': {
+      'order': 'score',
+      'number_of_fragments': 2,
+      'pre_tags': [''],
+      'post_tags': [''],
+      'fragment_size': 150,
+      'fields': {
+        'title.*': {},
+        'synonymsList.*': {}
+      }
+    }
+  }
+}
+
+/**
+ * Used for automcomplete
+ * @param searchTerm
+ * @returns {{query: {multi_match: {query: *, type: string, fields: string[]}}, highlight: {order: string, number_of_fragments: number, pre_tags: string[], post_tags: string[], fragment_size: number, fields: {title: {fragment_size: number}, "synonymsList.completion": {pre_tags: string[], post_tags: string[]}}}}}
+ */
+const buildPrefixQuery = (searchTerm) => {
+  return {
+    'query': {
+      'multi_match': {
+        'query': searchTerm,
+        'type': 'phrase_prefix',
+        'fields': ['title.completion', 'synonymsList.completion']
+      }
+    },
+    'highlight': {
+      'order': 'score',
+      'number_of_fragments': 2,
+      'pre_tags': ['<strong>'],
+      'post_tags': ['</strong>'],
+      'fragment_size': 150,
+      'fields': {
+        'title': {
+          'fragment_size': 20
+        },
+        'synonymsList.completion': {
+          'pre_tags': ['<span class="match">'],
+          'post_tags': ['</span>']
+        }
+      }
+    }
+  }
+}
+
+/**
+ * No longer used - splits out search results in separate 'matches' & 'suggestions'
+ * @param searchTerm
+ * @returns {{query: {multi_match: {query: *, type: string, fields: string[]}}, highlight: {order: string, number_of_fragments: number, pre_tags: string[], post_tags: string[], fragment_size: number, fields: {title: {fragment_size: number}, "synonymsList.completion": {pre_tags: string[], post_tags: string[]}}}}}
+ */
 const buildShouldQuery = (searchTerm) => {
   let query = [{
     // Exact matches
@@ -359,6 +491,13 @@ const buildShouldQuery = (searchTerm) => {
   }
 }
 
+/**
+ * No longer used - uses a known drug name to find definite results
+ * splits out search results in separate 'matches' & 'suggestions'
+ *
+ * @param searchTerm
+ * @returns {{query: {multi_match: {query: *, type: string, fields: string[]}}, highlight: {order: string, number_of_fragments: number, pre_tags: string[], post_tags: string[], fragment_size: number, fields: {title: {fragment_size: number}, "synonymsList.completion": {pre_tags: string[], post_tags: string[]}}}}}
+ */
 const buildMustQuery = (drugSearchTerm, phraseSearchTerm) => {
   const mustQuery = [{
     // Phrase matches

@@ -34,10 +34,10 @@ function receivePage (pageData) {
 export function fetchSearchTerm (term, drug, shouldOrMustQuery) {
   return dispatch => {
     dispatch(requestPage())
-    let lookupUrl = apiHost + `/api/v1/search/should/${term}`
-    if (shouldOrMustQuery === 'must') {
-      lookupUrl = apiHost + `/api/v1/search/must/${term}/${drug}`
-    }
+    let lookupUrl = apiHost + `/api/v1/search/page/${term}`
+//     if (shouldOrMustQuery === 'must') {
+//       lookupUrl = apiHost + `/api/v1/search/must/${term}/${drug}`
+//     }
     return axios.get(lookupUrl)
       .then(res => {
         dispatch(receivePage(res.data))
