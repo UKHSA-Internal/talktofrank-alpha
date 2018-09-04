@@ -175,18 +175,18 @@ export default class SearchPage extends React.Component {
         <main className='search' id='main' name='main'>
           <div className='search--header'>
             <div>
-              <h1>You've entered '<span className={!match ? 'underlined' : ''}>{searchValue}</span>'</h1>
+              <h1>You've entered '<span className={!match ? 'underlined underlined--heavy' : ''}>{searchValue}</span>'</h1>
             </div>
           </div>
           <div className='main-wrapper'>
             <Grid>
               <GridCol className='col-12 col-md-8'>
                 <div className='input-group' role='search'>
-                  <label htmlFor='search-site' className='form-label h3 sr-only'>Enter a drug name (e.g. Mandy, Cocaine, Balloons)</label>
+                  <label htmlFor='search-site' className='form-label h3 sr-only'>Enter a drug name (e.g. Mandy, Cocaine, Weed)</label>
                   <div className='input-group--raised d-flex'>
                     <input
                       className={`form-control form-control--search ${!match ? 'underlined' : ''}`}
-                      placeholder='Enter a drug name (e.g. Mandy, Cocaine, Balloons)'
+                      placeholder='Enter a drug name (e.g. Mandy, Cocaine, Weed)'
                       id='search-site'
                       type='text'
                       autoComplete='off'

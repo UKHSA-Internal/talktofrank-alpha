@@ -206,6 +206,10 @@ mark,
   font-family: $font-family-sans-serif;
 }
 
+.italic {
+  font-style: italic;
+}
+
 strong,
 b {
   font-family: $font-family-heavy;
@@ -219,6 +223,7 @@ b {
 
 .list-link {
   display: block;
+  color: inherit;
 
   &::hover p {
     text-decoration: none;
@@ -228,3 +233,12 @@ b {
 .fake-link {
   cursor: pointer;
 }
+
+.inverted {
+  display: inline-block;
+  margin-bottom: .2em;
+  background-color: $black;
+  color: $white;
+  padding: .2em .4em;
+}
+
