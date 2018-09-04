@@ -13,7 +13,8 @@
   }
 
   .input-group-autocomplete-menu {
-
+    list-style: none;
+    padding: 0;
     position: absolute;
     overflow: auto;
     top: 40px;
@@ -23,7 +24,7 @@
     z-index: 5;
 
     .input-group-autocomplete-menu-item,
-    .input-group-autocomplete-menu-item--hover {
+    .input-group-autocomplete-menu-item__hover {
       padding: 10px;
       background-color: white;
 
@@ -32,7 +33,7 @@
       }
     }
 
-    .input-group-autocomplete-menu-item--hover {
+    .input-group-autocomplete-menu-item__hover {
       background-color: #fffafa;
     }
   }
@@ -40,6 +41,7 @@
   .input-group-autocomplete--inverse & {
     input {
       min-width: 320px;
+      font-size: 1.4rem;
     }
 
     .input-group-autocomplete-menu {
@@ -49,14 +51,22 @@
       border: none;
 
       .input-group-autocomplete-menu-item,
-      .input-group-autocomplete-menu-item--hover {
+      .input-group-autocomplete-menu-item__hover {
         background-color: #444444;
         border-bottom: 1px solid black;
-        color: white;
+        font-size: 1.4rem;
 
         a {
-          color: white;
+          color: #b3b3b3;
+
+          .input-group-autocomplete-menu-item__highlight {
+            color: white;
+          }
         }
+      }
+
+      .input-group-autocomplete-menu-item__hover {
+        background-color: #606060;
       }
     }
 
@@ -66,4 +76,3 @@
     }
   }
 }
-

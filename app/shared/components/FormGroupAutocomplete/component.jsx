@@ -11,11 +11,20 @@ class FormGroup extends PureComponent {
     super()
     this.autoCompleteOnChange = this.autoCompleteOnChange.bind(this)
     this.handleKeyPress = this.handleKeyPress.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
       searchTerm: '',
       autoCompleteData: []
     }
   }
+
+  handleSubmit () {
+    if (this.state.searchTerm !== '') {
+      const searchTerm = this.state.searchTerm
+      window.location = `/drug/search/${searchTerm}`
+    }
+  }
+
   handleKeyPress (e) {
     if (e.key === 'Enter' && this.state.searchTerm !== '') {
       e.preventDefault()
@@ -28,11 +37,41 @@ class FormGroup extends PureComponent {
     return axios
       .get(`/api/v1/search/autocomplete/${value}`)
       .then(res => {
-        const result = res.data.results
+        const result = res.data.results ? res.data.results : []
         // eslint-disable-next-line
         this.setState({ autoCompleteData: result })
       })
       .catch(err => console.log(err))
+  }
+
+  renderMenuItem (item, isHighlighted) {
+    const { showContent, titleClass } = this.props
+    const { searchTerm } = this.state
+
+    const regexp = new RegExp('(' + searchTerm + ')', 'ig')
+    const searchHighlight = item.name.replace(regexp, '<span class="input-group-autocomplete-menu-item__highlight">$&</span>')
+
+    let linkText = item.name !== item.drug
+      ? `${searchHighlight} <span className="input-group-autocomplete-menu-item-drugname">(${item.drug})</span>`
+      : searchHighlight
+
+    return (
+      <li
+        key={`${item.drug} - ${item.name}`}
+        className={ isHighlighted ? 'input-group-autocomplete-menu-item__hover' : 'input-group-autocomplete-menu-item ' }
+        aria-selected={ isHighlighted }
+        role="option"
+        tabindex="-1"
+      >
+        <p className={'mt-1 mb-0 grey ' + titleClass}>
+          <span>
+            <a href={`/drug/${item.link}`} dangerouslySetInnerHTML={{__html: linkText}}>
+            </a>
+          </span>
+        </p>
+        {showContent && <p dangerouslySetInnerHTML={{__html: item.description}}/>}
+      </li>
+    )
   }
 
   autoCompleteOnChange (e) {
@@ -48,7 +87,7 @@ class FormGroup extends PureComponent {
     let classes = classNames('input-group', this.props.className)
     let controlClasses = classNames('form-control', this.props.modifiers)
     const { searchTerm, autoCompleteData } = this.state
-    const { id, labelHidden, label, button, showContent, titleClass } = this.props
+    const { id, labelHidden, label, button } = this.props
 
     return (
       <div className={classes}>
@@ -59,42 +98,37 @@ class FormGroup extends PureComponent {
             inputProps={{
               className: controlClasses,
               id: id,
-              onKeyDown: this.handleKeyPress
+              onKeyDown: this.handleKeyPress,
+              placeholder: 'Enter a drug name (e.g. Mandy, Cocaine, Balloons)',
+              role: false,
+              type: 'search'
             }}
             value={searchTerm}
             items={autoCompleteData}
             getItemValue={(item) => item.name}
-            onSelect={value => {
-              this.setState({
-                searchTerm: value
-              })
+            onSelect={(value, item) => {
+              if (value.trim().length) {
+                document.location = '/drug/' + item.link
+              }
             }}
             renderMenu={items => {
-              return <div className='input-group-autocomplete-menu' children={items}/>
+              return <ul className='input-group-autocomplete-menu' role="listbox" children={items}/>
             }}
             onChange={event => {
               this.autoCompleteOnChange(event)
             }}
-            renderItem={(item, isHighlighted) => (
-              <div
-                key={`${item.drug} - ${item.name}`}
-                className={ isHighlighted ? 'input-group-autocomplete-menu-item--hover' : 'input-group-autocomplete-menu-item ' }
-              >
-                <p className={'mt-1 mb-0 grey ' + titleClass}>
-                  <span><a href={`/drug/${item.link}`}>{item.name}</a>{' '}
-                  { item.name !== item.drug && <span className="muted smaller">({item.drug})</span>}
-                  </span>
-                </p>
-                {showContent && <p dangerouslySetInnerHTML={{__html: item.description}}/>}
-              </div>
-            )}
+            renderItem={(item, isHighlighted) => this.renderMenuItem(item, isHighlighted)}
             required
           />
 
           {button && <div className='input-group-append'>
-            <Button className='btn--primary icon-magnifying'><span
-              className='sr-only'>Submit search</span><Svg
-              url='/ui/svg/magnifying.svg' alt='Submit search'/></Button>
+            <Button
+              className='btn--primary icon-magnifying'
+              clickHandler={this.handleSubmit}
+            >
+              <span className='sr-only'>Submit search</span>
+              <Svg url='/ui/svg/magnifying.svg' alt='Submit search'/>
+            </Button>
           </div>}
         </div>
       </div>
