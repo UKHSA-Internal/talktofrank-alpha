@@ -11,7 +11,7 @@ import Footer from '../Footer/component.jsx'
 import Main from '../Main/component.jsx'
 
 const DrugList = props => {
-  const limit = 3
+  const limit = 4
 
   return (
     <React.Fragment>
@@ -31,17 +31,21 @@ const DrugList = props => {
                     <ul className='list-unstyled'>
                     {val.values.map((v, index) => {
                       let synonyms
-                      let name = v.parent ? <span>{v.name} <span className='muted smaller'>({v.parent})</span></span> : <span>{v.name}</span>
+                      let name = v.parent ? v.name : <span className='inverted'>{v.name}</span>
+                      let realName = v.parent ? <span className='italic'>Real name: <strong>{v.parent}</strong></span> : null
+
                       if (v.synonyms) {
                         let item = v.synonyms.split(',')
-                        synonyms = item.length > limit ? `${item.splice(0, limit).join(', ')} +${item.length} more` : item.join(', ')
+                        synonyms = item.length > limit ? `${item.splice(0, limit).join(' / ')} +${item.length} more` : item.join(' / ')
                       }
 
                       return (
                       <li key={'inner' + index} className='list-item list-item--dotted'>
-                        <a href={v.slug} className='list-link'><h3 className='h4 mt-1 mb-0 grey'>{name}</h3></a>
+                        <a href={v.slug} className='list-link'><h3 className='h4 mt-1 mb-0 grey'>{name}</h3>
                         {synonyms && <p className='grey'>Also called: {synonyms}</p>}
-                        <p><span className='muted'>{v.description}</span></p>
+                        {realName}
+                        {v.description && <p><span className='muted'>{v.description}</span></p>}
+                        </a>
                       </li>)
                     })}
                     </ul>
