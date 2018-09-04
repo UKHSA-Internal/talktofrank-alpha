@@ -34,12 +34,12 @@ export default class Masthead extends React.PureComponent {
           </Button>
           <Logo url='/ui/img/logo-frank.png' alt=''/>
           <nav className={navClasses} id='navigation'>
-            <ul className='navbar-nav'>
-              <LinkItem url='#' label='News'/>
-              <LinkItem url='#' label='Help for you'/>
-              <LinkItem url='#' label='Help for others'/>
-              <LinkItem url='/drug' label='Drugs A-Z'/>
-              <LinkItem url='#' label='Contact Frank'/>
+            <ul className='navbar-nav'role='menu'>
+              <LinkItem url='#' role="menuitem" label='News'/>
+              <LinkItem url='#' role="menuitem" label='Help for you'/>
+              <LinkItem url='#' role="menuitem" label='Help for others'/>
+              <LinkItem url='/drug' role="menuitem" label='Drugs A-Z'/>
+              <LinkItem url='#' role="menuitem" label='Contact Frank'/>
             </ul>
             <Form className='ml-auto'>
               <FormGroupAutocomplete
