@@ -60,8 +60,9 @@ class FormGroup extends PureComponent {
         key={`${item.drug} - ${item.name}`}
         className={ isHighlighted ? 'input-group-autocomplete-menu-item__hover' : 'input-group-autocomplete-menu-item ' }
         aria-selected={ isHighlighted }
-        role="option"
-        tabindex="-1"
+        role='option'
+        tabIndex='-1'
+        id={item.name}
       >
         <p className={'mt-1 mb-0 grey ' + titleClass}>
           <span>
@@ -91,17 +92,18 @@ class FormGroup extends PureComponent {
 
     return (
       <div className={classes}>
-        <label htmlFor={id}
-               className={'form-label h3 ' + (labelHidden ? 'sr-only' : null)}>{label}</label>
+        <label htmlFor={id} className={'form-label h3 ' + (labelHidden ? 'sr-only' : null)}>{label}</label>
         <div className='input-group--raised input-group-autocomplete--raised d-flex'>
           <Autocomplete
             inputProps={{
               className: controlClasses,
               id: id,
               onKeyDown: this.handleKeyPress,
-              placeholder: 'Enter a drug name (e.g. Mandy, Cocaine, Balloons)',
+              placeholder: this.props.placeholder,
               role: false,
-              type: 'search'
+              type: 'search',
+              role: 'combobox',
+              'aria-autocomplete': 'both'
             }}
             value={searchTerm}
             items={autoCompleteData}
@@ -112,7 +114,7 @@ class FormGroup extends PureComponent {
               }
             }}
             renderMenu={items => {
-              return <ul className='input-group-autocomplete-menu' role="listbox" children={items}/>
+              return <div><div className='sr-only' aria-live='assertive'>{items.length} suggestions found </div><ul className='input-group-autocomplete-menu' role='listbox' children={items}/></div>
             }}
             onChange={event => {
               this.autoCompleteOnChange(event)

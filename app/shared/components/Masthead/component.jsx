@@ -47,9 +47,10 @@ export default class Masthead extends React.PureComponent {
                 modifiers='form-control--search'
                 className='input-group-autocomplete--inverse'
                 id='search-masthead'
-                label='Search site'
+                label='Search for any drug'
                 labelHidden='true'
                 showContent={false}
+                placeholder='Enterdrug name (e.g. Mandy)'
               />
             </Form>
           </nav>

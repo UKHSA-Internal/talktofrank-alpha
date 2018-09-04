@@ -66,10 +66,12 @@ const PageHome = props => {
             <FormGroupAutocomplete
               button='true'
               modifiers='form-control--search'
+              className='input-group-autocomplete--inverse'
               id='search-a-z'
-              label='Ask anything about any drug:'
+              label='Search for any drug'
               showContent
               titleClass='h4'
+              placeholder='Enter a drug name (e.g. Mandy, Cocaine, Weed)'
             />
           </Form>
         </section>

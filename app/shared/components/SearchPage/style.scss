@@ -52,7 +52,13 @@
 
   .underlined {
     text-decoration: none;
-    border-bottom: 1px dashed $purple;
+    border-bottom-style: dashed;
+    border-bottom-color: $purple;
+    border-bottom-width: 1px;
+
+    &--heavy {
+      border-bottom-width: 3px;
+    }
   }
 
   input.underlined {

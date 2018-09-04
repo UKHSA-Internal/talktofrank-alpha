@@ -44,6 +44,10 @@
       font-size: 1.4rem;
     }
 
+    p {
+      color: $gray-200;
+    }
+
     .input-group-autocomplete-menu {
       top: 43px;
       background-color: #444444;
@@ -72,7 +76,7 @@
 
     .input-group-append {
       position: absolute;
-      right: 0px;
+      right: 0;
     }
   }
 }
