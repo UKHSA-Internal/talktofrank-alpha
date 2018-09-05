@@ -13,6 +13,7 @@ class FormGroup extends PureComponent {
     this.handleKeyPress = this.handleKeyPress.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.state = {
+      id: '',
       searchTerm: '',
       autoCompleteData: []
     }
@@ -102,7 +103,8 @@ class FormGroup extends PureComponent {
               placeholder: this.props.placeholder,
               type: 'search',
               role: 'combobox',
-              'aria-autocomplete': 'both'
+              'aria-owns': this.props.resultsId,
+              'aria-activedescendant': this.state.id
             }}
             value={searchTerm}
             items={autoCompleteData}
@@ -112,13 +114,20 @@ class FormGroup extends PureComponent {
                 document.location = '/drug/' + item.link
               }
             }}
-            renderMenu={items => {
-              return <div><div className='sr-only' aria-live='assertive'>{items.length} suggestions found </div><ul className='input-group-autocomplete-menu' role='listbox' children={items}/></div>
-            }}
             onChange={event => {
               this.autoCompleteOnChange(event)
             }}
-            renderItem={(item, isHighlighted) => this.renderMenuItem(item, isHighlighted)}
+            renderItem={(item, isHighlighted) => {
+              // @refactor - this feels appallingly unperformant
+              if (isHighlighted) {
+                this.setState({id: item.name})
+              }
+              return this.renderMenuItem(item, isHighlighted)
+            }}
+
+            renderMenu={items => {
+              return <div><ul className='input-group-autocomplete-menu' role='listbox' children={items} id={this.props.resultsId}/><div className='sr-only' aria-live='assertive'>{items.length} suggestions found </div></div>
+            }}
             required
           />
 

@@ -72,6 +72,7 @@ const PageHome = props => {
               showContent
               titleClass='h4'
               placeholder='Enter a drug name (e.g. Mandy, Cocaine, Weed)'
+              resultsId='body-results'
             />
           </Form>
         </section>
