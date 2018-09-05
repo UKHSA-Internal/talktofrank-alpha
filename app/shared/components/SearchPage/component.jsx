@@ -65,9 +65,9 @@ export default class SearchPage extends React.Component {
     const {name, drug, description, link} = item
     return (
       <li key={`resultitem-${drug}-${name}`} className='list-item list-item--dotted'>
-        <h3 className="h4 mt-1 mb-3">
+        <h2 className="h4 mt-1 mb-3">
           <a href={`/drug/${link}`}>{name}</a>
-        </h3>
+        </h2>
         { name !== drug && <p className='font-italic mt-1'>Real name: {drug}</p>}
         <p className="muted mt-1" dangerouslySetInnerHTML={{__html: description}}/>
       </li>

@@ -28,6 +28,7 @@ const DrugList = props => {
               showContent
               titleClass='h4'
               placeholder='Enter a drug name (e.g. Mandy, Cocaine, Weed)'
+              resultsId='masthead-results'
             />
           </Form>
         <Grid>
