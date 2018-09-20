@@ -99,15 +99,13 @@ app.get('*', function (req, res) {
   // import createBrowserHistory from 'history/createBrowserHistory'
   // history = createBrowserHistory()
 
-
   const page = matchRoutes(routes, req.url)
 
+  // checking whether I need to return matches but not sure if relevant
   const matcher = page.map(({ route, match }) => {
     return match
   })
 
-
-console.log(page.length)
   // const page = matchRoutes(routes, req.url)
 
   // // const promises = page.map(({ route, match }) => {
@@ -116,8 +114,6 @@ console.log(page.length)
   // //     : Promise.resolve(null)
   // // })
 
-  // console.log(page)
-
   let componentHtml = ''
   let state = store.getState()
 
@@ -125,16 +121,13 @@ console.log(page.length)
     componentHtml = ReactDOMServer.renderToString((
       <Provider store={store}>
         <StaticRouter context={context} location={req.url}>
-          {renderRoutes(matcher)}
+          {renderRoutes(routes)}
         </StaticRouter>
       </Provider>
     ))
   } catch (err) {
     console.log(err)
   }
-
-  const branch = matchRoutes(routes, req.url)
-  console.log(branch)
 
   let title = 'Talk to Frank'
 
@@ -159,8 +152,6 @@ console.log(page.length)
 
   let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
   return res.status(status).send(renderedHtml)
-
-
 
   // res.render('index', {title: 'Express', data: false, content })
 
