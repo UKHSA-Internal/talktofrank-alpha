@@ -1,5 +1,5 @@
 const routes = [{
-  component: Root,
+  component: require('./containers/HomepageContainer/component.jsx'),
   exact: true,
   key: '0',
   routes: [
@@ -30,11 +30,6 @@ const routes = [{
         component: require('./containers/SearchPageContainer/component.jsx'),
         key: '5'
       }]
-    },
-    {
-      path: '*',
-      component: require('./containers/NoMatchContainer/component.jsx'),
-      key: '6'
     }
   ]
 }]
