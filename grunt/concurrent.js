@@ -13,6 +13,6 @@ module.exports = {
     }
   },
   js: {
-    tasks: ['webpack:client', 'webpack:server']
+    tasks: [/* 'webpack:client', */ 'webpack:server']
   }
 }
