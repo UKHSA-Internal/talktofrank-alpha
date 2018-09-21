@@ -84,128 +84,6 @@ app.get('/robots.txt', function (req, res) {
   res.send('User-agent: *\nDisallow: /')
 })
 
-/*
- * Pass Express over to the App via the React Router
- */
-// app.get('*', function (req, res) {
-//   store = generateStore()
-
-//   cookie.plugToRequest(req, res)
-
-//   let context = {}
-//   let history = createMemoryHistory()
-
-//   // for the client side
-//   // import createBrowserHistory from 'history/createBrowserHistory'
-//   // history = createBrowserHistory()
-
-//   // checking whether I need to return matches but not sure if relevant
-//   // const matcher = matchRoutes(routes, req.url).map(({ route, match }) => {
-//   //   console.log(match)
-//   //   return match
-//   // })
-
-//   // // const promises = page.map(({ route, match }) => {
-//   // //   return route.loadData
-//   // //     ? route.loadData(match)
-//   // //     : Promise.resolve(null)
-//   // // })
-
-//   let componentHtml = ''
-//   let state = store.getState()
-
-//   try {
-//     componentHtml = ReactDOMServer.renderToString((
-//       <Provider store={store}>
-//         <StaticRouter context={context} location={req.url}>
-//           {renderRoutes(routes)}
-//         </StaticRouter>
-//       </Provider>
-//     ))
-//   } catch (err) {
-//     console.log(err)
-//   }
-
-//   let title = 'Talk to Frank'
-
-//   if (state.error) {
-//     switch (state.error) {
-//       case '404':
-//         title = 'Page not found (404)'
-//         break
-//       case 500:
-//       default:
-//         title = 'Server error'
-//         break
-//     }
-//   } else if (exists(state, 'app.pageData.head.title')) {
-//     title = state.app.pageData.head.title
-//   }
-
-//   let status = state.error ? state.error : 200
-//   let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
-//   let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-//   let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
-
-//   let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
-//   return res.status(status).send(renderedHtml)
-
-//   // res.render('index', {title: 'Express', data: false, content })
-
-//   // match({routes: getRoutes(store), location: req.url}, (error, redirectLocation, renderProps) => {
-//   //   if (error) {
-//   //     // Error with routing
-//   //     res.status(500).send(error.message)
-//   //     return
-//   //   }
-
-//   //   if (redirectLocation) {
-//   //     // Handle redirects
-//   //     console.log('REDIRECTING TO: ' + redirectLocation.pathname + redirectLocation.search)
-//   //     res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-//   //     return
-//   //   }
-
-//   //   let componentHtml = ''
-//   //   let state = store.getState()
-
-//   //   try {
-//   //     componentHtml = ReactDOMServer.renderToString((
-//   //       <Provider store={store}>
-//   //         <RouterContext {...renderProps} />
-//   //       </Provider>
-//   //     ))
-//   //   } catch (err) {
-//   //     console.log(err)
-//   //   }
-
-//   //   let title = 'Talk to Frank'
-
-//   //   if (state.error) {
-//   //     switch (state.error) {
-//   //       case '404':
-//   //         title = 'Page not found (404)'
-//   //         break
-//   //       case 500:
-//   //       default:
-//   //         title = 'Server error'
-//   //         break
-//   //     }
-//   //   } else if (exists(state, 'app.pageData.head.title')) {
-//   //     title = state.app.pageData.head.title
-//   //   }
-
-//   //   let status = state.error ? state.error : 200
-//   //   let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
-//   //   let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-//   //   let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
-
-//   //   let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
-//   //   return res.status(status).send(renderedHtml)
-//   // })
-// })
-
-
 // Register server-side rendering middleware
 app.get('*', (req, res) => {
   const history = createMemoryHistory()
@@ -215,6 +93,7 @@ app.get('*', (req, res) => {
   const loadBranchData = () => {
     const page = matchRoutes(routes, req.path)
     const promises = page.map(({ route, match }) => {
+      console.log(route, match)
       if (route.loadData) {
         return Promise.all(
           route
