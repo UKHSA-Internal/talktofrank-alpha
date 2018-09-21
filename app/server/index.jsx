@@ -100,10 +100,10 @@ app.get('*', function (req, res) {
   // history = createBrowserHistory()
 
   // checking whether I need to return matches but not sure if relevant
-  const matcher = matchRoutes(routes, req.url).map(({ route, match }) => {
-    console.log(match)
-    return match
-  })
+  // const matcher = matchRoutes(routes, req.url).map(({ route, match }) => {
+  //   console.log(match)
+  //   return match
+  // })
 
   // // const promises = page.map(({ route, match }) => {
   // //   return route.loadData
