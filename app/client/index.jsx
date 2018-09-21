@@ -1,9 +1,9 @@
 import { hydrate } from 'react-dom'
 import React from 'react'
 
-import { IndexRoute, Router, Route, browserHistory } from 'react-router';
+import { IndexRoute, Router, Route, browserHistory } from 'react-router'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux';
+import { Provider } from 'react-redux'
 
 import { app } from '../shared/reducers'
 import { fetchPage } from '../shared/actions'
@@ -27,52 +27,52 @@ const routes = (
         <Route path='drug'>
           <IndexRoute getComponent={(location, callback) => {
             import('../shared/containers/DrugListContainer/component.jsx').then((component) => {
-              callback(null, component);
+              callback(null, component)
             }).catch(err => {
-              console.log(err);
+              console.log(err)
             })
           }} />
           <Route path='search' getComponent={(location, callback) => {
             import('../shared/containers/SearchPageContainer/component.jsx').then((component) => {
-              callback(null, component);
+              callback(null, component)
             }).catch(err => {
-              console.log(err);
+              console.log(err)
             })
           }} />
           <Route path='search/:term' getComponent={(location, callback) => {
             import('../shared/containers/SearchPageContainer/component.jsx').then((component) => {
-              callback(null, component);
+              callback(null, component)
             }).catch(err => {
-              console.log(err);
+              console.log(err)
             })
           }} />
           <Route path='search-results' getComponent={(location, callback) => {
             import('../shared/containers/SearchResultsContainer/component.jsx').then((component) => {
-              callback(null, component);
+              callback(null, component)
             }).catch(err => {
-              console.log(err);
+              console.log(err)
             })
           }} />
           <Route path=':drugName' getComponent={(location, callback) => {
             import('../shared/containers/PageContainer/component.jsx').then((component) => {
-              callback(null, component);
+              callback(null, component)
             }).catch(err => {
-              console.log(err);
+              console.log(err)
             })
           }} />
         </Route>
         <IndexRoute getComponent={(location, callback) => {
           import('../shared/components/PageHome/component.jsx').then((component) => {
-            callback(null, component);
+            callback(null, component)
           }).catch(err => {
-            console.log(err);
+            console.log(err)
           })
         }} />
         <Route path='*' getComponent={(location, callback) => {
           import('../shared/containers/NoMatchContainer/component.jsx').then((component) => {
-            callback(null, component);
+            callback(null, component)
           }).catch(err => {
-            console.log(err);
+            console.log(err)
           })
         }} />
       </Route>
@@ -84,7 +84,7 @@ const routes = (
  * If there is an error, don't invoke the client app, the server will show it
  */
 if ( !store.getState().error  ) {
-  hydrate(routes, document.getElementById('app'));
+  hydrate(routes, document.getElementById('app'))
 }
 
 export default routes
