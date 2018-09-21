@@ -1,14 +1,9 @@
 const routes = [{
   component: require('./containers/HomepageContainer/component.jsx'),
   exact: true,
+  path: '/',
   key: '0',
   routes: [
-    {
-      path: '/',
-      exact: true,
-      component: require('./containers/HomepageContainer/component.jsx'),
-      key: '1'
-    },
     {
       path: '/drug',
       component: require('./containers/DrugListContainer/component.jsx'),

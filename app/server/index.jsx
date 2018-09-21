@@ -283,7 +283,7 @@ app.get('*', (req, res) => {
     } catch (err) {
       res.status(404).send('Not Found :(')
 
-      console.error(chalk.red(`==> 😭  Rendering routes error: ${err}`))
+      console.error(`Rendering routes error: ${err}`)
     }
   })()
 })

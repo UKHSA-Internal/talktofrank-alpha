@@ -11,7 +11,7 @@ import CardDeck from '../CardDeck/component.jsx'
 import LinkDeck from '../LinkDeck/component.jsx'
 
 // @todo @refactor @joel - haul this out of here and into a fixture / Contentful
-const PageHome = props => {
+const PageHome = () => {
   const teasers = [{
     modifiers: '',
     url: '/',
