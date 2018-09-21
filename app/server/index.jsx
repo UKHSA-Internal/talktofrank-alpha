@@ -18,7 +18,7 @@ import { exists } from '../shared/utilities'
 import { generateStore } from '../shared/store'
 
 import createMemoryHistory from 'history/createMemoryHistory'
-
+import { getLoadableState } from 'loadable-components/server'
 import Head from '../shared/components/Head/component.jsx'
 import Scripts from '../shared/components/Scripts/component.jsx'
 import Skiplinks from '../shared/components/Skiplinks/component.jsx'
@@ -87,125 +87,208 @@ app.get('/robots.txt', function (req, res) {
 /*
  * Pass Express over to the App via the React Router
  */
-app.get('*', function (req, res) {
-  store = generateStore()
+// app.get('*', function (req, res) {
+//   store = generateStore()
 
-  cookie.plugToRequest(req, res)
+//   cookie.plugToRequest(req, res)
 
-  let context = {}
-  let history = createMemoryHistory()
+//   let context = {}
+//   let history = createMemoryHistory()
 
-  // for the client side
-  // import createBrowserHistory from 'history/createBrowserHistory'
-  // history = createBrowserHistory()
+//   // for the client side
+//   // import createBrowserHistory from 'history/createBrowserHistory'
+//   // history = createBrowserHistory()
 
-  // checking whether I need to return matches but not sure if relevant
-  // const matcher = matchRoutes(routes, req.url).map(({ route, match }) => {
-  //   console.log(match)
-  //   return match
-  // })
+//   // checking whether I need to return matches but not sure if relevant
+//   // const matcher = matchRoutes(routes, req.url).map(({ route, match }) => {
+//   //   console.log(match)
+//   //   return match
+//   // })
 
-  // // const promises = page.map(({ route, match }) => {
-  // //   return route.loadData
-  // //     ? route.loadData(match)
-  // //     : Promise.resolve(null)
-  // // })
+//   // // const promises = page.map(({ route, match }) => {
+//   // //   return route.loadData
+//   // //     ? route.loadData(match)
+//   // //     : Promise.resolve(null)
+//   // // })
 
-  let componentHtml = ''
-  let state = store.getState()
+//   let componentHtml = ''
+//   let state = store.getState()
 
-  try {
-    componentHtml = ReactDOMServer.renderToString((
-      <Provider store={store}>
-        <StaticRouter context={context} location={req.url}>
-          {renderRoutes(routes)}
-        </StaticRouter>
-      </Provider>
-    ))
-  } catch (err) {
-    console.log(err)
+//   try {
+//     componentHtml = ReactDOMServer.renderToString((
+//       <Provider store={store}>
+//         <StaticRouter context={context} location={req.url}>
+//           {renderRoutes(routes)}
+//         </StaticRouter>
+//       </Provider>
+//     ))
+//   } catch (err) {
+//     console.log(err)
+//   }
+
+//   let title = 'Talk to Frank'
+
+//   if (state.error) {
+//     switch (state.error) {
+//       case '404':
+//         title = 'Page not found (404)'
+//         break
+//       case 500:
+//       default:
+//         title = 'Server error'
+//         break
+//     }
+//   } else if (exists(state, 'app.pageData.head.title')) {
+//     title = state.app.pageData.head.title
+//   }
+
+//   let status = state.error ? state.error : 200
+//   let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
+//   let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
+//   let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
+
+//   let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
+//   return res.status(status).send(renderedHtml)
+
+//   // res.render('index', {title: 'Express', data: false, content })
+
+//   // match({routes: getRoutes(store), location: req.url}, (error, redirectLocation, renderProps) => {
+//   //   if (error) {
+//   //     // Error with routing
+//   //     res.status(500).send(error.message)
+//   //     return
+//   //   }
+
+//   //   if (redirectLocation) {
+//   //     // Handle redirects
+//   //     console.log('REDIRECTING TO: ' + redirectLocation.pathname + redirectLocation.search)
+//   //     res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+//   //     return
+//   //   }
+
+//   //   let componentHtml = ''
+//   //   let state = store.getState()
+
+//   //   try {
+//   //     componentHtml = ReactDOMServer.renderToString((
+//   //       <Provider store={store}>
+//   //         <RouterContext {...renderProps} />
+//   //       </Provider>
+//   //     ))
+//   //   } catch (err) {
+//   //     console.log(err)
+//   //   }
+
+//   //   let title = 'Talk to Frank'
+
+//   //   if (state.error) {
+//   //     switch (state.error) {
+//   //       case '404':
+//   //         title = 'Page not found (404)'
+//   //         break
+//   //       case 500:
+//   //       default:
+//   //         title = 'Server error'
+//   //         break
+//   //     }
+//   //   } else if (exists(state, 'app.pageData.head.title')) {
+//   //     title = state.app.pageData.head.title
+//   //   }
+
+//   //   let status = state.error ? state.error : 200
+//   //   let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
+//   //   let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
+//   //   let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
+
+//   //   let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
+//   //   return res.status(status).send(renderedHtml)
+//   // })
+// })
+
+
+// Register server-side rendering middleware
+app.get('*', (req, res) => {
+  const history = createMemoryHistory()
+  const store = generateStore()
+
+  // The method for loading data from server-side
+  const loadBranchData = () => {
+    const page = matchRoutes(routes, req.path)
+    const promises = page.map(({ route, match }) => {
+      if (route.loadData) {
+        return Promise.all(
+          route
+            .loadData({ params: match.params, getState: store.getState })
+            .map(item => store.dispatch(item))
+        )
+      }
+
+      return Promise.resolve(null)
+    })
+
+    return Promise.all(promises)
   }
 
-  let title = 'Talk to Frank'
+  (async () => {
+    try {
+      // Load data from server-side first
+      await loadBranchData()
 
-  if (state.error) {
-    switch (state.error) {
-      case '404':
-        title = 'Page not found (404)'
-        break
-      case 500:
-      default:
-        title = 'Server error'
-        break
+      const staticContext = {}
+      const AppComponent = (
+        <Provider store={store}>
+          <StaticRouter location={req.path} context={staticContext}>
+            {renderRoutes(routes)}
+          </StaticRouter>
+        </Provider>
+      )
+
+      // Check if the render result contains a redirect, if so we need to set
+      // the specific status and redirect header and end the response
+      if (staticContext.url) {
+        res.status(301).setHeader('Location', staticContext.url)
+        res.end()
+
+        return
+      }
+
+      // Extract loadable state from application tree (loadable-components setup)
+      getLoadableState(AppComponent).then(loadableState => {
+        // const head = Helmet.renderStatic()
+        let state = store.getState()
+        let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
+        const head = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
+        const htmlContent = ReactDOMServer.renderToString(AppComponent)
+        const initialState = JSON.stringify(state)
+        const loadableStateTag = loadableState.getScriptTag()
+        let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
+
+        // Check page status
+        const status = staticContext.status === '404' ? 404 : 200
+
+        // Pass the route and initial state into html template
+        res
+          .status(status)
+          .send(
+            renderFullPageHtml(
+              head,
+              skip,
+              htmlContent,
+              componentScripts,
+              initialState,
+              loadableStateTag
+            )
+          )
+      })
+    } catch (err) {
+      res.status(404).send('Not Found :(')
+
+      console.error(chalk.red(`==> 😭  Rendering routes error: ${err}`))
     }
-  } else if (exists(state, 'app.pageData.head.title')) {
-    title = state.app.pageData.head.title
-  }
-
-  let status = state.error ? state.error : 200
-  let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
-  let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-  let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
-
-  let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
-  return res.status(status).send(renderedHtml)
-
-  // res.render('index', {title: 'Express', data: false, content })
-
-  // match({routes: getRoutes(store), location: req.url}, (error, redirectLocation, renderProps) => {
-  //   if (error) {
-  //     // Error with routing
-  //     res.status(500).send(error.message)
-  //     return
-  //   }
-
-  //   if (redirectLocation) {
-  //     // Handle redirects
-  //     console.log('REDIRECTING TO: ' + redirectLocation.pathname + redirectLocation.search)
-  //     res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-  //     return
-  //   }
-
-  //   let componentHtml = ''
-  //   let state = store.getState()
-
-  //   try {
-  //     componentHtml = ReactDOMServer.renderToString((
-  //       <Provider store={store}>
-  //         <RouterContext {...renderProps} />
-  //       </Provider>
-  //     ))
-  //   } catch (err) {
-  //     console.log(err)
-  //   }
-
-  //   let title = 'Talk to Frank'
-
-  //   if (state.error) {
-  //     switch (state.error) {
-  //       case '404':
-  //         title = 'Page not found (404)'
-  //         break
-  //       case 500:
-  //       default:
-  //         title = 'Server error'
-  //         break
-  //     }
-  //   } else if (exists(state, 'app.pageData.head.title')) {
-  //     title = state.app.pageData.head.title
-  //   }
-
-  //   let status = state.error ? state.error : 200
-  //   let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
-  //   let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-  //   let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
-
-  //   let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
-  //   return res.status(status).send(renderedHtml)
-  // })
+  })()
 })
 
-function renderFullPageHtml (skip, html, head, scripts, initialState) {
+function renderFullPageHtml (head, skip, html, scripts, initialState, loadableStateTag) {
   return `
     <!DOCTYPE html>
     <html lang='en'>
@@ -213,6 +296,7 @@ function renderFullPageHtml (skip, html, head, scripts, initialState) {
     <body>
       ${skip}
       <div id='app'>${html}</div>
+      ${loadableStateTag}
       <script>window.$REDUX_STATE=${initialState}</script>
       ${scripts}
     </body>

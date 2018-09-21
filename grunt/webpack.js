@@ -65,7 +65,7 @@ module.exports = {
   server: {
     devtool: 'eval',
     entry: {
-      server: './app/server/index.jsx'
+      server: ['./app/server/index.jsx']
     },
     output: {
       path: path.resolve(__dirname, '../dist/app/'),
