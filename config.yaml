@@ -6,3 +6,6 @@ elasticsearch:
  suggestResultCount: 5
  phraseResultCount: 3
  showESResult: false
+
+sentry:
+ dsn: 'https://ba8d45f8851c4c84b311a037444e3d23@sentry.io/1286883'
