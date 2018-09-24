@@ -1,5 +1,5 @@
 
-import thunkMiddleware from 'redux-thunk'
+import thunk from 'redux-thunk'
 import { app } from '../shared/reducers'
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 
@@ -10,7 +10,7 @@ export function generateStore (intialState) {
   return createStore(
     rootReducer,
     applyMiddleware(
-      thunkMiddleware
+      thunk
     )
   )
 }

@@ -3,7 +3,7 @@ const Home = require('./containers/HomepageContainer/component.jsx')
 const Search = require('./containers/SearchPageContainer/component.jsx')
 const DrugList = require('./containers/DrugListContainer/component.jsx')
 const Drug = require('./containers/PageContainer/component.jsx')
-
+import { generateStore } from '../shared/store'
 import { fetchPage, fetchDrugList, fetchSearchTerm, receivePageError } from './actions'
 
 
@@ -31,16 +31,9 @@ function getSearchPage (nextState, replace, callback) {
     })
 }
 
-function getDrugList (nextState, replace, callback) {
+function getDrugList (store) {
   console.log('hitting this ')
   store.dispatch(fetchDrugList())
-    .then(() => {
-      callback()
-    }).catch(err => {
-      console.log(err)
-      // error pushed to state
-      callback()
-    })
 }
 
 function noMatchError (nextState, replace, callback) {

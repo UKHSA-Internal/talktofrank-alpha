@@ -51,7 +51,7 @@ export function fetchSearchTerm (term, drug, shouldOrMustQuery) {
 }
 
 export function fetchDrugList () {
-  console.log('hitting this page')
+
   return dispatch => {
     dispatch(requestPage())
     let lookupUrl = apiHost + '/api/v1/drugList'
