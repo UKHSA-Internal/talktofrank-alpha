@@ -14,7 +14,7 @@ module.exports = {
   },
   js: {
     tasks: [
-      'webpack:client',
+      //'webpack:client',
       'webpack:server'
     ]
   }

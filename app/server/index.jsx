@@ -90,10 +90,13 @@ app.get('*', (req, res) => {
   const store = generateStore()
 
   // The method for loading data from server-side
-  const loadBranchData = () => {
+  const loadData = () => {
     const page = matchRoutes(routes, req.path)
+
     const promises = page.map(({ route, match }) => {
       if (route.loadData) {
+
+        console.log('route loading data' + route.loadData)
         return Promise.all(
           route
             .loadData({ params: match.params, getState: store.getState })
@@ -110,9 +113,10 @@ app.get('*', (req, res) => {
   (async () => {
     try {
       // Load data from server-side first
-      await loadBranchData()
-
+      await loadData()
       const staticContext = {}
+
+      console.log('store ' + store)
       const AppComponent = (
         <Provider store={store}>
           <StaticRouter location={req.path} context={staticContext}>
@@ -121,6 +125,7 @@ app.get('*', (req, res) => {
         </Provider>
       )
 
+      console.log('AppComponent ' + AppComponent)
       // Check if the render result contains a redirect, if so we need to set
       // the specific status and redirect header and end the response
       if (staticContext.url) {
@@ -132,11 +137,10 @@ app.get('*', (req, res) => {
 
       // Extract loadable state from application tree (loadable-components setup)
       getLoadableState(AppComponent).then(loadableState => {
-        // const head = Helmet.renderStatic()
         let state = store.getState()
         let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
         const head = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-        const htmlContent = ReactDOMServer.renderToString(AppComponent)
+        const htmlContent = ReactDOMServer.renderToStaticMarkup(AppComponent)
         const initialState = JSON.stringify(state)
         const loadableStateTag = loadableState.getScriptTag()
         let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
