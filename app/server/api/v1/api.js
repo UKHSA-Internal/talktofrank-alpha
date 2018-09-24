@@ -48,7 +48,6 @@ router.get('/pages/:slug', (req, res, next) => {
   let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug, req.params.slug)
 
   axios.get(pageUrl).then(json => {
-
     if (json.data.total === 0) {
       let error = new Error()
       error.message = `Page not found ${pageUrl}`
@@ -88,7 +87,6 @@ router.get('/pages/:slug', (req, res, next) => {
       })
 
     res.send(response)
-
   })
 })
 
@@ -101,7 +99,6 @@ router.get('/drugList', (req, res, next) => {
     let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug)
 
     axios.get(pageUrl).then(json => {
-
       if (json.data.total === 0) {
         let error = new Error()
         error.message = `Page not found ${pageUrl}`

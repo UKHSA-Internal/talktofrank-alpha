@@ -8,5 +8,5 @@ elasticsearch:
  showESResult: false
 
 sentry:
- dsn: 'https://ba8d45f8851c4c84b311a037444e3d23@sentry.io/1286883'
+ dsn: !!import/single '../config.creds.yaml'
  logErrors: true

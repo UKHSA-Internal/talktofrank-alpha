@@ -17,7 +17,6 @@ import Scripts from '../shared/components/Scripts/component.jsx'
 import Skiplinks from '../shared/components/Skiplinks/component.jsx'
 import ContentfulTextSearch from 'contentful-text-search'
 import * as path from 'path'
-const Sentry = require('@sentry/node')
 
 /*
  * Express routes
@@ -31,6 +30,7 @@ import contentFulWebhookRoutes from './contentful/webhooks.js'
 import { config } from 'config'
 import packageInfo from '../../package.json'
 
+const Sentry = require('@sentry/node')
 if (config.sentry.logErrors) {
   console.log(`Error logging enabled: Sentry DSN ${config.sentry.dsn}`)
   Sentry.init({ dsn: config.sentry.dsn })
