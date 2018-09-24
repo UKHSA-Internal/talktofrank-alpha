@@ -93,7 +93,6 @@ app.get('*', (req, res) => {
   const loadBranchData = () => {
     const page = matchRoutes(routes, req.path)
     const promises = page.map(({ route, match }) => {
-      console.log(route, match)
       if (route.loadData) {
         return Promise.all(
           route

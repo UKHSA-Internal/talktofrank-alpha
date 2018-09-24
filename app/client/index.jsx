@@ -25,15 +25,13 @@ let store = createStore(
   )
 )
 
-// Get the initial state from server-side rendering
-const initialState = window.__INITIAL_STATE__
 const history = createHistory()
 
-const render = (Routes) => {
+const render = (routes) => {
   hydrate(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        {renderRoutes(Routes)}
+        {renderRoutes(routes)}
       </ConnectedRouter>
     </Provider>,
     document.getElementById('app')
@@ -42,7 +40,8 @@ const render = (Routes) => {
 
 // Load all components needed before starting rendering (loadable-components setup)
 loadComponents().then(() => {
-  render(routes)
+  console.log('loaded')
+  render(Routes)
 })
 
 /*
