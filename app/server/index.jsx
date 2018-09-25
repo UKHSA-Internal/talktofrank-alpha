@@ -132,13 +132,12 @@ app.get('*', function (req, res) {
     let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
     let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
-
     let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
     return res.status(status).send(renderedHtml)
   })
 })
 
-function renderFullPageHtml (skip, html, head, scripts, initialState) {
+function renderFullPageHtml (skip, html, head, scripts, initialState, tracking) {
   return `
     <!DOCTYPE html>
     <html lang='en'>

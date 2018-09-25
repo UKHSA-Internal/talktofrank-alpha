@@ -9,6 +9,8 @@ import Form from '../Form/component.jsx'
 import Footer from '../Footer/component.jsx'
 import CardDeck from '../CardDeck/component.jsx'
 import LinkDeck from '../LinkDeck/component.jsx'
+import GA from '../GoogleAnalytics/component.jsx'
+import { config } from 'config'
 
 // @todo @refactor @joel - haul this out of here and into a fixture / Contentful
 const PageHome = props => {
@@ -87,6 +89,7 @@ const PageHome = props => {
         </Grid>
       </Main>
       <Footer />
+      <GA appId='UA-126357409-1'/>
     </React.Fragment>
   )
 }

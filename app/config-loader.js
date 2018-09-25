@@ -28,5 +28,6 @@ envConfig = loadConfig('/../config.' + env + '.yaml')
 baseConfig.buildTimestamp = Date.now()
 
 var config = merge.recursive(true, baseConfig, envConfig)
+console.log(config)
 
 export { config }
