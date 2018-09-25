@@ -30,9 +30,9 @@ router.use('/search', searchRoutes)
 router.get('/pages/:slug', (req, res, next) => {
   if (!req.params.slug) {
     let error = new Error()
+    error.message = 'Page id not set'
     error.status = 404
-    next(error)
-    return
+    return next(error)
   }
 
   if (req.params.slug === 'index' || req.params.slug === 'no-match') {
@@ -157,8 +157,7 @@ router.get('/drugList', (req, res, next) => {
 
       res.send(response)
     })
-  } catch (e) {
-    let error = new Error()
+  } catch (error) {
     error.status = 500
     return next(error)
   }

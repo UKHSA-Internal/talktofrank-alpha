@@ -24,12 +24,8 @@ router.get('/page/:term', jsonParser, (req, res, next) => {
       body: buildFullMatchQuery(searchTerm)
     }).then(results => res.status(200).json(formatResults(results, searchTerm, true)))
   } catch (err) {
-    /* eslint-disable */
-    console.error(err)
-    /* eslint-enable */
-    let error = new Error()
-    error.status = 500
-    return next(error)
+    err.status = 500
+    return next(err)
   }
 })
 
@@ -48,12 +44,8 @@ router.get('/autocomplete/:term', jsonParser, (req, res, next) => {
       body: buildPrefixQuery(searchTerm)
     }).then(results => res.status(200).json(formatAutocompleteResults(results, searchTerm, true)))
   } catch (err) {
-    /* eslint-disable */
-    console.error(err)
-    /* eslint-enable */
-    let error = new Error()
-    error.status = 500
-    return next(error)
+    err.status = 500
+    return next(err)
   }
 })
 
@@ -72,12 +64,8 @@ router.get('/should/:term', jsonParser, (req, res, next) => {
       body: buildShouldQuery(searchTerm)
     }).then(results => res.status(200).json(formatResults(results, searchTerm)))
   } catch (err) {
-    /* eslint-disable */
-    console.error(err)
-    /* eslint-enable */
-    let error = new Error()
-    error.status = 500
-    return next(error)
+    err.status = 500
+    return next(err)
   }
 })
 
@@ -96,12 +84,8 @@ router.get('/must/:phrase/:drug', jsonParser, (req, res, next) => {
       body: buildMustQuery(drugSearchTerm, phraseSearchTerm)
     }).then(results => res.status(200).json(formatResults(results, drugSearchTerm)))
   } catch (err) {
-    /* eslint-disable */
-    console.error(err)
-    /* eslint-enable */
-    let error = new Error()
-    error.status = 500
-    return next(error)
+    err.status = 500
+    return next(err)
   }
 })
 

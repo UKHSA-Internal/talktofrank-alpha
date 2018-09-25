@@ -6,7 +6,3 @@ elasticsearch:
  suggestResultCount: 5
  phraseResultCount: 3
  showESResult: false
-
-sentry:
- dsn: !!import/single '../config.creds.yaml'
- logErrors: true
