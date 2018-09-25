@@ -73,6 +73,18 @@
       working_directory: "/home/deploy/app/"
       commands:
       - "pm2 startOrRestart ecosystem.json --env staging"
+    - action: "Send notification to CX Partners"
+      type: "SENTRY"
+      environment: "$BUDDY_PIPELINE_NAME"
+      organization_slug: "cx-partners"
+      organization_name: "CX Partners"
+      version: "$BUDDY_EXECUTION_REVISION"
+      release_url: "$BUDDY_EXECUTION_URL"
+      deploy_url: "$BUDDY_EXECUTION_URL"
+      projects:
+      - "talk-to-frank-beta"
+      trigger_condition: "ALWAYS"
+      integration_id: 38897
     - action: "Run validation"
       type: "RUN_NEXT_PIPELINE"
       comment: "Triggered by ${execution.pipeline.name} execution #${execution.id}"
