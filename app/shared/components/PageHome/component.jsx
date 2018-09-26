@@ -14,13 +14,13 @@ import ReactGA from 'react-ga'
 import Button from '../Button/component.jsx'
 
 // @todo @refactor @joel - haul this out of here and into a fixture / Contentful
-export default class PageHome extends React.PureComponent  {
-  constructor(props) {
+export default class PageHome extends React.PureComponent {
+  constructor (props) {
     super(props)
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick() {
+  handleClick () {
     ReactGA.event({
       category: 'Navigation',
       action: 'Clicked Link',
@@ -28,14 +28,14 @@ export default class PageHome extends React.PureComponent  {
     })
   }
 
-  componentDidMount() {
+  componentDidMount () {
     ReactGA.timing({
       category: 'React libraries - client side',
       variable: 'load',
       value: 20, // in milliseconds
       label: 'React bundles'
     })
-    console.log('I mounted! Here are my props');
+    console.log('I mounted! Here are my props')
   }
 
   render () {

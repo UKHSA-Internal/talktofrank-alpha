@@ -15,8 +15,8 @@ const withTracker = (WrappedComponent, options = {}) => {
     ReactGA.pageview(page)
   }
 
-  const HOC = class extends Component {
-    componentDidMount() {
+  const HOC = class extends PureComponent {
+    componentDidMount () {
       const page = this.props.location.pathname
       if (typeof window !== 'undefined') {
         if (!window.ga) {
@@ -26,7 +26,7 @@ const withTracker = (WrappedComponent, options = {}) => {
       trackPage(page)
     }
 
-    componentWillReceiveProps(nextProps) {
+    componentWillReceiveProps (nextProps) {
       const currentPage = this.props.location.pathname
       const nextPage = nextProps.location.pathname
 
@@ -35,7 +35,7 @@ const withTracker = (WrappedComponent, options = {}) => {
       }
     }
 
-    render() {
+    render () {
       return <WrappedComponent {...this.props} />
     }
   }
