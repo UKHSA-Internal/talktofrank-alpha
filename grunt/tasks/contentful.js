@@ -10,7 +10,7 @@ module.exports = function (grunt) {
     let configLoaded = false
 
     try {
-      config = yaml.load(fs.readFileSync(process.cwd() + '/config123.yaml', 'utf8'))
+      config = yaml.load(fs.readFileSync(process.cwd() + '/config.yaml', 'utf8'))
       grunt.log.writeln('Using config.yaml file')
       if (config.contentful && config.elasticsearch) configLoaded = true
     } catch (e) {
@@ -37,7 +37,8 @@ module.exports = function (grunt) {
       space: config.contentful.contentSpace,
       token: config.contentful.contentAccessToken,
       elasticHost: config.elasticsearch.host,
-      contentType: config.contentful.contentTypes.drug
+      contentType: config.contentful.contentTypes.drug,
+      amazonES: config.elasticsearch.amazonES
     })
 
     if (this.target === 'deleteAllIndices') {
