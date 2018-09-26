@@ -4,7 +4,7 @@ import ReactGA from 'react-ga'
 const GA = props => {
   if (typeof window !== 'undefined') {
     if (!window.ga) {
-      ReactGA.initialize('UA-126357409-1')
+      ReactGA.initialize('UA-129232-18')
     }
     ReactGA.pageview(window.location.pathname + window.location.search)
   }

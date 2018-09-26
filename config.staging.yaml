@@ -1,6 +1,6 @@
 buildConfig: production
 api: https://alpha-talktofrank.cxp.io
-ga: UA-126357409-1 # @joel - update this as this is the test account
+ga: UA-129232-18 # @joel - update this as this is the test account
 contentful:
   contentHost: 'https://cdn.contentful.com'
   contentSpace: 'mltlrs3kods6'
