@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactGA from 'react-ga'
 
-const GA = ({appID}) => {
+const GA = props => {
   if (typeof window !== 'undefined') {
     if (!window.ga) {
-      ReactGA.initialize(appID)
+      ReactGA.initialize('UA-126357409-1')
     }
     ReactGA.pageview(window.location.pathname + window.location.search)
   }

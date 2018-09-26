@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 
 import { app } from '../shared/reducers'
 import { fetchPage } from '../shared/actions'
+import { config } from 'config'
 import thunkMiddleware from 'redux-thunk'
 
 const rootReducer = combineReducers({

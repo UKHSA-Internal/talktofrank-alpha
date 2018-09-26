@@ -3,9 +3,10 @@
  */
 
 import React, { Component } from 'react'
-import ReactGA from '../../src'
+import ReactGA from 'react-ga'
+import { config } from 'config'
 
-export default function withTracker(WrappedComponent, options = {}) {
+const withTracker = (WrappedComponent, options = {}) => {
   const trackPage = (page) => {
     ReactGA.set({
       page,
@@ -17,6 +18,11 @@ export default function withTracker(WrappedComponent, options = {}) {
   const HOC = class extends Component {
     componentDidMount() {
       const page = this.props.location.pathname
+      if (typeof window !== 'undefined') {
+        if (!window.ga) {
+          ReactGA.initialize(config.ga)
+        }
+      }
       trackPage(page)
     }
 
@@ -36,3 +42,4 @@ export default function withTracker(WrappedComponent, options = {}) {
 
   return HOC
 }
+export default withTracker

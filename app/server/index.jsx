@@ -82,7 +82,6 @@ app.get('/robots.txt', function (req, res) {
  */
 app.get('*', function (req, res) {
   store = generateStore()
-
   cookie.plugToRequest(req, res)
 
   match({routes: getRoutes(store), location: req.url}, (error, redirectLocation, renderProps) => {
