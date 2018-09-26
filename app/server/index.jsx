@@ -43,7 +43,8 @@ const search = new ContentfulTextSearch({
   space: config.contentful.contentSpace,
   token: config.contentful.contentAccessToken,
   elasticHost: config.elasticsearch.host,
-  contentType: config.contentful.contentTypes.drug
+  contentType: config.contentful.contentTypes.drug,
+  amazonES: config.elasticsearch.amazonES
 })
 
 var store
