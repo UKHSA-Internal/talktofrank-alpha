@@ -35,7 +35,6 @@ export default class PageHome extends React.PureComponent {
       value: 20, // in milliseconds
       label: 'React bundles'
     })
-    console.log('I mounted! Here are my props')
   }
 
   render () {
