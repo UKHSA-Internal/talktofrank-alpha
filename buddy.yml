@@ -73,16 +73,16 @@
       working_directory: "/home/deploy/app/"
       commands:
       - "pm2 startOrRestart ecosystem.json --env staging"
-    - action: "Send notification to CX Partners"
+    - action: "Send notification to Public Health England - Talk To Frank"
       type: "SENTRY"
       environment: "$BUDDY_PIPELINE_NAME"
-      organization_slug: "cx-partners"
-      organization_name: "CX Partners"
+      organization_slug: "public-health-england-talk-to-"
+      organization_name: "Public Health England - Talk To Frank"
       version: "$BUDDY_EXECUTION_REVISION"
       release_url: "$BUDDY_EXECUTION_URL"
       deploy_url: "$BUDDY_EXECUTION_URL"
       projects:
-      - "talk-to-frank-beta"
+      - "talk-to-frank"
       trigger_condition: "ALWAYS"
       integration_id: 38897
     - action: "Run validation"
