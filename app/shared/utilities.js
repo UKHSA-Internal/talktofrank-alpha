@@ -19,6 +19,20 @@ export function isArray (obj) {
   return obj.constructor === Array
 }
 
+export function isPreviewSite (req) {
+  console.log('Req ', req.headers)
+  return req.headers.host === 'preview.local.talktofrank.com'
+}
+
+export function getContentfulHost (req) {
+  return isPreviewSite(req) ? config.contentful.previewHost : config.contentful.contentHost
+}
+
+export function getContentfulAccessToken (req) {
+  return isPreviewSite(req) ? config.contentful.previewAccessToken : config.contentful.contentAccessToken
+}
+
+
 export function stringContains (haystack, needles) {
   if (isArray(needles)) {
     for (let needle of needles) {

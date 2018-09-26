@@ -2,6 +2,7 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
+import basicAuth from 'express-basic-auth'
 import favicon from 'serve-favicon'
 import { RouterContext, match } from 'react-router'
 import React from 'react'
@@ -17,6 +18,7 @@ import Scripts from '../shared/components/Scripts/component.jsx'
 import Skiplinks from '../shared/components/Skiplinks/component.jsx'
 import ContentfulTextSearch from 'contentful-text-search'
 import * as path from 'path'
+import { isPreviewSite } from '../shared/utilities'
 
 /*
  * Express routes
@@ -46,6 +48,11 @@ const search = new ContentfulTextSearch({
   contentType: config.contentful.contentTypes.drug,
   amazonES: config.elasticsearch.amazonES
 })
+
+/*
+ * Authentication
+*/
+const basicAuthMiddleware = basicAuth({ users: { 'admin': 'password' }, challenge: true});
 
 var store
 
@@ -80,6 +87,8 @@ app.use(bodyParser.json())
 app.use(express.static('../static'))
 app.use(favicon('../static/ui/favicon.ico'))
 
+app.use((req, res, next) => isPreviewSite(req) ? basicAuthMiddleware(req, res, next) : next());
+
 app.get('/robots.txt', function (req, res) {
   res.type('text/plain')
   res.send('User-agent: *\nDisallow: /')
@@ -89,6 +98,9 @@ app.get('/robots.txt', function (req, res) {
  * Pass Express over to the App via the React Router
  */
 app.get('*', function (req, res) {
+
+  console.log(req)
+
   store = generateStore()
 
   cookie.plugToRequest(req, res)
@@ -165,6 +177,9 @@ const port = process.env.PORT || 3000
 
 var server = app.listen(port, () => {
   let host = server.address().address
+
+//   console.log(server)
+//   console.log(process.env)
 
   console.log('Compiled in ' + config.buildConfig + ' mode')
   console.log('NODE_ENV set to ' + process.env.NODE_ENV)
