@@ -1,4 +1,4 @@
-import { render } from 'react-dom'
+import { hydrate } from 'react-dom'
 import React from 'react'
 
 import { IndexRoute, Router, Route, browserHistory } from 'react-router';
@@ -68,6 +68,13 @@ const routes = (
             console.log(err);
           })
         }} />
+        <Route path='/typography' getComponent={(location, callback) => {
+          import('../shared/containers/TypographyContainer/component').then((component) => {
+            callback(null, component);
+          }).catch(err => {
+            console.log(err);
+          })
+        }} />
         <Route path='*' getComponent={(location, callback) => {
           import('../shared/containers/NoMatchContainer/component.jsx').then((component) => {
             callback(null, component);
@@ -84,7 +91,7 @@ const routes = (
  * If there is an error, don't invoke the client app, the server will show it
  */
 if ( !store.getState().error  ) {
-  render(routes, document.getElementById('app'));
+  hydrate(routes, document.getElementById('app'));
 }
 
 export default routes
