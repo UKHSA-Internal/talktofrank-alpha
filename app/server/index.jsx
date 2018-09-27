@@ -11,14 +11,13 @@ import ReactDOMServer from 'react-dom/server'
 import cookie from 'react-cookie'
 import cookieParser from 'cookie-parser'
 import { getRoutes } from '../shared/routes'
-import { exists } from '../shared/utilities'
+import { exists, shouldAuthenticate } from '../shared/utilities'
 import { generateStore } from '../shared/store'
 import Head from '../shared/components/Head/component.jsx'
 import Scripts from '../shared/components/Scripts/component.jsx'
 import Skiplinks from '../shared/components/Skiplinks/component.jsx'
 import ContentfulTextSearch from 'contentful-text-search'
 import * as path from 'path'
-import { isPreviewSite } from '../shared/utilities'
 
 /*
  * Express routes
@@ -52,7 +51,10 @@ const search = new ContentfulTextSearch({
 /*
  * Authentication
 */
-const basicAuthMiddleware = basicAuth({ users: { 'admin': 'password' }, challenge: true});
+const basicAuthHandler = (username, password) => {
+  return username === config.basicAuth.username && password === config.basicAuth.password
+}
+const basicAuthMiddleware = basicAuth({ authorizer: basicAuthHandler, challenge: true })
 
 var store
 
@@ -86,8 +88,7 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
 app.use(favicon('../static/ui/favicon.ico'))
-
-app.use((req, res, next) => isPreviewSite(req) ? basicAuthMiddleware(req, res, next) : next());
+app.use((req, res, next) => shouldAuthenticate(req) ? basicAuthMiddleware(req, res, next) : next())
 
 app.get('/robots.txt', function (req, res) {
   res.type('text/plain')
@@ -98,9 +99,6 @@ app.get('/robots.txt', function (req, res) {
  * Pass Express over to the App via the React Router
  */
 app.get('*', function (req, res) {
-
-  console.log(req)
-
   store = generateStore()
 
   cookie.plugToRequest(req, res)
@@ -177,9 +175,6 @@ const port = process.env.PORT || 3000
 
 var server = app.listen(port, () => {
   let host = server.address().address
-
-//   console.log(server)
-//   console.log(process.env)
 
   console.log('Compiled in ' + config.buildConfig + ' mode')
   console.log('NODE_ENV set to ' + process.env.NODE_ENV)

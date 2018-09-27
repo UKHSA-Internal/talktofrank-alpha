@@ -7,6 +7,10 @@
     "env_staging": {
       "BUILD_CONFIG": "staging",
       "NODE_ENV": "production"
+    },
+    "env_preview": {
+      "BUILD_CONFIG": "preview",
+      "NODE_ENV": "production"
     }
   }]
 }
