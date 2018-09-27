@@ -2,6 +2,7 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
+import basicAuth from 'express-basic-auth'
 import favicon from 'serve-favicon'
 import { RouterContext, match } from 'react-router'
 import React from 'react'
@@ -10,7 +11,7 @@ import ReactDOMServer from 'react-dom/server'
 import cookie from 'react-cookie'
 import cookieParser from 'cookie-parser'
 import { getRoutes } from '../shared/routes'
-import { exists } from '../shared/utilities'
+import { exists, shouldAuthenticate } from '../shared/utilities'
 import { generateStore } from '../shared/store'
 import Head from '../shared/components/Head/component.jsx'
 import Scripts from '../shared/components/Scripts/component.jsx'
@@ -47,6 +48,14 @@ const search = new ContentfulTextSearch({
   amazonES: config.elasticsearch.amazonES
 })
 
+/*
+ * Authentication
+*/
+const basicAuthHandler = (username, password) => {
+  return username === config.basicAuth.username && password === config.basicAuth.password
+}
+const basicAuthMiddleware = basicAuth({ authorizer: basicAuthHandler, challenge: true })
+
 var store
 
 const app = express()
@@ -79,6 +88,7 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
 app.use(favicon('../static/ui/favicon.ico'))
+app.use((req, res, next) => shouldAuthenticate(req) ? basicAuthMiddleware(req, res, next) : next())
 
 app.get('/robots.txt', function (req, res) {
   res.type('text/plain')

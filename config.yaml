@@ -3,3 +3,6 @@ elasticsearch:
   host: 'https://search-talktofrank-elastic-alpha-rqcui3cnc7qs3i2ns5glqw4m7i.eu-west-2.es.amazonaws.com/'
   amazonES:
     region: 'eu-west-2'
+
+sentry:
+ logErrors: false
