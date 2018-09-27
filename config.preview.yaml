@@ -15,5 +15,3 @@ sentry:
 basicAuth:
   username: !!import/single '../config.auth.username.yaml'
   password: !!import/single '../config.auth.password.yaml'
-
-
