@@ -1,5 +1,5 @@
 buildConfig: production
-api: https://alpha-talktofrank.cxp.io
+api: http://preview.alpha-talktofrank.cxp.io:3000
 
 contentful:
   contentHost: 'https://preview.contentful.com'
@@ -15,3 +15,5 @@ sentry:
 basicAuth:
   username: !!import/single '../config.auth.username.yaml'
   password: !!import/single '../config.auth.password.yaml'
+
+
