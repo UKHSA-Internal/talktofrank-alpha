@@ -9,6 +9,7 @@ import Toggle from '../Toggle/component.jsx'
 import Footer from '../Footer/component.jsx'
 import Main from '../Main/component.jsx'
 import FormGroupAutocomplete from '../FormGroupAutocomplete/component.jsx'
+import GA from '../GoogleAnalytics/component.jsx'
 
 const DrugList = props => {
   const limit = 4
@@ -67,6 +68,7 @@ const DrugList = props => {
         </Grid>
       </Main>
       <Footer />
+      <GA />
     </React.Fragment>
   )
 }
