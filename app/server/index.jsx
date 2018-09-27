@@ -30,6 +30,12 @@ import contentFulWebhookRoutes from './contentful/webhooks.js'
 import { config } from 'config'
 import packageInfo from '../../package.json'
 
+const Sentry = require('@sentry/node')
+if (config.sentry.logErrors) {
+  console.log(`Error logging enabled: Sentry DSN ${config.sentry.dsn}`)
+  Sentry.init({ dsn: config.sentry.dsn })
+}
+
 /*
  * Elasticsearch config
 */
@@ -37,12 +43,14 @@ const search = new ContentfulTextSearch({
   space: config.contentful.contentSpace,
   token: config.contentful.contentAccessToken,
   elasticHost: config.elasticsearch.host,
-  contentType: config.contentful.contentTypes.drug
+  contentType: config.contentful.contentTypes.drug,
+  amazonES: config.elasticsearch.amazonES
 })
 
 var store
 
 const app = express()
+
 const cacheBusterTS = Date.now()
 
 const addSearch = (req, res, next) => {

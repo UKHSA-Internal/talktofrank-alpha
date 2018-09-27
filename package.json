@@ -36,6 +36,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^10.7.1",
+    "@sentry/node": "^4.0.3",
     "autoprefixer": "^6.7.6",
     "axios": "^0.15.3",
     "babel-cli": "^6.26.0",
@@ -51,7 +52,7 @@
     "chrome-launcher": "^0.10.2",
     "classnames": "^2.2.6",
     "contentful-cli": "^0.16.1",
-    "contentful-text-search": "https://github.com/cxpartners/contentful-text-search.git#feature/remove-redis",
+    "contentful-text-search": "https://github.com/cxpartners/contentful-text-search.git#develop",
     "cookie-parser": "^1.4.3",
     "es6-promise": "^4.2.4",
     "eslint-config-standard": "^10.2.1",

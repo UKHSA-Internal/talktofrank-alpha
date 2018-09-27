@@ -78,6 +78,24 @@ To refresh the list of assets to precache:
 workbox injectManifest ./workbox-config.js 
 ```
 
+### Elasticsearch
+
+AWS Elasticsearch is used to provide the search capability, access is restricted using AWS IAM accounts:
+
+- The Alpha server has been given the IAM Role 'TalkToFrank-EC2-ElasticSearch' and therefore credentials are auto loaded
+- For development add the following to your config file, requesting the access key id/secrets where required.
+
+```
+elasticsearch:
+  host: ''
+  amazonES:
+    credentials:
+      accessKeyId: ''
+      secretAccessKey: ''
+    region: ''
+```
+
+
 ## Releasing
 
 - Determine the new semantic version of the release.
