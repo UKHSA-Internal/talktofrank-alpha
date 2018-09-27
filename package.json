@@ -92,7 +92,6 @@
     "nodemon": "^1.18.3",
     "npm": "^5.10.0",
     "pa11y": "^5.0.4",
-    "promise-polyfill": "^8.1.0",
     "react": "^16.4.2",
     "react-autocomplete": "^1.8.1",
     "react-cookie": "^1.0.4",

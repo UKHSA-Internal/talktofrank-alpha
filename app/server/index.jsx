@@ -17,7 +17,6 @@ import Scripts from '../shared/components/Scripts/component.jsx'
 import Skiplinks from '../shared/components/Skiplinks/component.jsx'
 import ContentfulTextSearch from 'contentful-text-search'
 import * as path from 'path'
-
 /*
  * Express routes
  */
