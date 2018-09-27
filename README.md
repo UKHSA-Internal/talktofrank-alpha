@@ -4,10 +4,6 @@
 
 - nodejs version `9.8.0`
 
-## development
-
-`grunt`
-
 ## Building
 
 To build files to `./dist`:
@@ -32,7 +28,6 @@ A feature branch branching strategy is in use, specifically:
 - When the work is ready (tested, linted etc.), a pull request should be opened against the `develop` branch.
 - A peer review should be undertaken against the pull request and the branch merged.
 - The CI server will build from the develop and deploy to the staging server.
-
 
 ### Grunt tasks
 
@@ -95,6 +90,15 @@ elasticsearch:
     region: ''
 ```
 
+### Sentry logging
+
+Server side logging via [Sentry](http://sentry.io) can be enabled using the following configuration:
+
+```
+sentry:
+ logErrors: true
+ dsn: ''
+```
 
 ## Releasing
 
