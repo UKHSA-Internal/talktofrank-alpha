@@ -8,6 +8,7 @@ import Heading from '../Heading/component.jsx'
 import Svg from '../Svg/component.jsx'
 import Footer from '../Footer/component.jsx'
 import Main from '../Main/component.jsx'
+import GA from '../GoogleAnalytics/component.jsx'
 
 const Page = props => {
   const modifiers = {
@@ -123,6 +124,7 @@ const Page = props => {
         </Grid>
       </Main>
       <Footer />
+      <GA/>
     </React.Fragment>
   )
 }

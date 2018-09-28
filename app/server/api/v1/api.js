@@ -24,7 +24,6 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${config.contentful.con
 /**
  * Get page data
  */
-
 router.use('/search', searchRoutes)
 
 router.get('/pages/:slug', (req, res, next) => {
@@ -44,7 +43,7 @@ router.get('/pages/:slug', (req, res, next) => {
     }
   }
 
-  let lookupUrl = config.contentful.contentHost + '/spaces/%s/entries?content_type=%s&fields.slug[match]=%s'
+  let lookupUrl = `${config.contentful.contentHost}/spaces/%s/entries?content_type=%s&fields.slug[match]=%s`
   let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug, req.params.slug)
 
   axios.get(pageUrl).then(json => {
@@ -95,9 +94,8 @@ router.get('/pages/:slug', (req, res, next) => {
  */
 router.get('/drugList', (req, res, next) => {
   try {
-    let lookupUrl = config.contentful.contentHost + '/spaces/%s/entries?content_type=%s'
+    let lookupUrl = `${config.contentful.contentHost}/spaces/%s/entries?content_type=%s`
     let pageUrl = util.format(lookupUrl, config.contentful.contentSpace, config.contentful.contentTypes.drug)
-
     axios.get(pageUrl).then(json => {
       if (json.data.total === 0) {
         let error = new Error()
@@ -111,6 +109,12 @@ router.get('/drugList', (req, res, next) => {
       }
 
       json.data.items.map((item) => {
+        // skip item if any key fields are missing (for preview)
+        if (!item.fields.synonyms ||
+          !item.fields.name) {
+          return
+        }
+
         response.list[response.list.length] = {
           // name: item.fields.name.toLowerCase(),
           name: item.fields.name,
@@ -156,6 +160,9 @@ router.get('/drugList', (req, res, next) => {
       response.list = response.list.concat(numbers)
 
       res.send(response)
+    }).catch(error => {
+      error.status = 500
+      return next(error)
     })
   } catch (error) {
     error.status = 500

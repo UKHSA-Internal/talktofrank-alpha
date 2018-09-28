@@ -90,6 +90,55 @@
       comment: "Triggered by ${execution.pipeline.name} execution #${execution.id}"
       revision: "INHERIT"
       next_pipeline_id: 148205
+- pipeline: "Build & Deploy (preview)"
+  trigger_mode: "ON_EVERY_PUSH"
+  ref_name: "develop"
+  actions:
+    - action: "Install dependencies"
+      type: "BUILD"
+      docker_image_name: "library/node"
+      docker_image_tag: "9.8.0"
+      execute_commands:
+      - "npm install"
+    - action: "Validate"
+      type: "BUILD"
+      docker_image_name: "library/node"
+      docker_image_tag: "9.8.0"
+      execute_commands:
+      - "grunt validate"
+      setup_commands:
+      - "npm install -g grunt-cli"
+    - action: "Build"
+      type: "BUILD"
+      docker_image_name: "library/node"
+      docker_image_tag: "9.8.0"
+      execute_commands:
+      - "BUILD_CONFIG=preview grunt build"
+      setup_commands:
+      - "npm install -g grunt-cli"
+    - action: "Deploy"
+      type: "RSYNC"
+      local_path: "./dist/"
+      remote_path: "/home/deploy/app"
+      login: "deploy"
+      host: "35.178.178.153"
+      port: "22"
+      authentication_mode: "PRIVATE_KEY"
+      server_key: "${id_rsa}"
+      archive: true
+      delete_extra_files: false
+      compress: true
+      deployment_excludes:
+      - "/.git/"
+    - action: "Restart App"
+      type: "SSH_COMMAND"
+      login: "deploy"
+      host: "35.178.178.153"
+      port: "22"
+      authentication_mode: "PUBLIC_KEY"
+      working_directory: "/home/deploy/app/"
+      commands:
+      - "pm2 startOrRestart ecosystem.json --env preview"
 - pipeline: "Validate"
   trigger_mode: "MANUAL"
   ref_name: "develop"

@@ -1,5 +1,4 @@
 import React from 'react'
-import GAScriptHead from '../GAScript/component'
 
 export default class Head extends React.Component {
   render () {
@@ -31,7 +30,6 @@ export default class Head extends React.Component {
         <meta name='format-detection' content='telephone=no' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
         <link rel='stylesheet' href='/ui/css/main.css' />
-        <GAScriptHead trackingId="UA-129232-18" />
         <script dangerouslySetInnerHTML={{__html:
         `  if ('serviceWorker' in navigator) {
           window.addEventListener('load', function() {
