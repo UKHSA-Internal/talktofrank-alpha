@@ -1,12 +1,26 @@
 import React from 'react'
 
+const SplitText = ({text, wrapper, modifiers = 'heading-inverted-test', highlight}) => {
+  let str = text.split(' ')
+  let Wrapper = `${wrapper || 'h2'}`
+  str = str.map((item, i) => {
+    let high = highlight.indexOf(i) !== -1 ? 'highlighted' : null
+    return <span key={i} className={high}>{item} </span>
+  })
+  return <Wrapper className={modifiers}>{str}</Wrapper>
+}
+
+
 const Typography = props => {
   return (
     <main className='container container-fluid'>
       <p className='display-2'>BIG text - non-heading</p>
       <h1>This is a chunk of h1</h1>
-      <p className='h1 heading-inverted'>This is a chunk of h1 sized paragraph text that is being churned out</p>
+      <p className='h1'>This is a chunk of h1 sized paragraph text that is being churned out</p>
       <p className='h1 heading-inverted-test constrained-text--wide'><span>Honest</span> <span>informagtion</span> <span>about</span> <span className='highlighted'>dhugs</span></p>
+
+      <SplitText text='This is a promo banner space that can be turned on and off' modifiers='heading-inverted-test constrained-text' highlight={[2,5,6]}/>
+
       <p className='h2 heading-inverted-test constrained-text'><span>This</span> <span>is</span> <span>a</span> <span className='highlighted'>promo</span> <span className='highlighted'>banner</span> <span className='highlighted'>space</span> <span>that</span> <span>can</span> <span>be</span> <span>turned</span> <span>on</span> <span>and</span> <span>off</span></p>
       <p className='h3 inverted'>This is a chunk of h3 paragraph text - indistinguishable except perhaps the bottom margin</p>
       <hr className='divider mt-5 mb-5'/>
