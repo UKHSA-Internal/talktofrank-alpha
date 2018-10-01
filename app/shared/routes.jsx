@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import { fetchPage, fetchDrugList, fetchSearchTerm, receivePageError } from './actions'
-
 import NoMatchContainer from './containers/NoMatchContainer/component.jsx'
 import ServerError from './components/ServerError/component.jsx'
 import PageContainer from './containers/PageContainer/component'

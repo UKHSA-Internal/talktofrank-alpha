@@ -2,6 +2,7 @@
 
 import express from 'express'
 import bodyParser from 'body-parser'
+import basicAuth from 'express-basic-auth'
 import favicon from 'serve-favicon'
 import { RouterContext, match } from 'react-router'
 import React from 'react'
@@ -10,14 +11,13 @@ import ReactDOMServer from 'react-dom/server'
 import cookie from 'react-cookie'
 import cookieParser from 'cookie-parser'
 import { getRoutes } from '../shared/routes'
-import { exists } from '../shared/utilities'
+import { exists, shouldAuthenticate } from '../shared/utilities'
 import { generateStore } from '../shared/store'
 import Head from '../shared/components/Head/component.jsx'
 import Scripts from '../shared/components/Scripts/component.jsx'
 import Skiplinks from '../shared/components/Skiplinks/component.jsx'
 import ContentfulTextSearch from 'contentful-text-search'
 import * as path from 'path'
-
 /*
  * Express routes
  */
@@ -30,6 +30,12 @@ import contentFulWebhookRoutes from './contentful/webhooks.js'
 import { config } from 'config'
 import packageInfo from '../../package.json'
 
+const Sentry = require('@sentry/node')
+if (config.sentry.logErrors) {
+  console.log(`Error logging enabled: Sentry DSN ${config.sentry.dsn}`)
+  Sentry.init({ dsn: config.sentry.dsn })
+}
+
 /*
  * Elasticsearch config
 */
@@ -37,12 +43,22 @@ const search = new ContentfulTextSearch({
   space: config.contentful.contentSpace,
   token: config.contentful.contentAccessToken,
   elasticHost: config.elasticsearch.host,
-  contentType: config.contentful.contentTypes.drug
+  contentType: config.contentful.contentTypes.drug,
+  amazonES: config.elasticsearch.amazonES
 })
+
+/*
+ * Authentication
+*/
+const basicAuthHandler = (username, password) => {
+  return username === config.basicAuth.username && password === config.basicAuth.password
+}
+const basicAuthMiddleware = basicAuth({ authorizer: basicAuthHandler, challenge: true })
 
 var store
 
 const app = express()
+
 const cacheBusterTS = Date.now()
 
 const addSearch = (req, res, next) => {
@@ -71,6 +87,7 @@ app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
 app.use(favicon('../static/ui/favicon.ico'))
+app.use((req, res, next) => shouldAuthenticate(req) ? basicAuthMiddleware(req, res, next) : next())
 
 app.get('/robots.txt', function (req, res) {
   res.type('text/plain')
@@ -82,7 +99,6 @@ app.get('/robots.txt', function (req, res) {
  */
 app.get('*', function (req, res) {
   store = generateStore()
-
   cookie.plugToRequest(req, res)
 
   match({routes: getRoutes(store), location: req.url}, (error, redirectLocation, renderProps) => {
@@ -132,13 +148,12 @@ app.get('*', function (req, res) {
     let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
     let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
     let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
-
     let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
     return res.status(status).send(renderedHtml)
   })
 })
 
-function renderFullPageHtml (skip, html, head, scripts, initialState) {
+function renderFullPageHtml (skip, html, head, scripts, initialState, tracking) {
   return `
     <!DOCTYPE html>
     <html lang='en'>

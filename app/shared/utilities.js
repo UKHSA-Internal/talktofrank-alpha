@@ -19,6 +19,10 @@ export function isArray (obj) {
   return obj.constructor === Array
 }
 
+export function shouldAuthenticate () {
+  return config.basicAuth && config.basicAuth.username && config.basicAuth.password
+}
+
 export function stringContains (haystack, needles) {
   if (isArray(needles)) {
     for (let needle of needles) {

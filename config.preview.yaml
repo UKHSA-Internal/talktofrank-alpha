@@ -1,0 +1,17 @@
+buildConfig: production
+api: http://preview.alpha-talktofrank.cxp.io:3000
+
+contentful:
+  contentHost: 'https://preview.contentful.com'
+  contentSpace: 'mltlrs3kods6'
+  contentAccessToken: !!import/single '../config.creds.yaml'
+  contentTypes:
+    drug: 'drugPage'
+
+sentry:
+ dsn: !!import/single '../config.sentry.yaml'
+ logErrors: false
+
+basicAuth:
+  username: !!import/single '../config.auth.username.yaml'
+  password: !!import/single '../config.auth.password.yaml'

@@ -25,53 +25,85 @@ h6,
 .h4,
 .h5,
 .h6 {
-  margin-top: 1em;
-  margin-bottom: $headings-margin-bottom;
-  font-weight: $headings-font-weight;
-  line-height: $headings-line-height;
   font-family: $headings-font-family;
   color: $headings-color;
+  font-weight: 700;
 }
 
 h1,
 .h1,
 %h1 {
-  font-size: 3rem;
+  font-size: 4rem;
+  line-height: (90px / 86px);
 
   @include media-breakpoint-up(md) {
-    font-size: 3.6rem;
+    font-size: 6rem;
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 4.2rem;
+    font-size: 9rem;
   }
 }
 
 h2,
 .h2,
 %h2 {
-  font-size: 2.1rem;
+  font-size: 3.2rem;
 
   @include media-breakpoint-up(md) {
-    font-size: 2.3rem;
+    font-size: 3.6rem;
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 2.6rem;
+    font-size: 4.1rem;
   }
 }
 
 h3,
 .h3,
 %h3 {
-  font-size: 1.8rem;
+  font-size: 2.1rem;
 
   @include media-breakpoint-up(md) {
-    font-size: 2.1rem;
+    font-size: 2.4rem;
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 2.4rem;
+    font-size: 2.8rem;
+  }
+}
+
+.heading-inverted {
+  background-color: $black;
+  color: $white;
+  display: inline;
+  padding: 0;
+  position: relative;
+  bottom: .06em;
+}
+
+.constrained-text {
+  max-width: 50%;
+}
+
+.constrained-text--wide {
+  max-width: 70%;
+}
+
+.heading-inverted-test {
+  display: block;
+  overflow: hidden;
+
+  span {
+    background-color: $black;
+    color: $white;
+    float: left;
+    position: relative;
+    padding: 0 .2em 0 .1em;
+
+    &.highlighted {
+      color: $pink;
+    }
   }
 }
 
@@ -79,14 +111,14 @@ h4,
 .h4,
 %lead,
 %h4 {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 
   @include media-breakpoint-up(md) {
-    font-size: 1.9rem;
+    font-size: 2rem;
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 2.2rem;
+    font-size: 2.4rem;
   }
 }
 
@@ -173,8 +205,13 @@ mark,
   color: $gray-900;
 }
 
-.display-2 {
+.display-2,
+.display-3 {
   margin-top: .3em;
+  line-height: .9;
+}
+
+.display-2 {
   font-size: 6rem;
 
   @include media-breakpoint-up(md) {
@@ -186,15 +223,16 @@ mark,
   }
 }
 
+
 .display-3 {
-  font-size: 3rem;
+  font-size: 4rem;
 
   @include media-breakpoint-up(md) {
-    font-size: 4rem;
+    font-size: 6rem;
   }
 
   @include media-breakpoint-up(lg) {
-    font-size: 6rem;
+    font-size: 9rem;
   }
 }
 

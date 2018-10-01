@@ -1,9 +1,13 @@
 buildConfig: production
 api: https://alpha-talktofrank.cxp.io
-
+ga: UA-129232-18 # @joel - update this as this is the test account
 contentful:
   contentHost: 'https://cdn.contentful.com'
   contentSpace: 'mltlrs3kods6'
   contentAccessToken: !!import/single '../config.creds.yaml'
   contentTypes:
     drug: 'drugPage'
+
+sentry:
+ dsn: !!import/single '../config.sentry.yaml'
+ logErrors: true
