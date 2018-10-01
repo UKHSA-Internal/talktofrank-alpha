@@ -3,8 +3,6 @@ import Button from '../Button/component.jsx'
 import ButtonGroup from '../ButtonGroup/component.jsx'
 import SplitText from '../SplitText/component.jsx'
 
-
-
 const Typography = props => {
   return (
     <main className='container container-fluid spacing-bottom--large'>
@@ -12,7 +10,7 @@ const Typography = props => {
       <h1>This is a chunk of h1</h1>
       <p className='h1 heading-inverted-test constrained-text--wide'><span>Honest</span> <span>informagtion</span> <span>about</span> <span className='highlighted'>dhugs</span></p>
 
-      <SplitText text='This is a promo banner space that can be turned on and off' modifiers='heading-inverted-test constrained-text' highlight={[2,5,6]}/>
+      <SplitText text='This is a promo banner space that can be turned on and off' modifiers='heading-inverted-test constrained-text' highlight={[2, 5, 6]}/>
 
       <p className='h3 inverted'>This is a chunk of h3 paragraph text - indistinguishable except perhaps the bottom margin</p>
       <hr className='divider mt-5 mb-5'/>
