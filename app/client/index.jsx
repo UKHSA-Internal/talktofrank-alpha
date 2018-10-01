@@ -68,7 +68,7 @@ const routes = (
             console.log(err);
           })
         }} />
-        <Route path='/typography' getComponent={(location, callback) => {
+        <Route path='typography' getComponent={(location, callback) => {
           import('../shared/containers/TypographyContainer/component').then((component) => {
             callback(null, component);
           }).catch(err => {
