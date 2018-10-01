@@ -205,9 +205,13 @@ mark,
   color: $gray-900;
 }
 
-.display-2 {
+.display-2,
+.display-3 {
   margin-top: .3em;
   line-height: .9;
+}
+
+.display-2 {
   font-size: 6rem;
 
   @include media-breakpoint-up(md) {
@@ -216,6 +220,19 @@ mark,
 
   @include media-breakpoint-up(lg) {
     font-size: 12rem;
+  }
+}
+
+
+.display-3 {
+  font-size: 4rem;
+
+  @include media-breakpoint-up(md) {
+    font-size: 6rem;
+  }
+
+  @include media-breakpoint-up(lg) {
+    font-size: 9rem;
   }
 }
 
