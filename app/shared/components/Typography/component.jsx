@@ -41,15 +41,11 @@ const Typography = props => {
         </ButtonGroup>
       </div>
       <Accent className='accent--dark'>
-          <h2>This is an actual h2</h2>
-          <p className='h2'>This is a chunk of h2  text - indistinguishable except perhaps the bottom margin</p>
+          <p className='h2'>This is a chunk of h2 styled text - indistinguishable except perhaps the bottom margin</p>
           <hr className='divider mt-5 mb-5'/>
           <h3>This is an actual h3</h3>
           <hr className='divider mt-5 mb-5'/>
           <h4>This is an actual h4 - time to test it out in the format below....</h4>
-          <p className='h4'>...which is a chunk of h4</p>
-          <hr className='divider mt-5 mb-5'/>
-          <p className='h3'>This is a chunk of h3  text - but applied to </p>
           <hr className='divider mt-5 mb-5'/>
           <div className='long-form'><p className='lead'>Lead text - used to introduce a section of long-form content</p></div>
           <hr className='divider mt-5 mb-5'/>
