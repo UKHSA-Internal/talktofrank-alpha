@@ -5,11 +5,11 @@
 //
 
 body {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   color: $gray-900;
 
   @include media-breakpoint-up(lg) {
-    font-size: 1.6rem;
+    font-size: 1.8rem;
   }
 }
 
