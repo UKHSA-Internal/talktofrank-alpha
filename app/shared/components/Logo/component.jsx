@@ -3,7 +3,7 @@ import Svg from '../Svg/component.jsx'
 
 const Logo = props => {
   return (
-    <div className={'logo ' + props.className}>
+    <div className='logo'>
       <a href='/' className='logo__link' title='Return to homepage'>
         <Svg url={props.url} alt={props.alt}/>
       </a>
