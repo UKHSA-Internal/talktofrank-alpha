@@ -38,6 +38,7 @@
     }
   }
 }
+
 .btn--large {
   font-size: 2.4rem;
   padding-top: 2.2rem;
@@ -129,15 +130,18 @@
 
 
 .button-group {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+
+  @include media-breakpoint-up(sm) {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
 
   .button + .button {
     margin-top: 1.5rem;
-  }
 
-  @include media-breakpoint-up(sm) {
-    .button + .button {
+    @include media-breakpoint-up(sm) {
       margin-top: 0;
     }
   }

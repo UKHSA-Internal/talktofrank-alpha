@@ -4,7 +4,7 @@ import Logo from '../Logo/component.jsx'
 import Button from '../Button/component.jsx'
 import FormGroupAutocomplete from '../FormGroupAutocomplete/component.jsx'
 import Form from '../Form/component.jsx'
-import LinkItem from '../LinkItem/component.jsx'
+import Nav from '../Nav/component.jsx'
 
 export default class Masthead extends React.PureComponent {
   constructor () {
@@ -22,7 +22,7 @@ export default class Masthead extends React.PureComponent {
 
   render () {
     let classes = classNames('masthead', this.props.className)
-    let navClasses = classNames('navbar navbar-expand-md', {
+    let navClasses = classNames('navbar-expand-md', {
       'd-none': !this.state.mobileMenuOpen
     })
 
@@ -32,28 +32,20 @@ export default class Masthead extends React.PureComponent {
           <Button className='float-left d-block d-md-none mt-4 navbar-toggler' aria-controls='navigation' aria-expanded={this.state.mobileMenuOpen} aria-label={this.state.mobileMenuOpen ? 'Hide navigation' : 'Reveal navigation'} clickHandler={this.handleMenuClick.bind(this)}>
             <span className='sr-only'>Menu</span>
           </Button>
-          <Logo url='/ui/img/logo-frank.png' alt=''/>
-          <nav className={navClasses} id='navigation'>
-            <ul className='navbar-nav'role='menu'>
-              <LinkItem url='#' role="menuitem" label='News'/>
-              <LinkItem url='#' role="menuitem" label='Help for you'/>
-              <LinkItem url='#' role="menuitem" label='Help for others'/>
-              <LinkItem url='/drug' role="menuitem" label='Drugs A-Z'/>
-              <LinkItem url='#' role="menuitem" label='Contact Frank'/>
-            </ul>
-            <Form className='ml-auto'>
-              <FormGroupAutocomplete
-                button='true'
-                modifiers='form-control--search'
-                className='input-group-autocomplete--inverse'
-                id='search-masthead'
-                label='Search for any drug'
-                labelHidden='true'
-                showContent={false}
-                placeholder='Enter drug name (e.g. Mandy)'
-              />
-            </Form>
-          </nav>
+          <Logo url='/ui/svg/logo-frank.svg' alt=''/>
+          <Form className='ml-auto'>
+            <FormGroupAutocomplete
+              button='true'
+              modifiers='form-control--search'
+              className='input-group-autocomplete--inverse'
+              id='search-masthead'
+              label='Search for any drug'
+              labelHidden='true'
+              showContent={false}
+              placeholder='Enter drug name (e.g. Mandy)'
+            />
+          </Form>
+          <Nav className={navClasses} id='navigation' />
         </div>
       </section>
     )

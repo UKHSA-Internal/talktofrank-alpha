@@ -3,17 +3,6 @@
    ===========================================================================*/
 $grid-gutter: 30px;
 
-.outer-wrapper {
-  position: relative;
-  width: 100%;
-  min-height: 100%;
-  background-color: $black;
-
-  @include media-breakpoint-up(md) {
-    background-color: $gray-500;
-  }
-}
-
 %constrain {
   max-width: $max-width;
   margin-left: auto;
@@ -48,26 +37,8 @@ $grid-gutter: 30px;
   }
 }
 
-#main {
+main {
   outline: none;  // Prevent focus outline
-}
-
-.content-wrapper {
-  @extend %constrain-narrow;
-  padding: 0 ($grid-gutter / 2);
-
-
-  @include media-breakpoint-up(md) {
-    padding-top: 4rem;
-  }
-
-  @include media-breakpoint-up(lg) {
-    padding: 3rem 0 10rem;
-  }
-
-  > :last-child {
-    margin-bottom: 0;
-  }
 }
 
 .section {
@@ -95,27 +66,5 @@ $grid-gutter: 30px;
   @include media-breakpoint-up(sm) {
     padding-top: 2rem;
     padding-bottom: 2rem;
-  }
-}
-
-// THIS IS BAD AND WILL GO!! @joel @refactor
-.homepage {
-
-  @include media-breakpoint-up(md) {
-    &::after {
-      position: absolute;
-      content: '';
-      z-index: -1;
-      top: 8rem;
-      left: 0;
-      width: 100%;
-      background-position: center top;
-      background-repeat: no-repeat;
-      padding-left: 0;
-      padding-right: 0;
-      background-size: cover;
-      height: 60rem;
-      background-image: url(../img/bg-homepage-desktop.jpg);
-    }
   }
 }
