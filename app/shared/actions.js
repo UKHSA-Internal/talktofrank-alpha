@@ -50,30 +50,16 @@ export function fetchSearchTerm (term, drug, shouldOrMustQuery) {
   }
 }
 
-export function fetchDrugList () {
 
+
+export function fetchDrugList () {
   return dispatch => {
     dispatch(requestPage())
     let lookupUrl = apiHost + '/api/v1/drugList'
     return axios.get(lookupUrl)
       .then(res => {
         dispatch(receivePage(res.data))
-      })
-      .catch(err => {
-        let status = err.code === 'ETIMEDOUT' ? 500 : err.response.status
-        dispatch(receivePageError(status))
-        return Promise.reject(err)
-      })
-  }
-}
-
-export function fetchPage (slug, type = 'pages') {
-  return dispatch => {
-    dispatch(requestPage())
-    let lookupUrl = apiHost + '/api/v1/' + type + '/' + slug
-    return axios.get(lookupUrl)
-      .then(res => {
-        dispatch(receivePage(res.data))
+        return Promise.resolve(null)
       })
       .catch(err => {
         let status = err.code === 'ETIMEDOUT' ? 500 : err.response.status

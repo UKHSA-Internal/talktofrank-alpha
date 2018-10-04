@@ -10,8 +10,8 @@ const processEnv = {
 module.exports = {
   client: {
     entry: {
-      client: './app/client/index.jsx',
-      vendor: ['react', 'react-dom', 'react-router', 'react-redux', 'redux-thunk']
+      client: './app/client/index.jsx'
+      //vendor: ['react', 'react-dom', 'react-router', 'react-redux', 'redux-thunk']
     },
     output: {
       path: path.resolve(__dirname, '../dist/static/ui/js/'),
@@ -46,11 +46,6 @@ module.exports = {
       }]
     },
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: Infinity,
-        filename: '[name].bundle.js'
-      }),
       new webpack.DefinePlugin({
         'process.env': processEnv
       })

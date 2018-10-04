@@ -12,7 +12,7 @@ import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter } from 'react-router-redux'
 import { renderRoutes } from 'react-router-config'
 import { loadComponents } from 'loadable-components'
-import Routes from '../shared/routes'
+import Routes from '../shared/newRoutes'
 
 const rootReducer = combineReducers({
   app
@@ -27,22 +27,15 @@ let store = createStore(
 
 const history = createHistory()
 
-const render = (routes) => {
+
   hydrate(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        {renderRoutes(routes)}
+        {renderRoutes(routes.routes)}
       </ConnectedRouter>
     </Provider>,
-    document.getElementById('app')
-  )
-}
+    document.getElementById('app'))
 
-// Load all components needed before starting rendering (loadable-components setup)
-loadComponents().then(() => {
-  console.log('loaded')
-  render(Routes)
-})
 
 /*
  * If there is an error, don't invoke the client app, the server will show it
@@ -50,5 +43,3 @@ loadComponents().then(() => {
 // if ( !store.getState().error  ) {
 //   hydrate(routes, document.getElementById('app'))
 // }
-
-export default routes

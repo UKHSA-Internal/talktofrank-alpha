@@ -8,20 +8,12 @@ import { StaticRouter, Router, BrowserRouter, Switch, Route } from 'react-router
 import React from 'react'
 import { Provider } from 'react-redux'
 import ReactDOMServer from 'react-dom/server'
-import cookie from 'react-cookie'
-import cookieParser from 'cookie-parser'
-// import { getRoutes } from '../shared/routes'
 import routes from '../shared/newRoutes'
 import { ConnectedRouter } from 'react-router-redux'
 import { matchRoutes, renderRoutes } from 'react-router-config'
 import { exists } from '../shared/utilities'
 import { generateStore } from '../shared/store'
 
-import createMemoryHistory from 'history/createMemoryHistory'
-import { getLoadableState } from 'loadable-components/server'
-import Head from '../shared/components/Head/component.jsx'
-import Scripts from '../shared/components/Scripts/component.jsx'
-import Skiplinks from '../shared/components/Skiplinks/component.jsx'
 import ContentfulTextSearch from 'contentful-text-search'
 import * as path from 'path'
 
@@ -74,7 +66,6 @@ app.use('/service-worker.js', (req, res) => {
   res.sendFile(path.resolve('../static/ui/js/service-worker.js'))
 })
 
-app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
 app.use(favicon('../static/ui/favicon.ico'))
@@ -84,107 +75,60 @@ app.get('/robots.txt', function (req, res) {
   res.send('User-agent: *\nDisallow: /')
 })
 
+
 // Register server-side rendering middleware
 app.get('*', (req, res) => {
-  const history = createMemoryHistory()
+
   const store = generateStore()
 
   // The method for loading data from server-side
   const loadData = () => {
-    const page = matchRoutes(routes, req.path)
 
-    const promises = page.map(({ route, match }) => {
-      if (route.loadData) {
+    const branches = matchRoutes(routes, req.path)
 
-        console.log('route loading data' + route.loadData)
-        return Promise.all(
-          route
-            .loadData({ params: match.params, getState: store.getState })
-            .map(item => store.dispatch(item))
-        )
-      }
-
-      return Promise.resolve(null)
+    let match = branches.find(({ route, match }) => {
+      return match.isExact && route.loadData
     })
 
-    return Promise.all(promises)
+    if ( !match ) {
+      return Promise.resolve(null)
+    }
+
+    return store.dispatch(match.route.loadData())
   }
 
   (async () => {
     try {
-      // Load data from server-side first
+
       await loadData()
+
+      const state = store.getState()
       const staticContext = {}
 
-      console.log('store ' + store)
       const AppComponent = (
         <Provider store={store}>
           <StaticRouter location={req.path} context={staticContext}>
-            {renderRoutes(routes)}
+            {renderRoutes(routes, {
+              initialState: state,
+              cacheBusterTS: cacheBusterTS
+            })}
           </StaticRouter>
         </Provider>
       )
 
-      console.log('AppComponent ' + AppComponent)
-      // Check if the render result contains a redirect, if so we need to set
-      // the specific status and redirect header and end the response
-      if (staticContext.url) {
-        res.status(301).setHeader('Location', staticContext.url)
-        res.end()
+      res.write('<!DOCTYPE html>')
+console.log("TEST")
+      ReactDOMServer
+        .renderToNodeStream(AppComponent)
+        .pipe(res)
 
-        return
-      }
-
-      // Extract loadable state from application tree (loadable-components setup)
-      getLoadableState(AppComponent).then(loadableState => {
-        let state = store.getState()
-        let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
-        const head = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-        const htmlContent = ReactDOMServer.renderToStaticMarkup(AppComponent)
-        const initialState = JSON.stringify(state)
-        const loadableStateTag = loadableState.getScriptTag()
-        let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
-
-        // Check page status
-        const status = staticContext.status === '404' ? 404 : 200
-
-        // Pass the route and initial state into html template
-        res
-          .status(status)
-          .send(
-            renderFullPageHtml(
-              head,
-              skip,
-              htmlContent,
-              componentScripts,
-              initialState,
-              loadableStateTag
-            )
-          )
-      })
     } catch (err) {
+      console.log(err)
+      // need to render the NoMatch component here
       res.status(404).send('Not Found :(')
-
-      console.error(`Rendering routes error: ${err}`)
     }
   })()
 })
-
-function renderFullPageHtml (head, skip, html, scripts, initialState, loadableStateTag) {
-  return `
-    <!DOCTYPE html>
-    <html lang='en'>
-    ${head}
-    <body>
-      ${skip}
-      <div id='app'>${html}</div>
-      ${loadableStateTag}
-      <script>window.$REDUX_STATE=${initialState}</script>
-      ${scripts}
-    </body>
-    </html>
-  `
-}
 
 const port = process.env.PORT || 3000
 
