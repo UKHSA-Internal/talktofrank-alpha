@@ -7,8 +7,7 @@ const Nav = props => {
 
   return (
     <nav className={classes} id={props.id}>
-      <ul className='navbar-nav'role='menu'>
-
+      <ul className='navbar-nav' role='menu'>
         <LinkItem url='#' role="menuitem" label='News'/>
         <LinkItem url='#' role="menuitem" label='Help for you'/>
         <LinkItem url='#' role="menuitem" label='Help for others'/>
