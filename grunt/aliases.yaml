@@ -28,3 +28,8 @@ validate:
 post-build-validate:
   - pa11y:stage
   - lighthouse
+
+cucumbertests:
+  - clean
+  - build
+  - concurrent:cucumber
