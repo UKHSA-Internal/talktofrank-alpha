@@ -9,12 +9,11 @@
 }
 
 .nav-link {
-  color: $white;
+  color: $gray-600;
 
   &:active,
   &:hover,
   &:focus {
-    color: $white;
     text-decoration: underline;
   }
 }
