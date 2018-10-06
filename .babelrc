@@ -4,9 +4,12 @@
         "@babel/preset-react"
     ],
     "plugins": [
-        "add-module-exports",
-        ["@babel/plugin-transform-runtime", {
-          "regenerator": true
-        }]
+      "@babel/plugin-syntax-dynamic-import",
+      "@babel/plugin-proposal-class-properties",
+      [
+          "@babel/plugin-transform-runtime", {
+            "regenerator": true
+          }
+      ]
     ]
 }

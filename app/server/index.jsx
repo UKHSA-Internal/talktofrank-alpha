@@ -3,17 +3,14 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
-import { RouterContext, match } from 'react-router'
-import { StaticRouter, Router, BrowserRouter, Switch, Route } from 'react-router-dom'
+import { StaticRouter } from 'react-router-dom'
 import React from 'react'
 import { Provider } from 'react-redux'
 import ReactDOMServer from 'react-dom/server'
 import routes from '../shared/newRoutes'
-import { ConnectedRouter } from 'react-router-redux'
-import { matchRoutes, renderRoutes } from 'react-router-config'
-import { exists } from '../shared/utilities'
+import { matchRoutes } from 'react-router-config'
 import { generateStore } from '../shared/store'
-
+import { renderRoutes } from 'react-router-config'
 import ContentfulTextSearch from 'contentful-text-search'
 import * as path from 'path'
 
@@ -75,13 +72,15 @@ app.get('/robots.txt', function (req, res) {
   res.send('User-agent: *\nDisallow: /')
 })
 
+const App = (props) => {
+    return <div>Hello {props.name}</div>;
+};
 
 // Register server-side rendering middleware
 app.get('*', (req, res) => {
 
   const store = generateStore()
 
-  // The method for loading data from server-side
   const loadData = () => {
 
     const branches = matchRoutes(routes, req.path)
@@ -94,7 +93,7 @@ app.get('*', (req, res) => {
       return Promise.resolve(null)
     }
 
-    return store.dispatch(match.route.loadData())
+    return store.dispatch(match.route.loadData(match.match.params))
   }
 
   (async () => {
@@ -117,7 +116,7 @@ app.get('*', (req, res) => {
       )
 
       res.write('<!DOCTYPE html>')
-console.log("TEST")
+
       ReactDOMServer
         .renderToNodeStream(AppComponent)
         .pipe(res)

@@ -2,12 +2,13 @@ var path = require('path')
 var webpack = require('webpack')
 
 const processEnv = {
-  NODE_ENV: !process.env.BUILD_CONFIG ? JSON.stringify('development') : process.env.BUILD_CONFIG === 'development' ? JSON.stringify('development') : JSON.stringify('production'),
+  NODE_ENV: JSON.stringify('production'), //!process.env.BUILD_CONFIG ? JSON.stringify('development') : process.env.BUILD_CONFIG === 'development' ? JSON.stringify('development') : JSON.stringify('production'),
   BUILD_CONFIG: JSON.stringify(process.env.BUILD_CONFIG),
   PORT: JSON.stringify(process.env.PORT)
 }
 
 module.exports = {
+  mode: 'production',
   client: {
     entry: {
       client: './app/client/index.jsx'
@@ -16,6 +17,7 @@ module.exports = {
     output: {
       path: path.resolve(__dirname, '../dist/static/ui/js/'),
       filename: '[name].bundle.js',
+      chunkFilename: '[name].bundle.js',
       devtoolLineToLine: true,
       sourceMapFilename: './bundle.js.map',
       pathinfo: true,
@@ -34,8 +36,6 @@ module.exports = {
         'config': path.resolve(__dirname, '../app/client/client-config-loader.js')
       }
 
-    },
-    resolveLoader: {
     },
     module: {
       rules: [{

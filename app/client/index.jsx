@@ -11,8 +11,8 @@ import thunkMiddleware from 'redux-thunk'
 import createHistory from 'history/createBrowserHistory'
 import { ConnectedRouter } from 'react-router-redux'
 import { renderRoutes } from 'react-router-config'
-import { loadComponents } from 'loadable-components'
-import Routes from '../shared/newRoutes'
+//import { loadable } from 'loadable-components'
+import routes from '../shared/newRoutes.jsx'
 
 const rootReducer = combineReducers({
   app
@@ -26,20 +26,12 @@ let store = createStore(
 )
 
 const history = createHistory()
+import { Switch, Route } from "react-router";
 
-
-  hydrate(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        {renderRoutes(routes.routes)}
-      </ConnectedRouter>
-    </Provider>,
-    document.getElementById('app'))
-
-
-/*
- * If there is an error, don't invoke the client app, the server will show it
- */
-// if ( !store.getState().error  ) {
-//   hydrate(routes, document.getElementById('app'))
-// }
+hydrate(
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      {renderRoutes(routes[0].routes)}
+    </ConnectedRouter>
+  </Provider>,
+  document.getElementById('app'))
