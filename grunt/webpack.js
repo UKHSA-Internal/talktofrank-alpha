@@ -95,6 +95,9 @@ module.exports = {
     plugins: [
       new webpack.DefinePlugin({
         'process.env': processEnv
+      }),
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1 // only want 1 chunk for server, i.e. ignore code splitting
       })
     ],
     stats: {

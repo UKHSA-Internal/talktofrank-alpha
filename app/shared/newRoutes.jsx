@@ -12,9 +12,9 @@ import React from 'react'
 
 import { fetchPage, fetchDrugList, fetchSearchTerm, receivePageError } from './actions'
 
-const asyncHome = loadable(() => import('../shared/containers/HomepageContainer/component.jsx'))
-const asyncDrugList = loadable(() => import('./containers/DrugListContainer/component.jsx'))
-const asyncDrug = loadable(() => import('./containers/PageContainer/component.jsx'))
+const asyncHome = loadable(() => import(/*webpackChunkName: 'homepage'*/ '../shared/containers/HomepageContainer/component.jsx'))
+const asyncDrugList = loadable(() => import(/*webpackChunkName: 'drugslist'*/'./containers/DrugListContainer/component.jsx'))
+const asyncDrug = loadable(() => import(/*webpackChunkName: 'drug'*/'./containers/PageContainer/component.jsx'))
 
 export default [
   {
