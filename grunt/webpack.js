@@ -64,7 +64,7 @@ module.exports = {
     },
     output: {
       path: path.resolve(__dirname, '../dist/app/'),
-      filename: '[name].bundle.js',
+      filename: 'server.bundle.js',
       devtoolLineToLine: true,
       sourceMapFilename: './bundle.js.map',
       pathinfo: true
