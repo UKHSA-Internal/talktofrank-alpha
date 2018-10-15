@@ -1,23 +1,21 @@
 'use strict'
 
 import express from 'express'
-import bodyParser from 'body-parser'
 import basicAuth from 'express-basic-auth'
+import bodyParser from 'body-parser'
 import favicon from 'serve-favicon'
-import { RouterContext, match } from 'react-router'
+import { StaticRouter } from 'react-router-dom'
 import React from 'react'
 import { Provider } from 'react-redux'
 import ReactDOMServer from 'react-dom/server'
-import cookie from 'react-cookie'
-import cookieParser from 'cookie-parser'
-import { getRoutes } from '../shared/routes'
-import { exists, shouldAuthenticate } from '../shared/utilities'
+import routes from '../shared/newRoutes'
+import { matchRoutes } from 'react-router-config'
 import { generateStore } from '../shared/store'
-import Head from '../shared/components/Head/component.jsx'
-import Scripts from '../shared/components/Scripts/component.jsx'
-import Skiplinks from '../shared/components/Skiplinks/component.jsx'
+import { renderRoutes } from 'react-router-config'
 import ContentfulTextSearch from 'contentful-text-search'
 import * as path from 'path'
+import { exists, shouldAuthenticate } from '../shared/utilities'
+
 /*
  * Express routes
  */
@@ -58,7 +56,6 @@ const basicAuthMiddleware = basicAuth({ authorizer: basicAuthHandler, challenge:
 var store
 
 const app = express()
-
 const cacheBusterTS = Date.now()
 
 const addSearch = (req, res, next) => {
@@ -83,7 +80,6 @@ app.use('/service-worker.js', (req, res) => {
   res.sendFile(path.resolve('../static/ui/js/service-worker.js'))
 })
 
-app.use(cookieParser())
 app.use(bodyParser.json())
 app.use(express.static('../static'))
 app.use(favicon('../static/ui/favicon.ico'))
@@ -97,76 +93,57 @@ app.get('/robots.txt', function (req, res) {
 /*
  * Pass Express over to the App via the React Router
  */
-app.get('*', function (req, res) {
-  store = generateStore()
-  cookie.plugToRequest(req, res)
+app.get('*', (req, res) => {
 
-  match({routes: getRoutes(store), location: req.url}, (error, redirectLocation, renderProps) => {
-    if (error) {
-      // Error with routing
-      res.status(500).send(error.message)
-      return
+  const store = generateStore()
+
+  const loadData = () => {
+
+    const branches = matchRoutes(routes, req.path)
+
+    let match = branches.find(({ route, match }) => {
+      return match.isExact && route.loadData
+    })
+
+    if ( !match ) {
+      return Promise.resolve(null)
     }
 
-    if (redirectLocation) {
-      // Handle redirects
-      console.log('REDIRECTING TO: ' + redirectLocation.pathname + redirectLocation.search)
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
-      return
-    }
+    return store.dispatch(match.route.loadData(match.match.params))
+  }
 
-    let componentHtml = ''
-    let state = store.getState()
-
+  (async () => {
     try {
-      componentHtml = ReactDOMServer.renderToString((
+
+      await loadData()
+
+      const state = store.getState()
+      const staticContext = {}
+
+      const AppComponent = (
         <Provider store={store}>
-          <RouterContext {...renderProps} />
+          <StaticRouter location={req.path} context={staticContext}>
+            {renderRoutes(routes, {
+              initialState: state,
+              cacheBusterTS: cacheBusterTS
+            })}
+          </StaticRouter>
         </Provider>
-      ))
+      )
+
+      res.write('<!DOCTYPE html>')
+
+      ReactDOMServer
+        .renderToNodeStream(AppComponent)
+        .pipe(res)
+
     } catch (err) {
       console.log(err)
+      // need to render the NoMatch component here
+      res.status(404).send('Not Found :(')
     }
-
-    let title = 'Talk to Frank'
-
-    if (state.error) {
-      switch (state.error) {
-        case '404':
-          title = 'Page not found (404)'
-          break
-        case 500:
-        default:
-          title = 'Server error'
-          break
-      }
-    } else if (exists(state, 'app.pageData.head.title')) {
-      title = state.app.pageData.head.title
-    }
-
-    let status = state.error ? state.error : 200
-    let skip = ReactDOMServer.renderToStaticMarkup(<Skiplinks />)
-    let componentHead = ReactDOMServer.renderToStaticMarkup(<Head {...state.app.pageData} error={state.app.error} />)
-    let componentScripts = ReactDOMServer.renderToStaticMarkup(<Scripts cacheTS={cacheBusterTS} />)
-    let renderedHtml = renderFullPageHtml(skip, componentHtml, componentHead, componentScripts, JSON.stringify(state))
-    return res.status(status).send(renderedHtml)
-  })
+  })()
 })
-
-function renderFullPageHtml (skip, html, head, scripts, initialState, tracking) {
-  return `
-    <!DOCTYPE html>
-    <html lang='en'>
-    ${head}
-    <body>
-      ${skip}
-      <div id='app'>${html}</div>
-      <script>window.$REDUX_STATE=${initialState};</script>
-      ${scripts}
-    </body>
-    </html>
-  `
-}
 
 const port = process.env.PORT || 3000
 

@@ -2,20 +2,22 @@ var path = require('path')
 var webpack = require('webpack')
 
 const processEnv = {
-  NODE_ENV: !process.env.BUILD_CONFIG ? JSON.stringify('development') : process.env.BUILD_CONFIG === 'development' ? JSON.stringify('development') : JSON.stringify('production'),
+  NODE_ENV: JSON.stringify('production'), //!process.env.BUILD_CONFIG ? JSON.stringify('development') : process.env.BUILD_CONFIG === 'development' ? JSON.stringify('development') : JSON.stringify('production'),
   BUILD_CONFIG: JSON.stringify(process.env.BUILD_CONFIG),
   PORT: JSON.stringify(process.env.PORT)
 }
 
 module.exports = {
+  mode: 'production',
   client: {
     entry: {
-      client: './app/client/index.jsx',
-      vendor: ['react', 'react-dom', 'react-router', 'react-redux', 'redux-thunk']
+      client: './app/client/index.jsx'
+      //vendor: ['react', 'react-dom', 'react-router', 'react-redux', 'redux-thunk']
     },
     output: {
       path: path.resolve(__dirname, '../dist/static/ui/js/'),
       filename: '[name].bundle.js',
+      chunkFilename: '[name].bundle.js',
       devtoolLineToLine: true,
       sourceMapFilename: './bundle.js.map',
       pathinfo: true,
@@ -35,8 +37,6 @@ module.exports = {
       }
 
     },
-    resolveLoader: {
-    },
     module: {
       rules: [{
         test: [/\.jsx$/, /\.js$/],
@@ -46,11 +46,6 @@ module.exports = {
       }]
     },
     plugins: [
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        minChunks: Infinity,
-        filename: '[name].bundle.js'
-      }),
       new webpack.DefinePlugin({
         'process.env': processEnv
       })
@@ -65,11 +60,11 @@ module.exports = {
   server: {
     devtool: 'eval',
     entry: {
-      server: './app/server/index.jsx'
+      server: ['./app/server/index.jsx']
     },
     output: {
       path: path.resolve(__dirname, '../dist/app/'),
-      filename: '[name].bundle.js',
+      filename: 'server.bundle.js',
       devtoolLineToLine: true,
       sourceMapFilename: './bundle.js.map',
       pathinfo: true
@@ -100,6 +95,9 @@ module.exports = {
     plugins: [
       new webpack.DefinePlugin({
         'process.env': processEnv
+      }),
+      new webpack.optimize.LimitChunkCountPlugin({
+        maxChunks: 1 // only want 1 chunk for server, i.e. ignore code splitting
       })
     ],
     stats: {
