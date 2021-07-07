@@ -29,12 +29,21 @@ export default class Head extends React.Component {
         <meta content='on' httpEquiv='cleartype' />
         <meta name='format-detection' content='telephone=no' />
         <meta httpEquiv='X-UA-Compatible' content='IE=edge' />
-        <link rel='stylesheet' href='/ui/css/main.css' />
+        <link rel='stylesheet' href='/ui/css/critical_min.css' />
         <script dangerouslySetInnerHTML={{__html:
         `  if ('serviceWorker' in navigator) {
           window.addEventListener('load', function() {
           navigator.serviceWorker.register('/service-worker.js');
-        })};`
+        })};
+        var cb = function() {
+        var l = document.createElement('link'); l.rel = 'stylesheet';
+        l.href = '/ui/css/app_min.css';
+        var h = document.getElementsByTagName('head')[0]; h.parentNode.insertBefore(l, h);
+        };
+        var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+        webkitRequestAnimationFrame || msRequestAnimationFrame;
+        if (raf) raf(cb);
+        else window.addEventListener('load', cb);`
         }} />
       </head>
     )
